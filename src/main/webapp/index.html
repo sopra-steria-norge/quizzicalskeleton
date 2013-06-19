@@ -1,7 +1,15 @@
 <!DOCTYPE html>
-<html>
-<body>
+<html ng-app>
+<head>
+	<title>Steria Quizzical</title>
+	<script src="scripts/ext/angular.min.js"></script>
+	<script src="scripts/quizCtrl.js"></script>
+</head>
+<body ng-controller='QuizCtrl'>
 <h1>Hello from Quizzical</h1>
-Say hello to <a href="quiz/hello.html">servlet</a>
+<p>Number1 <input type="number" ng-model="numberOne"/></p>
+<p>Number2 <input type="number" ng-model="numberTwo"/></p>
+<p><button ng-click="addNumbers()"/>Addit</button></p>
+<p>Answer from client {{sum}}</p>
 </body>
 </html>
