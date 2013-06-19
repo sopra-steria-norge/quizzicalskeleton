@@ -1,4 +1,4 @@
-package no.steria.quizzicale;
+package no.steria.quizzical;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
