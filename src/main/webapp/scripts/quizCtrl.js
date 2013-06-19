@@ -4,5 +4,12 @@ function QuizCtrl($scope,$http) {
 
 	$scope.addNumbers = function() {
 		$scope.sum = $scope.numberOne + $scope.numberTwo;
+		$http({method: "POST",url: "quiz/addData", data: {one: $scope.numberOne, two: $scope.numberTwo}}).
+		success(function(data) {
+			$scope.serversum = data.result;
+		}).
+		error(function(data,status) {
+			console.log("Error:" + status);
+		});
 	};
 }
