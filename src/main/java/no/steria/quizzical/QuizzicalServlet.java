@@ -8,20 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import org.codehaus.jackson.map.ObjectMapper;
 
-public class QuizServlet extends HttpServlet {
+public class QuizzicalServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	        throws ServletException, IOException {
-	    String res = readJsonRequest(req);
 	    
-	    Gson gson = new Gson();
-	    AddRequest addRequest = gson.fromJson(res, AddRequest.class);
+	    ObjectMapper mapper = new ObjectMapper();
+	    AddRequest addRequest = mapper.readValue(stringify(req), AddRequest.class);
 	    AddResult addResult = addNumbers(addRequest);
-	    
-	    String jsonResult = gson.toJson(addResult);
+	    String jsonResult = mapper.writeValueAsString(addResult);
 	    
 	    resp.setContentType("text/json");
 	    resp.getWriter().append(jsonResult);
@@ -32,13 +30,15 @@ public class QuizServlet extends HttpServlet {
         return addResult;
     }
 
-    private String readJsonRequest(HttpServletRequest req)
+    private String stringify(HttpServletRequest req)
             throws IOException {
         BufferedReader reader = req.getReader();
-	    StringBuilder res = new StringBuilder();
+	    StringBuilder sb = new StringBuilder();
+	    
 	    for (String line=reader.readLine();line!=null;line=reader.readLine()) {
-	        res.append(line);
+	        sb.append(line);
 	    }
-        return res.toString();
+	    
+        return sb.toString();
     }
 }

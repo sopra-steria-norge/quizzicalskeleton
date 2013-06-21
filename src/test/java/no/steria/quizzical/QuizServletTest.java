@@ -19,7 +19,7 @@ public class QuizServletTest {
 	
 	@Test
     public void shouldAddNumbers() throws Exception {
-	    QuizServlet servlet = new QuizServlet();
+	    QuizzicalServlet servlet = new QuizzicalServlet();
         
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);

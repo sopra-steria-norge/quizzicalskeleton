@@ -11,4 +11,13 @@ public class AddRequest {
     public int getTwo() {
         return two;
     }
+    
+    public void setOne(int in) {
+    	one = in;
+    }
+    
+    public void setTwo(int in) {
+    	two = in;
+    }
+
 }
