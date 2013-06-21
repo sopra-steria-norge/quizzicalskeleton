@@ -19,7 +19,6 @@ public class QuizzicalServlet extends HttpServlet {
 		IntHolder intHolder = mapper.readValue(stringify(req), IntHolder.class);
 		Sum sum = new Sum(intHolder.getOne() + intHolder.getTwo());
 		String jsonResult = mapper.writeValueAsString(sum);
-		System.out.println(jsonResult);
 		resp.setContentType("text/json");
 		resp.getWriter().append(jsonResult);
 	}
@@ -32,7 +31,6 @@ public class QuizzicalServlet extends HttpServlet {
 			sb.append(line);
 		}
 		
-		System.out.println(sb.toString());
 		return sb.toString();
 	}
 }
