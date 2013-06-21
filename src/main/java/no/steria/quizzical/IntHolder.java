@@ -1,6 +1,6 @@
 package no.steria.quizzical;
 
-public class AddRequest {
+public class IntHolder {
     private int one;
     private int two;
     

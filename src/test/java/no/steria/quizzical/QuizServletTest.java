@@ -30,7 +30,7 @@ public class QuizServletTest {
     
         servlet.service(req, resp);
         
-        assertThat(htmlDoc.toString()).isEqualTo("{\"result\":7}");
+        assertThat(htmlDoc.toString()).isEqualTo("{\"sum\":7}");
     }
 
 }
