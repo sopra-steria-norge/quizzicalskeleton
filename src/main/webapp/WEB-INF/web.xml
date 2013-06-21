@@ -1,11 +1,11 @@
 <web-app>
 	<servlet>
-		<servlet-name>quizServlet</servlet-name>
-		<servlet-class>no.steria.quizzical.QuizServlet</servlet-class>
+		<servlet-name>quizzicalServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.QuizzicalServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>quizServlet</servlet-name>
+		<servlet-name>quizzicalServlet</servlet-name>
 		<url-pattern>quiz/*</url-pattern>
 	</servlet-mapping>
 </web-app>
