@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
 	<title>Quiz</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" type="text/javascript"></script>
+	<script src="quiz.js" type="text/javascript"></script>
 	<link href="bootstrap.css" rel="stylesheet" type="text/css">
 	<style>
 		body {
@@ -32,6 +34,20 @@
 			
 		}
 		
+		.quiz-input-choice-box {
+			border: 1px solid #ddd;
+			border-radius: 12px; 
+			padding: 0.5em 2.0em 0.5em 2.0em;
+			/*margin:*/
+		}
+		.quiz-input-choice-box:hover {
+			background-color: #aef;
+		}
+		.quiz-input-choice-box-selected {
+			background-color: #888;
+		}
+	
+}
 	</style>
 </head>
 <body>
@@ -39,7 +55,7 @@
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="brand" href="#"><img alt="Steria" src="steriasm.png"> Quizzical</a>
-<!-- 			<div class="nav-collapse collapse">
+		<!--	<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#about">About</a></li>
@@ -50,34 +66,29 @@
 		</div>
 	</div>
 	
-<!-- 	<div class="container">
-		<h1>Test</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lacinia imperdiet lorem, id scelerisque lacus viverra vel.</p>
-	</div> -->
-	
-	
-
-	<div class="quiz-box">
+	<div class="quiz-box" ng-controller="QuizCtrl">
 		<h2 class="quiz-box-heading">Geography Quiz</h2>
 		<h4 class="quiz-box-question">What is the capital of Norway?</h4>
-		<label class="radio">
-			<input type="radio" class="quiz-input-choice" name="quiz-choice" value="1">
-			Oslo
-		</label>
-		<label class="radio">
-			<input type="radio" class="quiz-input-choice" name="quiz-choice" value="2">
-			Bergen
-		</label>
-		<label class="radio">
-			<input type="radio" class="quiz-input-choice" name="quiz-choice" value="3">
-			Kristiansand
-		</label>
-		<label class="radio">
-			<input type="radio" class="quiz-input-choice" name="quiz-choice" value="4">
-			Trondheim
-		</label>
-		<br>
-		<button class="btn btn-large btn-primary" type="submit">Next</button>
+		<form action="post">
+			<label class="radio quiz-input-choice-box">
+				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="1" ng-model="ansValue" ng-click="chooseOption()">
+				Oslo
+			</label>
+			<label class="radio quiz-input-choice-box">
+				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="2" ng-model="ansValue" ng-click="chooseOption()">
+				Bergen
+			</label>
+			<label class="radio quiz-input-choice-box">
+				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="3" ng-model="ansValue" ng-click="chooseOption()">
+				Kristiansand
+			</label>
+			<label class="radio quiz-input-choice-box">
+				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="4" ng-model="ansValue" ng-click="chooseOption()">
+				Trondheim
+			</label>
+			<br>
+			<button class="btn btn-large btn-primary" type="submit">Next question</button>
+		</form>
 	</div>
 </body>
 </html>
