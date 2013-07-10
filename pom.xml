@@ -6,6 +6,7 @@
 	<packaging>war</packaging>
 	<version>1.0</version>
 	<name>quizzical</name>
+
 	<repositories>
 		<repository>
 			<id>eap</id>
@@ -18,6 +19,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	
 	<pluginRepositories>
 		<pluginRepository>
 			<id>eap</id>
@@ -30,11 +32,13 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
@@ -125,6 +129,38 @@
 			<version>2.10.1</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jslint-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<configuration>
+					<sourceJsFolder>${basedir}/src/main/webapp/scripts</sourceJsFolder>
+					<includes>
+						<include>**/*.js</include>
+					</includes>
+					<excludes>
+						<exclude>**/ext/*.js</exclude>
+					</excludes>
+					<disallowInsecureCharsInRegExp>false</disallowInsecureCharsInRegExp>
+					<disallowUndefinedVariables>false</disallowUndefinedVariables>
+					<allowOneVarStatementPerFunction>false</allowOneVarStatementPerFunction>
+					<failOnIssues>true</failOnIssues>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jslint</goal>
+							<goal>test-jslint</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
@@ -158,4 +194,5 @@
 			</build>
 		</profile>
 	</profiles>
+
 </project>
