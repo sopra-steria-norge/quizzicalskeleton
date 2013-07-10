@@ -37,13 +37,26 @@
         }
 
     </style>
+
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+    <script src="../jquery/jquery-1.7.2.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="#"><img alt="Steria" src="../gfx/steria_logo2.png"> Quizzical</a>
+        <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="quizzes.html"><img alt="Steria" src="../gfx/steria_logo2.png"> Quizzical</a>
             <div class="nav-collapse collapse">
+                <p class="navbar-text pull-right">
+                    Logged in as <a href="#" class="navbar-link">Username</a>
+                </p>
                 <ul class="nav">
                     <li><a href="quizzes.html">Overview</a></li>
                     <li><a href="addquiz.html">Add quiz</a></li>
@@ -65,55 +78,52 @@
     <h2 class="quiz-box-heading">Results</h2>
     <hr>
     <div class="row">
-        <div class="span2">
+        <div class="span4">
             <h4 class="quiz-box-question">Science Quiz</h4>
-        </div>
-        <div class="span4">
-            Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula.
+            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
+            <br>
+            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
+            <br>
+            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
         </div>
         <div class="span1">
-            <p class="text-success">
-                <strong>
-                    1001
-                    <br/>
-                    respondents
-                </strong>
+            <p class="lead text-success">
+                <br>
+                1001 respondents
             </p>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="span2">
+        <div class="span4">
             <h4 class="quiz-box-question">Geography Quiz</h4>
-        </div>
-        <div class="span4">
-            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
+            <br>
+            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
+            <br>
+            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
         </div>
         <div class="span1">
-            <p class="text-success">
-                <strong>
-                    901
-                    <br/>
-                    respondents
-                </strong>
+            <p class="lead text-success">
+                <br>
+                888 respondents
             </p>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="span2">
-            <h4 class="quiz-box-question">Astronomy Quiz</h4>
-        </div>
         <div class="span4">
-            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+            <h4 class="quiz-box-question">Astronomy Quiz</h4>
+            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
+            <br>
+            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
+            <br>
+            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
         </div>
         <div class="span1">
-            <p class="text-success">
-                <strong>
-                    701
-                    <br/>
-                    respondents
-                </strong>
+            <p class="lead text-success">
+                <br>
+                433 respondents
             </p>
         </div>
     </div>

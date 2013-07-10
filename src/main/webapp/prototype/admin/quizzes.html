@@ -3,7 +3,10 @@
 <head>
     <title>Quiz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="../css/bootstrap.css" rel="stylesheet">
+
+
     <style>
         body {
             padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -32,18 +35,36 @@
             margin-bottom: 10px;
         }
 
-        .quiz-input-choice {
-
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
         }
 
     </style>
+
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+    <script src="../jquery/jquery-1.7.2.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="#"><img alt="Steria" src="../gfx/steria_logo2.png"> Quizzical</a>
+        <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="quizzes.html"><img alt="Steria" src="../gfx/steria_logo2.png"> Quizzical</a>
             <div class="nav-collapse collapse">
+                <p class="navbar-text pull-right">
+                    Logged in as <a href="#" class="navbar-link">Username</a>
+                </p>
                 <ul class="nav">
                     <li class="active"><a href="quizzes.html">Overview</a></li>
                     <li><a href="addquiz.html">Add quiz</a></li>
@@ -62,16 +83,14 @@
 
 
 <div class="quiz-box">
-    <h2 class="quiz-box-heading">Your Quizzes</h2>
+    <h2 class="quiz-box-heading">Overview</h2>
     <hr>
     <div class="row">
-        <div class="span2">
-            <h4 class="quiz-box-question">Science Quiz</h4>
-        </div>
         <div class="span4">
+            <h4 class="quiz-box-question">Science Quiz</h4>
             Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula.
         </div>
-        <div class="span1">
+        <div class="span1 pull-right">
             <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
             <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
             <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
@@ -79,13 +98,11 @@
     </div>
     <hr>
     <div class="row">
-        <div class="span2">
+        <div class="span4">
             <h4 class="quiz-box-question">Geography Quiz</h4>
-        </div>
-        <div class="span4">
             Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
         </div>
-        <div class="span1">
+        <div class="span1 pull-right">
             <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
             <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
             <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
@@ -93,13 +110,11 @@
     </div>
     <hr>
     <div class="row">
-        <div class="span2">
-            <h4 class="quiz-box-question">Astronomy Quiz</h4>
-        </div>
         <div class="span4">
+            <h4 class="quiz-box-question">Astronomy Quiz</h4>
             Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
         </div>
-        <div class="span1">
+        <div class="span1 pull-right">
             <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
             <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
             <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
