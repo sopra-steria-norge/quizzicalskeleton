@@ -178,7 +178,7 @@
 					<sourceIncludes>
 						<include>**/angular.min.js</include>
 						<include>**/angular-mocks.js</include>
-						<include>**/*.js</include>
+						<include>**/quizCtrl.js</include>
 					</sourceIncludes>
 					<format>progress</format>
 					<specIncludes>
