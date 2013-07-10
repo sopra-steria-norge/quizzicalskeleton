@@ -53,10 +53,10 @@
 		.quiz-input-choice-box:ACTIVE {
 			background-color: #f57921;
 		}
-		.quiz-input-choice:required {
-			box-shadow: none;
-		}
 		
+}
+	
+}
 	</style>
 </head>
 <body>
@@ -77,26 +77,12 @@
 	
 	<div class="quiz-box" ng-controller="QuizCtrl">
 		<h2 class="quiz-box-heading">Geography Quiz</h2>
-		<h4 class="quiz-box-question">What is the capital of Norway?</h4>
-		<form method="post" action="userview_demo.html">
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="1" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Oslo
-			</label>
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="2" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Bergen
-			</label>
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="3" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Kristiansand
-			</label>
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="4" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Trondheim
-			</label>
-			<br>
-			<button class="btn btn-large btn-primary" type="submit">Next question</button>
+		<p class="quiz-box-description">Please fill out the following fields in order to enter to win</p>
+		<form method="post" action="qthanks.html">
+			<input type="text" class="input-block-level" placeholder="Name" ng-model="userName" required="required">
+			<input type="email" class="input-block-level" placeholder="Email address" ng-model="userEmail" required="required">
+			<br><br>
+			<button class="btn btn-large btn-primary" type="submit">Submit answers</button>
 		</form>
 	</div>
 </body>

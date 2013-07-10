@@ -53,10 +53,10 @@
 		.quiz-input-choice-box:ACTIVE {
 			background-color: #f57921;
 		}
-		.quiz-input-choice:required {
-			box-shadow: none;
-		}
 		
+}
+	
+}
 	</style>
 </head>
 <body>
@@ -77,27 +77,9 @@
 	
 	<div class="quiz-box" ng-controller="QuizCtrl">
 		<h2 class="quiz-box-heading">Geography Quiz</h2>
-		<h4 class="quiz-box-question">What is the capital of Norway?</h4>
-		<form method="post" action="userview_demo.html">
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="1" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Oslo
-			</label>
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="2" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Bergen
-			</label>
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="3" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Kristiansand
-			</label>
-			<label class="radio quiz-input-choice-box">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice" value="4" ng-model="ansValue" ng-click="chooseOption()" required="required">
-				Trondheim
-			</label>
-			<br>
-			<button class="btn btn-large btn-primary" type="submit">Next question</button>
-		</form>
+		<h4>Thank you!</h4>
+		<p class="quiz-box-description">Your answers are received. The winner will be announced on July 11 at 4 PM.</p>
+		<br><br>
 	</div>
 </body>
 </html>
