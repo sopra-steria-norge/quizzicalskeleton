@@ -1,4 +1,8 @@
 function QuizCtrl($scope){
+	$scope.userName = null;
+	$scope.userEmail = null;
+	
+	
 	$scope.ansValue = null;
 	
 	$scope.chooseOption = function(){
