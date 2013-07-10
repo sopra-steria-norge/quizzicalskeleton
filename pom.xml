@@ -177,6 +177,7 @@
 					<jsTestSrcDir>${basedir}/src/test/javascript</jsTestSrcDir>
 					<sourceIncludes>
 						<include>**/angular.min.js</include>
+						<include>**/angular-mocks.js</include>
 						<include>**/*.js</include>
 					</sourceIncludes>
 					<format>progress</format>
