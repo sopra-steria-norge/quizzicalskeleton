@@ -1,42 +1,44 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>Adminview - Quiz</title>
+    <title>Quiz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
+    <style>
         body {
-            padding-top: 60px;
-            padding-bottom: 40px;
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            background-color: #f5f5f5;
         }
 
         .navbar-fixed-top .navbar-inner {
             box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
         }
+
+        .quiz-box {
+            max-width: 750px;
+            padding: 10px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+
+        .quiz-box .quiz-box-heading .quiz-box {
+            margin-bottom: 10px;
+        }
+
+        .quiz-input-choice {
+
+        }
+
     </style>
-    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="../assets/ico/favicon.png">
 </head>
-
 <body>
-
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -53,66 +55,44 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="span7">
-    <!-- Main hero unit for a primary marketing message or call to action -->
-        <div class="hero-unit">
-            <h1>Create a quiz, change the world!</h1>
-            <p>Happy people live longer, and people who take quizzes are happy, therefore they live longer.</p>
-            <p><a href="#" class="btn btn-primary btn-large">Add a quiz &raquo;</a></p>
-        </div>
-    </div>
-    <!-- Example row of columns -->
+<!-- 	<div class="container">
+		<h1>Test</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lacinia imperdiet lorem, id scelerisque lacus viverra vel.</p>
+	</div> -->
+
+
+
+<div class="quiz-box">
+    <h2 class="quiz-box-heading">Home</h2>
+    <hr>
     <div class="row">
-        <div class="span2">
-            <h2>Quiz status</h2>
-            <p>Science quiz has the highest increase of completions, with 33 new completions today!</p>
-            <p><a class="btn" href="#">Check more results &raquo;</a></p>
-        </div>
         <div class="span3">
             <h2>Recent activity</h2>
             <p>
-                <ul>
-                    <li>Something</li>
-                    <li>Something</li>
-                    <li>Something</li>
-                    <li>Dark side</li>
-                </ul>
+            <ul>
+                <li>Something</li>
+                <li>Something</li>
+                <li>Something</li>
+                <li>Dark side</li>
+            </ul>
             </p>
-            <p><a class="btn" href="#">View details &raquo;</a></p>
+            Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula.
         </div>
-        <div class="span2">
+        <div class="span3">
+            <h2>Quiz status</h2>
+            <p>Science quiz has the highest increase of completions, with 33 new completions today!</p>
+            <p><a class="btn" href="#">Check more results &raquo;</a></p>
+            Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula.
+        </div>
+        <div class="span3">
             <h2>Feedback</h2>
             <p>Suggest improvements to developers.</p>
             <p><textarea rows="3"></textarea></p>
             <p><a class="btn" href="#">Send</a></p>
+            Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula.
         </div>
     </div>
-
-    <hr>
-
-    <footer>
-        <p>&copy; Company 2013</p>
-    </footer>
-
-</div> <!-- /container -->
-
-<!-- Le javascript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="../assets/js/jquery.js"></script>
-<script src="../assets/js/bootstrap-transition.js"></script>
-<script src="../assets/js/bootstrap-alert.js"></script>
-<script src="../assets/js/bootstrap-modal.js"></script>
-<script src="../assets/js/bootstrap-dropdown.js"></script>
-<script src="../assets/js/bootstrap-scrollspy.js"></script>
-<script src="../assets/js/bootstrap-tab.js"></script>
-<script src="../assets/js/bootstrap-tooltip.js"></script>
-<script src="../assets/js/bootstrap-popover.js"></script>
-<script src="../assets/js/bootstrap-button.js"></script>
-<script src="../assets/js/bootstrap-collapse.js"></script>
-<script src="../assets/js/bootstrap-carousel.js"></script>
-<script src="../assets/js/bootstrap-typeahead.js"></script>
+</div>
 
 </body>
 </html>
