@@ -176,6 +176,7 @@
 					<jsSrcDir>${basedir}/src</jsSrcDir>
 					<jsTestSrcDir>${basedir}/src/test/javascript</jsTestSrcDir>
 					<sourceIncludes>
+						<include>**/jquery-1.8.2.js</include>
 						<include>**/angular.min.js</include>
 						<include>**/angular-mocks.js</include>
 						<include>**/quizCtrl.js</include>
