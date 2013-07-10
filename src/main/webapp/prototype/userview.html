@@ -12,6 +12,10 @@
 			background-color: #f5f5f5;
 		}
 		
+		.navbar-fixed-top .navbar-inner {
+			box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
+		}
+		
 		.quiz-box {
 			max-width: 350px;
 			padding: 10px 29px 29px;
@@ -41,17 +45,22 @@
 			/*margin:*/
 		}
 		.quiz-input-choice-box:hover {
-			background-color: #aef;
+			background-color: #f9b49b; /*F57921*/
 		}
 		.quiz-input-choice-box-selected {
-			background-color: #888;
+			background-color: #f57921;/*F15A23*/
 		}
+		.quiz-input-choice-box:ACTIVE {
+			background-color: #f57921;
+		}
+		
+}
 	
 }
 	</style>
 </head>
 <body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="brand" href="#"><img alt="Steria" src="steriasm.png"> Quizzical</a>
