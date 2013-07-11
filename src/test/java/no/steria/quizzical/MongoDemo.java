@@ -20,6 +20,11 @@ public class MongoDemo {
 		document.put("id", 1);
 		document.put("text", "What is the capital of Norway?");
 		table.insert(document);
+		
+		BasicDBObject document2 = new BasicDBObject();
+		document2.put("id", 2);
+		document2.put("text", "What is the largest lake in Norway?");
+		table.insert(document2);
 
 	}
 
