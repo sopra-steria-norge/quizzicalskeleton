@@ -2,6 +2,8 @@ package no.steria.quizzical;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class QuizzicalServlet extends HttpServlet {
+
+	private QuestionDao questionDao;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,6 +27,22 @@ public class QuizzicalServlet extends HttpServlet {
 		resp.getWriter().append(jsonResult);
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		PrintWriter writer = resp.getWriter();
+		writer.append("{\"questions\":[");
+		List<Question> questions = questionDao.getQuestions();
+		for (Question question : questions) {
+			writer.append("{\"questionId\":");
+			writer.append(""+question.getId());
+			writer.append(", \"text\":\"");
+			writer.append(""+question.getText());
+			writer.append("\"}");
+		}
+		writer.append("]}");
+	}
+	
 	private String stringify(HttpServletRequest req) throws IOException {
 		BufferedReader reader = req.getReader();
 		StringBuilder sb = new StringBuilder();
@@ -32,5 +52,10 @@ public class QuizzicalServlet extends HttpServlet {
 		}
 		
 		return sb.toString();
+	}
+
+	public void setQuestionDao(QuestionDao questionDao) {
+		this.questionDao = questionDao;
+		
 	}
 }
