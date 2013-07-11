@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="quizzical">
 <head>
 	<title>Steria Quizzical</title>
 	<script src="scripts/ext/angular.min.js"></script>
+	<script src="scripts/app.js"></script>
 	<script src="scripts/quizCtrl.js"></script>
 </head>
-<body ng-controller='QuizCtrl'>
-<h1>Hello from Quizzical</h1>
-<p>Number1 <input type="number" ng-model="numberOne"/></p>
-<p>Number2 <input type="number" ng-model="numberTwo"/></p>
-<p><button ng-click="addNumbers()"/>Addit</button></p>
-<p>Answer from client {{sum}}</p>
-<p>Answer from server {{serversum}}</p>
+<body>
+	<div ng-view></div>
 </body>
 </html>

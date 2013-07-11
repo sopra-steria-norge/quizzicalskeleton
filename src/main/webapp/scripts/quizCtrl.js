@@ -1,4 +1,7 @@
-function QuizCtrl($scope,$http) {
+angular.module('quizControllers')
+.controller('QuizCtrl', ['$scope', '$http',
+    function($scope, $http) {
+
 	$scope.numberOne = 3;
 	$scope.numberTwo = 2;
 
@@ -12,4 +15,4 @@ function QuizCtrl($scope,$http) {
 			console.log("Error:" + status);
 		});
 	};
-}
+}]);
