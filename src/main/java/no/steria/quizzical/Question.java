@@ -4,6 +4,10 @@ public class Question {
 
 	private int id;
 	private String text;
+	
+	public Question() {
+		
+	}
 
 	public Question(int id, String text) {
 		this.id = id;

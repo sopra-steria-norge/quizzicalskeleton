@@ -29,18 +29,11 @@ public class QuizzicalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		PrintWriter writer = resp.getWriter();
-		writer.append("{\"questions\":[");
+		ObjectMapper mapper = new ObjectMapper();
 		List<Question> questions = questionDao.getQuestions();
-		for (Question question : questions) {
-			writer.append("{\"questionId\":");
-			writer.append(""+question.getId());
-			writer.append(", \"text\":\"");
-			writer.append(""+question.getText());
-			writer.append("\"}");
-		}
-		writer.append("]}");
+		PrintWriter writer = resp.getWriter();
+		
+		mapper.writeValue(writer, questions);
 	}
 	
 	private String stringify(HttpServletRequest req) throws IOException {

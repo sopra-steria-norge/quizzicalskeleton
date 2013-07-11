@@ -2,7 +2,6 @@ package no.steria.quizzical;
 
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,10 +10,13 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.junit.Test;
 
 public class QuizServletTest {
@@ -50,12 +52,12 @@ public class QuizServletTest {
 		
 		servlet.service(req, resp);
 		
-		StringBuilder expectedResponse = new StringBuilder();
-		expectedResponse.append("{\"questions\":[");
-		expectedResponse.append("{\"questionId\":1, \"text\":\"The question\"}");
-		expectedResponse.append("]}");
+		ObjectMapper mapper = new ObjectMapper();
+		List<Question> receivedQuestions = mapper.readValue(htmlDoc.toString(), new TypeReference<List<Question>>() {});
 		
-		assertThat(htmlDoc.toString()).isEqualTo(expectedResponse.toString());
+		assertThat(receivedQuestions).hasSize(1);
+		assertThat(receivedQuestions.get(0).getId()).isEqualTo(1);
+		assertThat(receivedQuestions.get(0).getText()).isEqualTo("The question");
 
 		
 		
