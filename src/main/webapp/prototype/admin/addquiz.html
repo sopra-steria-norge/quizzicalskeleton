@@ -41,7 +41,7 @@
             }
         }
         
-        textarea[name=quizDescription] {
+        textarea.ta-no-resize {
         	resize: none;
         }
 
@@ -84,35 +84,52 @@
 
 
 <div class="quiz-box">
-    <h2 class="quiz-box-heading">Add quiz</h2>
-    <hr>
-    
-    <div class="row">
-    	<div class="span3">
-    		<input type="text" name="quizName" ng-model="ngQuizName" placeholder="Type a name for the quiz" required="required">
-    	</div>
-    	<div class="span4">
-    		Type a name for the quiz here.
-    	</div>
-    </div>
-    <br>
-    <div class="row">
-	    	<div class="span3">
-	    	<textarea name="quizDescription" ng-model="quizDesc" rows="3" cols="70" placeholder="Describe the quiz here."></textarea>
-	    	</div>
-	    	<div class="span4">
-	    		Describe the quiz here. This text will be shown to the user when the link is opened.
-	    	</div>
-    </div>
-    <hr>
-    
-    <div class="row">
-    
-    
-    
-    
-    </div>
-    
+	<form method="post" action="">
+		<h2 class="quiz-box-heading">Add quiz</h2>
+		<hr>
+		
+		<label class="row">
+			<span class="span3">
+				<input type="text" name="quizName" ng-model="ngQuizName" placeholder="Type a name for the quiz" required="required">
+			</span>
+			<span class="span4">
+				Type a name for the quiz here.
+			</span>
+		</label>
+		<br>
+		<label class="row">
+				<span class="span3">
+					<textarea class="ta-no-resize" name="quizDescription" ng-model="quizDesc" rows="3" cols="70" placeholder="Describe the quiz here..."></textarea>
+				</span>
+				<span class="span4">
+					Describe the quiz here. This text will be shown to the user when the link is opened, right before the quiz starts.
+				</span>
+		</label>
+		<hr>
+		<div class="add-question-row" ng-repeat="aqr in addQuestionRows">
+			<div class="row" ng-repeat="aqr in addQuestionRows">
+				<label class="add-question-name span3">
+					<textarea class="ta-no-resize" name="questionName" ng-model="questionName" rows="2" cols="70" placeholder="Type question here..."></textarea>
+				</label>
+				<div class="add-question-options span4">
+					<span class="add-question-info">Type in answer options:</span>
+					<span class="add-question-option" ng-repeat="aqo in agr.addQuestionOption">
+						
+					</span>
+				</div>
+				
+			</div>
+			<hr>
+		</div>
+		
+		<div class="row">
+			<span class="span7 text-center">
+				<button class="btn btn-medium btn-primary" type="submit">Add question</button>
+			</span>
+		</div>
+		<hr>
+		<button class="btn btn-large btn-primary" type="submit">Create quiz</button>
+	</form>
 </div>
 
 </body>
