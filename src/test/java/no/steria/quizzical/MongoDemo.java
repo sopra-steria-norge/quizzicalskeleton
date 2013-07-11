@@ -12,21 +12,14 @@ public class MongoDemo {
 
 	public static void main(String[] args) throws Exception {
 		MongoClient client = new MongoClient();
-		DB db = client.getDB("javatest");
+		DB db = client.getDB("quizzical");
 		
-		Set<String> tables = db.getCollectionNames();
-		 
-		for(String coll : tables){
-			System.out.println(coll);
-		}
-		
-		DBCollection table = db.getCollection("user");
+		DBCollection table = db.getCollection("questions");
+		table.drop();
 		BasicDBObject document = new BasicDBObject();
-		document.put("name", "username");
-		document.put("age", 30);
-		document.put("createdDate", new Date());
+		document.put("id", 1);
+		document.put("text", "What is the capital of Norway?");
 		table.insert(document);
-		
 
 	}
 
