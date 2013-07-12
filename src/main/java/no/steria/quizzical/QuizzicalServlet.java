@@ -32,8 +32,8 @@ public class QuizzicalServlet extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		List<Question> questions = questionDao.getQuestions();
 		PrintWriter writer = resp.getWriter();
-		
 		mapper.writeValue(writer, questions);
+		resp.setContentType("text/json");
 	}
 	
 	private String stringify(HttpServletRequest req) throws IOException {
@@ -49,6 +49,14 @@ public class QuizzicalServlet extends HttpServlet {
 
 	public void setQuestionDao(QuestionDao questionDao) {
 		this.questionDao = questionDao;
-		
+	
 	}
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+	
+		questionDao = new MongoQuestionDao();
+	}
+
 }

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class QuizServletTest {
 	
@@ -58,9 +59,8 @@ public class QuizServletTest {
 		assertThat(receivedQuestions).hasSize(1);
 		assertThat(receivedQuestions.get(0).getId()).isEqualTo(1);
 		assertThat(receivedQuestions.get(0).getText()).isEqualTo("The question");
-
-		
-		
+	
+		Mockito.verify(resp).setContentType("text/json");
 	}
 
 }
