@@ -9,6 +9,10 @@
                     when('/', {
                         templateUrl: 'templates/testTemplate.html', 
                         controller: 'QuizCtrl'
+                    }).
+                    when('/answerQuiz', {
+                        templateUrl: 'templates/answerQuizTemplate.html', 
+                        controller: 'AnswerQuizCtrl'
                     });
         }]);
             
