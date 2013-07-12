@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 
 public class QuizServletTest {
 	
@@ -48,7 +52,10 @@ public class QuizServletTest {
         when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
         
         QuestionDao questionDao = mock(QuestionDao.class);
-        when(questionDao.getQuestions()).thenReturn(Arrays.asList(new Question(1,"The question")));
+        
+        BasicDBList alternatives = new BasicDBList();
+        alternatives.add(new BasicDBObject("alt1","Oslo"));
+		when(questionDao.getQuestions()).thenReturn(Arrays.asList(new Question(1,"The question",alternatives,1)));
 		servlet.setQuestionDao(questionDao);
 		
 		servlet.service(req, resp);

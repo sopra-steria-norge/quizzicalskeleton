@@ -3,7 +3,6 @@ package no.steria.quizzical;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -17,7 +16,7 @@ public class MongoQuestionDaoTest {
 		
 		List<Question> questions = dao.getQuestions();
 		
-		assertThat(questions).hasSize(2);
+		assertThat(questions).hasSize(1);
 	}
 
 	private QuestionDao createDao() {

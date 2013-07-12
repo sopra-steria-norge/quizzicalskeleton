@@ -1,18 +1,23 @@
 package no.steria.quizzical;
 
+import com.mongodb.BasicDBList;
+
 public class Question {
 
 	private int id;
 	private String text;
+	private BasicDBList alternatives;
+	private int answer;
 	
 	public Question() {
 		
 	}
 
-	public Question(int id, String text) {
+	public Question(int id, String text, BasicDBList alternatives, int answer) {
 		this.id = id;
-		// TODO Auto-generated constructor stub
 		this.text = text;
+		this.alternatives = alternatives;
+		this.answer = answer;
 	}
 	
 	public int getId() {
@@ -21,6 +26,14 @@ public class Question {
 	
 	public String getText() {
 		return text;
+	}
+
+	public BasicDBList getAlternatives() {
+		return alternatives;
+	}
+	
+	public int getAnswer() {
+		return answer;
 	}
 	
 	

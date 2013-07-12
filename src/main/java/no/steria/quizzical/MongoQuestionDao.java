@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -33,7 +34,9 @@ public class MongoQuestionDao implements QuestionDao {
 			DBObject next = cursor.next();
 			Integer id = (Integer) next.get("id");
 			String text = (String) next.get("text");
-			Question question = new Question(id,text);
+			BasicDBList alternatives = (BasicDBList) next.get("alternatives");
+			Integer answer = (Integer) next.get("answer");
+			Question question = new Question(id,text,alternatives,answer);
 			questions.add(question);
 		}
 		return questions;
