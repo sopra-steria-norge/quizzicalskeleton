@@ -1,0 +1,24 @@
+
+<div class="quiz-box" ng-controller="AnswerQuizCtrl">
+
+	<h2 class="quiz-box-heading">Geography Quiz</h2>
+	
+	<form method="post" action="">
+		<div class="" ng-show="showBox(0)">
+			<p class="quiz-box-description">{{quiz.descr}}Description field. This is a geography quiz about norwegian geography. </p>
+			<br><br>
+			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Start quiz</button>
+		</div>
+		
+		<div ng-repeat="q in questions" ng-show="isCurrent(q)">
+			<h4 class="quiz-box-question">{{q.text}}What is the capital of Norway?</h4>
+			<label class="radio quiz-input-choice-box" ng-repeat="qa in q.qAlt">
+				<input type="radio" class="quiz-input-choice" name="quiz-choice{{q.id}}" value="{{qa.aid}}" ng-model="ansValue" ng-click="chooseOption()" required>
+				{{qa.aText}}
+			</label>
+			<br>
+			<a class="span2" ng-click="prevQuestion()">Previous question</a>
+			<button class="span1 btn btn-large btn-primary" ng-click="nextQuestion()">Next question</button>
+		</div>
+	</form>
+</div>

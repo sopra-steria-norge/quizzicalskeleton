@@ -11,7 +11,7 @@
                         controller: 'QuizCtrl'
                     }).
                     when('/answerQuiz', {
-                        templateUrl: 'templates/answerQuizTemplate.html', 
+                        templateUrl: 'templates/userview.html', 
                         controller: 'AnswerQuizCtrl'
                     });
         }]);
