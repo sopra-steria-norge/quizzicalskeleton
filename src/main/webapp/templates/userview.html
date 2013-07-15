@@ -12,13 +12,13 @@
 		
 		<div ng-repeat="q in questions" ng-show="isCurrent(q)">
 			<h4 class="quiz-box-question">{{q.text}}What is the capital of Norway?</h4>
-			<label class="radio quiz-input-choice-box" ng-repeat="qa in q.qAlt">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice{{q.id}}" value="{{qa.aid}}" ng-model="ansValue" ng-click="chooseOption()" required>
-				{{qa.aText}}
+			<label class="radio quiz-input-choice-box" ng-repeat="qa in q.alternatives">
+				<input type="radio" class="quiz-input-choice" name="quiz-choice{{q.id}}" value="{{qa.alt}}" ng-model="ansValue" ng-click="chooseOption()" required="required">
+				{{qa.atext}}
 			</label>
 			<br>
-			<a class="span2" ng-click="prevQuestion()">Previous question</a>
-			<button class="span1 btn btn-large btn-primary" ng-click="nextQuestion()">Next question</button>
+			<a class="hide" ng-click="prevQuestion()">Previous question</a>
+			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Next question</button>
 		</div>
 	</form>
 </div>
