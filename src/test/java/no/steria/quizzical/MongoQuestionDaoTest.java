@@ -16,7 +16,7 @@ public class MongoQuestionDaoTest {
 		
 		List<Question> questions = dao.getQuestions();
 		
-		assertThat(questions).hasSize(1);
+		assertThat(questions).hasSize(2);
 	}
 
 	private QuestionDao createDao() {

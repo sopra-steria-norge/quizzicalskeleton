@@ -14,28 +14,19 @@ public class MongoDemo {
 	public static void main(String[] args) throws Exception {
 		MongoClient client = new MongoClient();
 		DB db = client.getDB("quizzical");
-		
+
 		DBCollection table = db.getCollection("questions");
 		table.drop();
 		
 		BasicDBList alternatives = new BasicDBList();
-		
 		alternatives.add(new BasicDBObject().append("aid", 1).append("atext", "Oslo"));
 		alternatives.add(new BasicDBObject().append("aid", 2).append("atext", "Bergen"));
 		alternatives.add(new BasicDBObject().append("aid", 3).append("atext", "Trondheim"));
 		alternatives.add(new BasicDBObject().append("aid", 4).append("atext", "Kristiansand"));
-		
 		table.insert(makeDocumentForDB(1, "What is the capital of Norway?", alternatives, 1));
 
-		BasicDBList alternatives2 = new BasicDBList();
-		alternatives2.add(new BasicDBObject("alt1", "Sognsvann"));
-		alternatives2.add(new BasicDBObject("alt2", "Tyrifjorden"));
-		alternatives2.add(new BasicDBObject("alt3", "Mjosa"));
-		alternatives2.add(new BasicDBObject("alt4", "Burudvann"));
-		table.insert(makeDocumentForDB(2, "What is the largest lake in Norway?", alternatives2, 3));
-	
 	}
-
+	
 	private static BasicDBObject makeDocumentForDB(int idValue, String textValue, BasicDBList alternativeValues, int answerValue){
 		BasicDBObject document = new BasicDBObject();
 		document.put("id", idValue);
