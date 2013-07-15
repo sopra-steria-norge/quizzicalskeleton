@@ -17,6 +17,7 @@ angular.module('quizControllers')
 		$scope.nextQuestion = function(){
 			currentQuestion++;
 		};
+		
 		$scope.prevQuestion = function(){
 			currentQuestion--;
 		};
