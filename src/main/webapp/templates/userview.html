@@ -11,14 +11,14 @@
 		</div>
 		
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
-			<h4 class="quiz-box-question">{{q.text}}What is the capital of Norway?</h4>
-			<label class="radio quiz-input-choice-box" ng-repeat="qa in q.alternatives">
-				<input type="radio" class="quiz-input-choice" name="q{{q.id}}" value="{{qa.aid}}" ng-model="ansValue" ng-click="chooseOption()" required="required">
+			<h4 class="quiz-box-question">{{q.text}}</h4>
+			<label class="radio quiz-input-choice-box ql{{q.id}}" ng-repeat="qa in q.alternatives">
+				<input type="radio" class="quiz-input-choice" name="q{{q.id}}" value="{{qa.aid}}" ng-click="chooseOption(q.id)">
 				{{qa.atext}}
 			</label>
 			<br>
 			<a class="hide" ng-click="prevQuestion()">Previous question</a>
-			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Next question</button>
+			<button class="btn btn-large btn-primary" ng-click="checkRadioButtons(q.id)">Next question</button>
 		</div>
 		
 		<div ng-show="isCurrent(questions.length+1)">

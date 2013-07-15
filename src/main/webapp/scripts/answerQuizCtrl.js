@@ -30,16 +30,32 @@ angular.module('quizControllers')
 		};
 		
 		
-		$scope.chooseOption = function(){
-			var element = document.getElementsByName("quiz-choice");
-			var labels = document.getElementsByClassName("radio quiz-input-choice-box");
+		$scope.chooseOption = function(id){
+			var radioButtons = document.getElementsByName("q" + id);
+			var labels = document.getElementsByClassName("radio quiz-input-choice-box ql" + id);
 			
-			for (var i = 0; i < element.length; i++) {
+			for (var i = 0; i < radioButtons.length; i++) {
 				labels[i].className = labels[i].className.replace( /(?:^|\s)quiz-input-choice-box-selected(?!\S)/g , '' );
 				
-				if (element[i].checked == true) {
+				if (radioButtons[i].checked == true) {
 					labels[i].className += " quiz-input-choice-box-selected";
 				}
+			}
+		};
+		
+		$scope.checkRadioButtons = function(id){
+			var radioButtonIsChecked = false;
+			var buttons = document.getElementsByName("q" + id);
+			
+			for (var i = 0; i < buttons.length; i++){
+				if (buttons[i].checked){
+					radioButtonIsChecked = true;
+					$scope.nextQuestion();
+				}
+			}
+			
+			if (!radioButtonIsChecked){
+				buttons[0].required = "required";
 			}
 		};
 		
