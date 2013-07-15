@@ -3,7 +3,7 @@ angular.module('quizControllers')
     function($scope, $http) {
 		var currentQuestion = 0;
 		$scope.questions = []; 
-	
+		
 		$http({method: "GET",url: "quiz/"}).
 		success(function(data) {
 			$scope.questions = data;
@@ -12,7 +12,7 @@ angular.module('quizControllers')
 			console.log("Error:" + status);
 		});
 		
-		//$scope.questions = [{id:1, text: "Hva er hovedstaden i Norge?", alternatives: [{aid:1, aText:"Oslo"}, {aid:2, aText:"Bergen"}] }, {id:2, text: "Hva er norges største innsjoe?", alternatives: [{aid: 1, aText:"Mjosa"}] }];
+		
 		
 		$scope.nextQuestion = function(){
 			currentQuestion++;
@@ -26,7 +26,7 @@ angular.module('quizControllers')
 		};
 		
 		$scope.isCurrent = function(q){
-			return q.id == currentQuestion;
+			return q == currentQuestion;
 		};
 		
 		

@@ -3,22 +3,30 @@
 
 	<h2 class="quiz-box-heading">Geography Quiz</h2>
 	
-	<form method="post" action="">
-		<div class="" ng-show="showBox(0)">
+	<form method="get" action="user.html">
+		<div class="" ng-show="isCurrent(0)">
 			<p class="quiz-box-description">{{quiz.descr}}Description field. This is a geography quiz about norwegian geography. </p>
 			<br><br>
 			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Start quiz</button>
 		</div>
 		
-		<div ng-repeat="q in questions" ng-show="isCurrent(q)">
+		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
 			<h4 class="quiz-box-question">{{q.text}}What is the capital of Norway?</h4>
 			<label class="radio quiz-input-choice-box" ng-repeat="qa in q.alternatives">
-				<input type="radio" class="quiz-input-choice" name="quiz-choice{{q.id}}" value="{{qa.alt}}" ng-model="ansValue" ng-click="chooseOption()" required="required">
+				<input type="radio" class="quiz-input-choice" name="q{{q.id}}" value="{{qa.aid}}" ng-model="ansValue" ng-click="chooseOption()" required="required">
 				{{qa.atext}}
 			</label>
 			<br>
 			<a class="hide" ng-click="prevQuestion()">Previous question</a>
 			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Next question</button>
+		</div>
+		
+		<div ng-show="isCurrent(questions.length+1)">
+			<p class="quiz-box-description">Please fill out the following fields in order to enter to win</p>
+			<input type="text" class="input-block-level" name="name" placeholder="Name" ng-model="userName" required="required">
+			<input type="email" class="input-block-level" name="email" placeholder="Email address" ng-model="userEmail" required="required">
+			<br><br>
+			<button class="btn btn-large btn-primary" type="submit">Submit answers</button>
 		</div>
 	</form>
 </div>

@@ -25,6 +25,13 @@ public class MongoDemo {
 		alternatives.add(new BasicDBObject().append("aid", 4).append("atext", "Kristiansand"));
 		table.insert(makeDocumentForDB(1, "What is the capital of Norway?", alternatives, 1));
 
+		BasicDBList alternatives2 = new BasicDBList();
+		alternatives2.add(new BasicDBObject().append("aid", 1).append("atext", "Sognsvann"));
+		alternatives2.add(new BasicDBObject().append("aid", 2).append("atext", "Tyrifjorden"));
+		alternatives2.add(new BasicDBObject().append("aid", 3).append("atext", "Mjosa"));
+		alternatives2.add(new BasicDBObject().append("aid", 4).append("atext", "Burudvann"));
+		table.insert(makeDocumentForDB(2, "What is the largest lake in Norway?", alternatives2, 3));
+	
 	}
 	
 	private static BasicDBObject makeDocumentForDB(int idValue, String textValue, BasicDBList alternativeValues, int answerValue){
