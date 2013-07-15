@@ -42,5 +42,5 @@ public class MongoDemo {
 		document.put("answer", answerValue);
 		return document;
 	}
-	
+		
 }

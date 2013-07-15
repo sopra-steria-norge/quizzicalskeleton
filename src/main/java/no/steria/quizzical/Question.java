@@ -7,17 +7,15 @@ public class Question {
 	private int id;
 	private String text;
 	private BasicDBList alternatives;
-	private int answer;
 	
 	public Question() {
 		
 	}
 
-	public Question(int id, String text, BasicDBList alternatives, int answer) {
+	public Question(int id, String text, BasicDBList alternatives) {
 		this.id = id;
 		this.text = text;
 		this.alternatives = alternatives;
-		this.answer = answer;
 	}
 	
 	public int getId() {
@@ -32,10 +30,4 @@ public class Question {
 		return alternatives;
 	}
 	
-	public int getAnswer() {
-		return answer;
-	}
-	
-	
-
 }

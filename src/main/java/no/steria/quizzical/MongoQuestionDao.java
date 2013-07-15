@@ -35,8 +35,7 @@ public class MongoQuestionDao implements QuestionDao {
 			Integer id = (Integer) next.get("id");
 			String text = (String) next.get("text");
 			BasicDBList alternatives = (BasicDBList) next.get("alternatives");
-			Integer answer = (Integer) next.get("answer");
-			Question question = new Question(id,text,alternatives,answer);
+			Question question = new Question(id,text,alternatives);
 			questions.add(question);
 		}
 		return questions;

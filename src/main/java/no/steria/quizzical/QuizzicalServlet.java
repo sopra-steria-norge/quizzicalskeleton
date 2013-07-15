@@ -15,10 +15,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class QuizzicalServlet extends HttpServlet {
 
 	private QuestionDao questionDao;
-
+	private MongoRespondentDao mongoRespondentDao;
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
+		
 		ObjectMapper mapper = new ObjectMapper();
 		IntHolder intHolder = mapper.readValue(stringify(req), IntHolder.class);
 		Sum sum = new Sum(intHolder.getOne() + intHolder.getTwo());
@@ -34,6 +36,7 @@ public class QuizzicalServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		mapper.writeValue(writer, questions);
 		resp.setContentType("text/json");
+		
 	}
 	
 	private String stringify(HttpServletRequest req) throws IOException {
@@ -51,7 +54,7 @@ public class QuizzicalServlet extends HttpServlet {
 		this.questionDao = questionDao;
 	
 	}
-
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
