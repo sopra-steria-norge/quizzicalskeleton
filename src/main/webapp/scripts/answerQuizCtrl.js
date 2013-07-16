@@ -1,17 +1,19 @@
 angular.module('quizControllers')
-.controller('AnswerQuizCtrl', ['$scope', '$http',
-    function($scope, $http) {
+.controller('AnswerQuizCtrl', ['$scope', '$http', '$routeParams',
+    function($scope, $http, $routeParams) {
 		var currentQuestion = 0;
+		
+		$scope.quiz = null;
 		$scope.questions = []; 
 		
-		$http({method: "GET",url: "quiz/"}).
+		$http({method: "GET", url: "quiz/?quizId=" + $routeParams.quizid}).
 		success(function(data) {
-			$scope.questions = data;
+			$scope.quiz = data;
+			$scope.questions = data.questions;
 		}).
 		error(function(data,status) {
 			console.log("Error:" + status);
 		});
-		
 		
 		
 		$scope.nextQuestion = function(){

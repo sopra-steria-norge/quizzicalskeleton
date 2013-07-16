@@ -1,11 +1,11 @@
 
 <div class="quiz-box" ng-controller="AnswerQuizCtrl">
 
-	<h2 class="quiz-box-heading">Geography Quiz</h2>
+	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
 	<form method="get" action="/quiz/user.html">
 		<div class="" ng-show="isCurrent(0)">
-			<p class="quiz-box-description">{{quiz.descr}}Description field. This is a geography quiz about norwegian geography. </p>
+			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
 			<br><br>
 			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Start quiz</button>
 		</div>

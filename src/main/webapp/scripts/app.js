@@ -10,12 +10,12 @@
                         templateUrl: 'templates/testTemplate.html', 
                         controller: 'QuizCtrl'
                     }).
-                    when('/answerQuiz', {
+                    when('/answerQuiz/:quizid', {
                         templateUrl: 'templates/userview.html', 
                         controller: 'AnswerQuizCtrl'
                     });
         }]);
-            
+        
         angular.bootstrap(document,['quizzical']); 
         
     };

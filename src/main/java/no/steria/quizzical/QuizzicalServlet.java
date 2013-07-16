@@ -3,6 +3,7 @@ package no.steria.quizzical;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,8 +15,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class QuizzicalServlet extends HttpServlet {
 
-	private QuestionDao questionDao;
-	private MongoResponseDao mongoRespondentDao;
+	private MongoResponseDao mongoResponseDao;
+	private QuizDao quizDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,10 +32,16 @@ public class QuizzicalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println(req.getParameter("quizId"));
+		
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		
 		ObjectMapper mapper = new ObjectMapper();
-		List<Question> questions = questionDao.getQuestions();
+		
+		Quiz quiz = quizDao.getQuiz(quizId);
+		
 		PrintWriter writer = resp.getWriter();
-		mapper.writeValue(writer, questions);
+		mapper.writeValue(writer, quiz);
 		resp.setContentType("text/json");
 
 		System.out.println(req);
@@ -53,8 +60,8 @@ public class QuizzicalServlet extends HttpServlet {
 		return sb.toString();
 	}
 
-	public void setQuestionDao(QuestionDao questionDao) {
-		this.questionDao = questionDao;
+	public void setQuestionDao(QuizDao quizDao) {
+		this.quizDao = quizDao;
 	
 	}
 	
@@ -62,7 +69,7 @@ public class QuizzicalServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 	
-		questionDao = new MongoQuestionDao();
+		quizDao = new MongoQuizDao();
 	}
 
 }
