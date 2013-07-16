@@ -2,9 +2,13 @@ package no.steria.quizzical;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
+import javax.ejb.Remove;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class QuizzicalServlet extends HttpServlet {
+public class SubmitServlet extends HttpServlet {
 
-	private QuestionDao questionDao;
 	private MongoResponseDao mongoRespondentDao;
+	private Response quizResponse;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
 		ObjectMapper mapper = new ObjectMapper();
 		IntHolder intHolder = mapper.readValue(stringify(req), IntHolder.class);
 		Sum sum = new Sum(intHolder.getOne() + intHolder.getTwo());
@@ -31,14 +33,24 @@ public class QuizzicalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		List<Question> questions = questionDao.getQuestions();
-		PrintWriter writer = resp.getWriter();
-		mapper.writeValue(writer, questions);
-		resp.setContentType("text/json");
 
-		System.out.println(req);
-		System.out.println(req.getParameter("q1"));
+		Map<String,String[]> immutableParameters = req.getParameterMap();
+		HashMap<String,String[]> parameters = new HashMap<String,String[]>();
+		parameters.putAll(immutableParameters);
+		int quizId = Integer.parseInt(parameters.remove("quizId")[0]);
+		String name = parameters.remove("name")[0];
+		String email = parameters.remove("email")[0];
+		
+		Enumeration<String> allParameterNames = req.getParameterNames();
+		while(allParameterNames.hasMoreElements()){
+			String element = allParameterNames.nextElement();
+			if(!element.matches("^q[1-9][0-9]*$")){				
+				parameters.remove(element);
+			}
+		}
+								
+		quizResponse = new Response(quizId, name, email, parameters);
+		mongoRespondentDao.setResponse(quizResponse);
 		
 	}
 	
@@ -52,17 +64,12 @@ public class QuizzicalServlet extends HttpServlet {
 		
 		return sb.toString();
 	}
-
-	public void setQuestionDao(QuestionDao questionDao) {
-		this.questionDao = questionDao;
-	
-	}
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-	
-		questionDao = new MongoQuestionDao();
+
+		mongoRespondentDao = new MongoResponseDao();
 	}
 
 }

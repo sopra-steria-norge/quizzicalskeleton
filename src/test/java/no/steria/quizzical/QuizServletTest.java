@@ -55,7 +55,7 @@ public class QuizServletTest {
         
         BasicDBList alternatives = new BasicDBList();
         alternatives.add(new BasicDBObject("alt1","Oslo"));
-		when(questionDao.getQuestions()).thenReturn(Arrays.asList(new Question(1,"The question",alternatives,1)));
+		when(questionDao.getQuestions()).thenReturn(Arrays.asList(new Question(1,"The question",alternatives)));
 		servlet.setQuestionDao(questionDao);
 		
 		servlet.service(req, resp);

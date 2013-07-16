@@ -12,11 +12,11 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
-public class MongoRespondentDao{
+public class MongoResponseDao{
 		
 	private DB db;
 	
-	public MongoRespondentDao() {
+	public MongoResponseDao() {
 		try {
 			MongoClient client = new MongoClient();
 			db = client.getDB("quizzical");
@@ -25,15 +25,13 @@ public class MongoRespondentDao{
 		}
 	}
 
-	public void setRespondents(Respondent respondent) {
-		DBCollection collection = db.getCollection("respondents");
+	public void setResponse(Response response) {
+		DBCollection collection = db.getCollection("responses");
 		BasicDBObject document = new BasicDBObject();
-		document.put("quizId", respondent.getQuizId());
-		BasicDBList respondentArray = new BasicDBList();
-		respondentArray.add(new BasicDBObject().append("name", respondent.getName()));
-		respondentArray.add(new BasicDBObject().append("email", respondent.getEmail()));
-		// set score 100 for testing purposes, needs own method later
-		respondentArray.add(new BasicDBObject().append("score", 100));
+		document.put("quizId", response.getQuizId());
+		document.put("name", response.getName());
+		document.put("email", response.getEmail());
+		document.put("score", response.calculateAndRetrieveScore());
 		collection.insert(document);
 	}
 
