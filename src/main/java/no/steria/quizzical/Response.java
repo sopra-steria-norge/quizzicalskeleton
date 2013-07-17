@@ -1,20 +1,22 @@
 package no.steria.quizzical;
 
-import java.util.Map;
+import java.util.HashMap;
+
+import com.mongodb.BasicDBList;
 
 public class Response {
 
 	private int quizId;
 	private String name;
 	private String email;
-	private Map<String,String[]> quizAnswers;
+	private HashMap<String,String[]> quizAnswers;
 	private int score;
 	
 	public Response(){
 		
 	}
 	
-	public Response(int quizId, String name, String email, Map<String,String[]> quizAnswers){
+	public Response(int quizId, String name, String email, HashMap<String,String[]> quizAnswers){
 		this.quizId = quizId;
 		this.name = name;
 		this.email = email;
@@ -33,14 +35,19 @@ public class Response {
 		return email;
 	}
 	
-	public Map<String,String[]> getQuizAnswers(){
+	public HashMap<String,String[]> getQuizAnswers(){
 		return quizAnswers;
 	}
 	
-	public int calculateAndRetrieveScore(){
-		// TODO Calculation of score
-		this.score = 1000;
+	public int getScore(){
 		return score;
 	}
-			
+
+	public void calculateScore(Quiz quiz){
+		BasicDBList questions = quiz.getQuestions();
+		//questions.g
+		
+		this.score = 1000;
+	}
+
 }

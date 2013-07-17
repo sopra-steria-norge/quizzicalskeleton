@@ -44,18 +44,18 @@ public class QuizServletTest {
     }
 	
 	@Test
-	public void shouldReturnQuestionsWithAlternatives() throws Exception {
+	public void shouldReturnQuiz() throws Exception {
 		when(req.getMethod()).thenReturn("GET");
 		when(req.getPathInfo()).thenReturn("/getQuizQuestions");
 		
 		StringWriter htmlDoc = new StringWriter();
         when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
         
-        QuestionDao questionDao = mock(QuestionDao.class);
+        QuizDao quizDao = mock(QuizDao.class);
         
         BasicDBList alternatives = new BasicDBList();
         alternatives.add(new BasicDBObject("alt1","Oslo"));
-		when(questionDao.getQuestions()).thenReturn(Arrays.asList(new Question(1,"The question",alternatives)));
+		when(quizDao.getQuiz(1).getQuestions()).thenReturn(new Question(1,"The question",alternatives)));
 		servlet.setQuestionDao(questionDao);
 		
 		servlet.service(req, resp);
@@ -69,5 +69,5 @@ public class QuizServletTest {
 	
 		Mockito.verify(resp).setContentType("text/json");
 	}
-
+	
 }

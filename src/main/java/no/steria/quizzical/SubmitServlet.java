@@ -20,10 +20,11 @@ public class SubmitServlet extends HttpServlet {
 
 	private MongoResponseDao mongoRespondentDao;
 	private Response quizResponse;
+	private MongoQuizDao mongoQuizDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
+		this.doGet(req, resp);
 	}
 
 	@Override
@@ -45,7 +46,8 @@ public class SubmitServlet extends HttpServlet {
 		}
 								
 		quizResponse = new Response(quizId, name, email, parameters);
-		mongoRespondentDao.setResponse(quizResponse);
+		quizResponse.calculateScore(mongoQuizDao.getQuiz(quizResponse.getQuizId()));
+		mongoRespondentDao.setResponse(quizResponse);		
 		
 	}
 	

@@ -31,7 +31,7 @@ public class MongoResponseDao{
 		document.put("quizId", response.getQuizId());
 		document.put("name", response.getName());
 		document.put("email", response.getEmail());
-		document.put("score", response.calculateAndRetrieveScore());
+		document.put("score", response.getScore());
 		collection.insert(document);
 	}
 
