@@ -1,21 +1,18 @@
 package no.steria.quizzical;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class QuizzicalServlet extends HttpServlet {
 
-	private MongoResponseDao mongoResponseDao;
 	private QuizDao quizDao;
 	
 	@Override
@@ -25,7 +22,8 @@ public class QuizzicalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		int quizId = Integer.parseInt(req.getParameter("quizId"));			
+
 		ObjectMapper mapper = new ObjectMapper();
 		Quiz quiz = quizDao.getQuiz(quizId);
 		
@@ -34,7 +32,7 @@ public class QuizzicalServlet extends HttpServlet {
 		resp.setContentType("text/json");
 	}
 
-	public void setQuestionDao(QuizDao quizDao) {
+	public void setQuizDao(QuizDao quizDao) {
 		this.quizDao = quizDao;
 	
 	}

@@ -2,7 +2,6 @@ package no.steria.quizzical;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -28,7 +27,7 @@ public class MongoQuizDao implements QuizDao {
 	}
 	
 	@Override
-	public List<Quiz> getQuizzes() {
+	public ArrayList<Quiz> getQuizzes() {
 		DBCursor cursor = collection.find();
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
 		while(cursor.hasNext()){
