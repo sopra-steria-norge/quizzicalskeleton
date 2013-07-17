@@ -3,7 +3,7 @@
 
 	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
-	<form method="get" action="/quiz/user.html">
+	<form name="quizForm" method="get" action="submit">
 		<div class="" ng-show="isCurrent(0)">
 			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
 			<br><br>
@@ -26,7 +26,14 @@
 			<input type="text" class="input-block-level" name="name" placeholder="Name" ng-model="userName" required="required">
 			<input type="email" class="input-block-level" name="email" placeholder="Email address" ng-model="userEmail" required="required">
 			<br><br>
-			<button class="btn btn-large btn-primary" type="submit">Submit answers</button>
+			<input type="hidden" name="quizId" value="{{quiz.quizId}}">
+			<button class="btn btn-large btn-primary" ng-click="submitQuiz()">Submit answers</button>
 		</div>
 	</form>
+	
+	<div ng-show="isCurrent(questions.length+2)">
+		<h4>The quiz is now submitted! Thank you for taking the quiz!</h4>
+		<p>{{quiz.submitMsg}}
+	</div>
+	
 </div>

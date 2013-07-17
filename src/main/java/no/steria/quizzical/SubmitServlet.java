@@ -23,12 +23,7 @@ public class SubmitServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		IntHolder intHolder = mapper.readValue(stringify(req), IntHolder.class);
-		Sum sum = new Sum(intHolder.getOne() + intHolder.getTwo());
-		String jsonResult = mapper.writeValueAsString(sum);
-		resp.setContentType("text/json");
-		resp.getWriter().append(jsonResult);
+		doGet(req, resp);
 	}
 
 	@Override

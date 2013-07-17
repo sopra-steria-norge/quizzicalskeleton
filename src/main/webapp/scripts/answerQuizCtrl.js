@@ -6,7 +6,7 @@ angular.module('quizControllers')
 		$scope.quiz = null;
 		$scope.questions = []; 
 		
-		$http({method: "GET", url: "quiz/?quizId=" + $routeParams.quizid}).
+		$http({method: "GET", url: "quiz?quizId=" + $routeParams.quizid}).
 		success(function(data) {
 			$scope.quiz = data;
 			$scope.questions = data.questions;
@@ -25,22 +25,23 @@ angular.module('quizControllers')
 		};
 		
 		$scope.showBox = function(value){
-			return value == currentQuestion;
+			return value === currentQuestion;
 		};
 		
 		$scope.isCurrent = function(q){
-			return q == currentQuestion;
+			return q === currentQuestion;
 		};
 		
 		
 		$scope.chooseOption = function(id){
 			var radioButtons = document.getElementsByName("q" + id);
 			var labels = document.getElementsByClassName("radio quiz-input-choice-box ql" + id);
+			var i = 0;
 			
-			for (var i = 0; i < radioButtons.length; i++) {
+			for (i = 0; i < radioButtons.length; i++) {
 				labels[i].className = labels[i].className.replace( /(?:^|\s)quiz-input-choice-box-selected(?!\S)/g , '' );
 				
-				if (radioButtons[i].checked == true) {
+				if (radioButtons[i].checked) {
 					labels[i].className += " quiz-input-choice-box-selected";
 				}
 			}
@@ -49,8 +50,9 @@ angular.module('quizControllers')
 		$scope.checkRadioButtons = function(id){
 			var radioButtonIsChecked = false;
 			var buttons = document.getElementsByName("q" + id);
+			var i = 0;
 			
-			for (var i = 0; i < buttons.length; i++){
+			for (i = 0; i < buttons.length; i++){
 				if (buttons[i].checked){
 					radioButtonIsChecked = true;
 					$scope.nextQuestion();
@@ -60,6 +62,34 @@ angular.module('quizControllers')
 			if (!radioButtonIsChecked){
 				buttons[0].required = "required";
 			}
+		};
+		
+		$scope.submitQuiz = function(){
+			
+			if (true){
+				//document.quizForm.submit();
+				alert("aaaab");
+				
+				var str = [];
+				var obj = document.quizForm.elements;
+				alert(obj);
+				var p;
+				
+				for(p in obj){
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				}
+				var formData = str.join("&");
+				
+				$http({method: "POST", url: "submit", data: formData}).
+				success(function(data) {
+					$scope.quiz = data;
+					$scope.questions = data.questions;
+				}).
+				error(function(data,status) {
+					console.log("Error:" + status);
+				});
+			}
+			
 		};
 		
 }]);
