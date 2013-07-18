@@ -12,6 +12,10 @@ import com.mongodb.util.JSON;
 public class MongoDemo {
 	
 	public static void main(String[] args) throws Exception {
+		demo();
+	}
+	
+	public static void demo() throws Exception {
 		MongoClient client = new MongoClient();
 		DB db = client.getDB("quizzical");
 

@@ -9,6 +9,10 @@ public class Quiz {
 	private String submitMsg;
 	private BasicDBList questions;
 	
+	public Quiz(){
+		
+	}
+	
 	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, BasicDBList questions) {
 		this.quizId = quizId;
 		this.quizName = quizName;
