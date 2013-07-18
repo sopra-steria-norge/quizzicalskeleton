@@ -86,31 +86,13 @@ angular.module('quizControllers')
 		};
 		
 		$scope.submitQuiz = function(){
+			//alert(document.getElementById("quizFormid").invalid);
 			
-			//if (true){
-				//document.quizForm.submit();
-				/*
-				var str = [];
-				var obj = document.quizForm.elements;
-				alert(obj);
-				var i;
+			//if (!quizForm.$invalid){
+				$scope.answers["name"] = $scope.userName;
+				$scope.answers["email"] = $scope.userEmail;
 				
-				for(i = 0; i < obj.length; i++){
-					var e = obj[i];
-					if (e.value != ""){
-						if (e.type === "radio" && !e.checked){
-							//if (e.checked){
-								//str.push(encodeURIComponent(obj[i].name) + "=" + encodeURIComponent(obj[i].value));
-							//}
-						} else {
-							str.push(encodeURIComponent(obj[i].name) + "=" + encodeURIComponent(obj[i].value));
-						}
-					}
-				}
-				var formData = str.join("&");
-				*/
-				
-				$http({method: "POST", url: "submit", data: answers}).
+				$http({method: "POST", url: "submit", data: JSON.stringify($scope.answers) }).
 				success(function(data) {
 					alert("The answers was sent!");
 				}).
@@ -118,7 +100,6 @@ angular.module('quizControllers')
 					console.log("Error:" + status);
 				});
 			//}
-			
 		};
 		
 }]);
