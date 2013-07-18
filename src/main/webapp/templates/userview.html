@@ -3,7 +3,7 @@
 
 	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
-	<form name="quizForm" method="get" action="submit">
+	<form name="quizForm">
 		<div class="" ng-show="isCurrent(0)">
 			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
 			<br><br>
@@ -13,7 +13,7 @@
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
 			<h4 class="quiz-box-question">{{q.text}}</h4>
 			<label class="radio quiz-input-choice-box ql{{q.id}}" ng-repeat="qa in q.alternatives">
-				<input type="radio" class="quiz-input-choice" name="q{{q.id}}" value="{{qa.aid}}" ng-click="chooseOption(q.id)">
+				<input type="radio" class="quiz-input-choice" ng-model="qa.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="radioButtonChanged(q.id, qa.aid)">
 				{{qa.atext}}
 			</label>
 			<br>

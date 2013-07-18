@@ -37,9 +37,11 @@ body {
 }
 .quiz-input-choice-box:hover {
 	background-color: #f9b49b; /*F57921*/
+	color: #000000;
 }
 .quiz-input-choice-box-selected {
 	background-color: #f57921;/*F15A23*/
+	color: #ffffff;	
 }
 .quiz-input-choice-box:ACTIVE {
 	background-color: #f57921;

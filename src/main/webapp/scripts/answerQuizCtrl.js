@@ -1,10 +1,22 @@
 angular.module('quizControllers')
 .controller('AnswerQuizCtrl', ['$scope', '$http', '$routeParams',
     function($scope, $http, $routeParams) {
+		$scope.quiz = null;
+		$scope.questions = [];
+		
+		$scope.userName = "";
+		$scope.userEmail = "";
+		$scope.answers = {};
+		
 		var currentQuestion = 0;
 		
-		$scope.quiz = null;
-		$scope.questions = []; 
+		$scope.sjekk = function(){
+			var i = 0;
+			var x;
+			for (x in $scope.answers){
+				alert(x + ": " + $scope.answers[x]);
+			}
+		};
 		
 		$http({method: "GET", url: "quiz?quizId=" + $routeParams.quizid}).
 		success(function(data) {
@@ -32,10 +44,14 @@ angular.module('quizControllers')
 			return q === currentQuestion;
 		};
 		
+		$scope.updateAnswers = function(qid, aid){
+			var key = "q" + qid;
+			$scope.answers[key] = aid;
+		};
 		
-		$scope.chooseOption = function(id){
-			var radioButtons = document.getElementsByName("q" + id);
-			var labels = document.getElementsByClassName("radio quiz-input-choice-box ql" + id);
+		$scope.highlightChoosenOption = function(qid){
+			var radioButtons = document.getElementsByName("q" + qid);
+			var labels = document.getElementsByClassName("radio quiz-input-choice-box ql" + qid);
 			var i = 0;
 			
 			for (i = 0; i < radioButtons.length; i++) {
@@ -47,9 +63,14 @@ angular.module('quizControllers')
 			}
 		};
 		
-		$scope.checkRadioButtons = function(id){
+		$scope.radioButtonChanged = function(qid, aid){
+			$scope.updateAnswers(qid, aid);
+			$scope.highlightChoosenOption(qid);
+		};
+		
+		$scope.checkRadioButtons = function(qid){
 			var radioButtonIsChecked = false;
-			var buttons = document.getElementsByName("q" + id);
+			var buttons = document.getElementsByName("q" + qid);
 			var i = 0;
 			
 			for (i = 0; i < buttons.length; i++){
@@ -66,29 +87,37 @@ angular.module('quizControllers')
 		
 		$scope.submitQuiz = function(){
 			
-			if (true){
+			//if (true){
 				//document.quizForm.submit();
-				alert("aaaab");
-				
+				/*
 				var str = [];
 				var obj = document.quizForm.elements;
 				alert(obj);
-				var p;
+				var i;
 				
-				for(p in obj){
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				for(i = 0; i < obj.length; i++){
+					var e = obj[i];
+					if (e.value != ""){
+						if (e.type === "radio" && !e.checked){
+							//if (e.checked){
+								//str.push(encodeURIComponent(obj[i].name) + "=" + encodeURIComponent(obj[i].value));
+							//}
+						} else {
+							str.push(encodeURIComponent(obj[i].name) + "=" + encodeURIComponent(obj[i].value));
+						}
+					}
 				}
 				var formData = str.join("&");
+				*/
 				
-				$http({method: "POST", url: "submit", data: formData}).
+				$http({method: "POST", url: "submit", data: answers}).
 				success(function(data) {
-					$scope.quiz = data;
-					$scope.questions = data.questions;
+					alert("The answers was sent!");
 				}).
 				error(function(data,status) {
 					console.log("Error:" + status);
 				});
-			}
+			//}
 			
 		};
 		
