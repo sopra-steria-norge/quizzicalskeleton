@@ -10,14 +10,6 @@ angular.module('quizControllers')
 		
 		var currentQuestion = 0;
 		
-		$scope.sjekk = function(){
-			var i = 0;
-			var x;
-			for (x in $scope.answers){
-				alert(x + ": " + $scope.answers[x]);
-			}
-		};
-		
 		$http({method: "GET", url: "quiz?quizId=" + $routeParams.quizid}).
 		success(function(data) {
 			$scope.quiz = data;
@@ -86,10 +78,9 @@ angular.module('quizControllers')
 		};
 		
 		$scope.submitQuiz = function(){
-			$scope.answers.name = $scope.userName;
-			$scope.answers.email = $scope.userEmail;
+			var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "answers": $scope.answers};
 			
-			$http({method: "POST", url: "submit", data: JSON.stringify($scope.answers) }).
+			$http({method: "POST", url: "submit", data: JSON.stringify(submitData) }).
 			success(function(data) {
 				$scope.nextQuestion();
 			}).
