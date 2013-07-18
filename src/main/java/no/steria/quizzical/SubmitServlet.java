@@ -24,8 +24,8 @@ public class SubmitServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		DBObject document = (DBObject) JSON.parse(req.getReader().toString());
-		mongoResponseDao.setResponse(document);
+		//DBObject document = (DBObject) JSON.parse(req.getReader().toString());
+		//mongoResponseDao.setResponse(document);
 	}
 
 	@Override

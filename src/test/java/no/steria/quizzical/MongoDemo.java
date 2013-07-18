@@ -15,7 +15,7 @@ public class MongoDemo {
 	
 	public static void main(String[] args) {
 		Quiz[] quizzesToAdd = new Quiz[2];
-		quizzesToAdd[0] = new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography","Thank you for taking the quiz",null);
+		quizzesToAdd[0] = new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", null);
 		quizzesToAdd[1] = new Quiz(2,"SecondQuiz","QuizDesc2","QuizMsg2",null);		
 		insertDataIntoDB(quizzesToAdd);
 	}

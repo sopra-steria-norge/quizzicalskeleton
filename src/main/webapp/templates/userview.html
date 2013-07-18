@@ -23,11 +23,17 @@
 		
 		<div ng-show="isCurrent(questions.length+1)">
 			<p class="quiz-box-description">Please fill out the following fields in order to enter to win</p>
+			
+			<span ng-show="quizForm.name.$error.required" class="text-error">Required</span>
 			<input type="text" class="input-block-level" name="name" placeholder="Name" ng-model="userName" required="required">
+			
+			<span ng-show="quizForm.email.$error.required" class="text-error">Required</span>
+			<span ng-show="quizForm.email.$error.email" class="text-error">Not a valid email address</span>
 			<input type="email" class="input-block-level" name="email" placeholder="Email address" ng-model="userEmail" required="required">
+			
 			<br><br>
 			<input type="hidden" name="quizId" value="{{quiz.quizId}}">
-			<button class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="isClean()">Submit answers</button>
+			<button class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="quizForm.$invalid">Submit answers</button>
 		</div>
 	</form>
 	

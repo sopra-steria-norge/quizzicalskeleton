@@ -86,20 +86,16 @@ angular.module('quizControllers')
 		};
 		
 		$scope.submitQuiz = function(){
-			//alert(document.getElementById("quizFormid").invalid);
+			$scope.answers.name = $scope.userName;
+			$scope.answers.email = $scope.userEmail;
 			
-			//if (!quizForm.$invalid){
-				$scope.answers.name = $scope.userName;
-				$scope.answers.email = $scope.userEmail;
-				
-				$http({method: "POST", url: "submit", data: JSON.stringify($scope.answers) }).
-				success(function(data) {
-					alert("The answers was sent!");
-				}).
-				error(function(data,status) {
-					console.log("Error:" + status);
-				});
-			//}
+			$http({method: "POST", url: "submit", data: JSON.stringify($scope.answers) }).
+			success(function(data) {
+				$scope.nextQuestion();
+			}).
+			error(function(data,status) {
+				console.log("Error:" + status);
+			});
 		};
 		
 }]);
