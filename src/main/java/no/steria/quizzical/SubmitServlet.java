@@ -2,13 +2,10 @@ package no.steria.quizzical;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-import javax.ejb.Remove;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
+
 public class SubmitServlet extends HttpServlet {
 
-	private MongoResponseDao mongoRespondentDao;
+	private MongoResponseDao mongoResponseDao;
 	private Response quizResponse;
 	private MongoQuizDao mongoQuizDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doGet(req, resp);
+		DBObject document = (DBObject) JSON.parse(req.getReader().toString());
+		mongoResponseDao.setResponse(document);
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class SubmitServlet extends HttpServlet {
 								
 		quizResponse = new Response(quizId, name, email, parameters);
 		quizResponse.calculateScore(mongoQuizDao.getQuiz(quizResponse.getQuizId()));
-		mongoRespondentDao.setResponse(quizResponse);		
+		mongoResponseDao.setResponse(quizResponse);		
 		
 	}
 	
@@ -66,7 +67,7 @@ public class SubmitServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 
-		mongoRespondentDao = new MongoResponseDao();
+		mongoResponseDao = new MongoResponseDao();
 	}
 
 }

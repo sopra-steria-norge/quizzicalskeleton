@@ -34,5 +34,10 @@ public class MongoResponseDao{
 		document.put("score", response.getScore());
 		collection.insert(document);
 	}
+	
+	public void setResponse(DBObject document){
+		DBCollection collection = db.getCollection("responses");
+		collection.insert(document);
+	}
 
 }
