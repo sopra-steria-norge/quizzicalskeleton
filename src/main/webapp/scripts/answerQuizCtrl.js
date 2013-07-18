@@ -89,8 +89,8 @@ angular.module('quizControllers')
 			//alert(document.getElementById("quizFormid").invalid);
 			
 			//if (!quizForm.$invalid){
-				$scope.answers["name"] = $scope.userName;
-				$scope.answers["email"] = $scope.userEmail;
+				$scope.answers.name = $scope.userName;
+				$scope.answers.email = $scope.userEmail;
 				
 				$http({method: "POST", url: "submit", data: JSON.stringify($scope.answers) }).
 				success(function(data) {
