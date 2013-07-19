@@ -75,7 +75,7 @@ public class MongoDemo {
 			alternatives22.add(new BasicDBObject().append("aid", 4).append("atext", "Burudvann"));
 			quiz2.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives22, 3));
 	
-			quizzesInDB.insert(createQuizHelper(quiz[0].getQuizId(), quiz[0].getQuizName(), quiz[0].getQuizDesc(), quiz[0].getSubmitMsg(), quiz2));
+			quizzesInDB.insert(createQuizHelper(quiz[1].getQuizId(), quiz[1].getQuizName(), quiz[1].getQuizDesc(), quiz[1].getSubmitMsg(), quiz2));
 		}else{
 			quizzesInDB.insert(createQuizHelper(quiz[1].getQuizId(), quiz[1].getQuizName(), quiz[1].getQuizDesc(), quiz[1].getSubmitMsg(), quiz[1].getQuestions()));			
 		}
