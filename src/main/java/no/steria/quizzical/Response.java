@@ -9,14 +9,14 @@ public class Response {
 	private int quizId;
 	private String name;
 	private String email;
-	private HashMap<String,String[]> quizAnswers;
+	private HashMap<String,String> quizAnswers;
 	private int score;
 	
 	public Response(){
 		
 	}
 	
-	public Response(int quizId, String name, String email, HashMap<String,String[]> quizAnswers){
+	public Response(int quizId, String name, String email, HashMap<String,String> quizAnswers){
 		this.quizId = quizId;
 		this.name = name;
 		this.email = email;
@@ -35,7 +35,7 @@ public class Response {
 		return email;
 	}
 	
-	public HashMap<String,String[]> getQuizAnswers(){
+	public HashMap<String,String> getQuizAnswers(){
 		return quizAnswers;
 	}
 	
