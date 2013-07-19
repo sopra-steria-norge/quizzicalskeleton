@@ -2,7 +2,7 @@ describe("Answer Quiz Controller", function() {
     var controller;
     var scope;
 
-    beforeEach(module('answerQuizControllers'));
+    beforeEach(module('quizControllers'));
 
     beforeEach(inject(function($controller, $rootScope, $injector) {
         scope = $rootScope;

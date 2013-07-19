@@ -1,4 +1,4 @@
-angular.module('answerQuizControllers')
+angular.module('quizControllers')
 .controller('AnswerQuizCtrl', ['$scope', '$http', '$routeParams',
     function($scope, $http, $routeParams) {
 		$scope.quiz = null;
