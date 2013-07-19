@@ -23,6 +23,7 @@ public class SubmitServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();		 
 		JsonNode rootNode = mapper.readTree(req.getReader().readLine());
+		System.out.println();
 		
 		int quizId=0; 
 		String name="", email="";
@@ -38,11 +39,11 @@ public class SubmitServlet extends HttpServlet {
 					answersToDB.put(answer.getKey(), answer.getValue().asInt());					
 				}
 			}else if(entry.getKey().equals("quizId")){
-				quizId = Integer.parseInt(entry.getValue().toString());
+				quizId = Integer.parseInt(entry.getValue().asText());
 			}else if(entry.getKey().equals("name")){
-				name = entry.getValue().toString();
+				name = entry.getValue().asText();
 			}else if(entry.getKey().equals("email")){
-				email = entry.getValue().toString();
+				email = entry.getValue().asText();
 			}
 		}
 		
