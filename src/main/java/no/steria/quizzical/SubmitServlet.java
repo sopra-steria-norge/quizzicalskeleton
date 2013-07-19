@@ -17,6 +17,7 @@ public class SubmitServlet extends HttpServlet {
 
 	private MongoResponseDao mongoResponseDao;
 	private Response quizResponse;
+	private MongoQuizDao mongoQuizDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +26,7 @@ public class SubmitServlet extends HttpServlet {
 		
 		int quizId=0; 
 		String name="", email="";
-		HashMap<String,String> answersToDB = new HashMap<String,String>();
+		HashMap<String,Integer> answersToDB = new HashMap<String,Integer>();
 		
 		Iterator<Entry<String,JsonNode>> allEntries = rootNode.getFields();
 		while(allEntries.hasNext()){
@@ -34,7 +35,7 @@ public class SubmitServlet extends HttpServlet {
 				Iterator<Entry<String,JsonNode>> answerEntries = entry.getValue().getFields();
 				while(answerEntries.hasNext()){
 					Entry<String,JsonNode> answer = answerEntries.next();
-					answersToDB.put(answer.getKey(), answer.getValue().toString());					
+					answersToDB.put(answer.getKey(), answer.getValue().asInt());					
 				}
 			}else if(entry.getKey().equals("quizId")){
 				quizId = Integer.parseInt(entry.getValue().toString());
@@ -46,36 +47,20 @@ public class SubmitServlet extends HttpServlet {
 		}
 		
 		quizResponse = new Response(quizId, name, email, answersToDB);
-		//quizResponse.calculateScore(mongoQuizDao.getQuiz(quizResponse.getQuizId()));
+		quizResponse.calculateScore(mongoQuizDao.getQuiz(quizId));
 		mongoResponseDao.setResponse(quizResponse);
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		Map<String,String[]> immutableParameters = req.getParameterMap();
-//		HashMap<String,String[]> parameters = new HashMap<String,String[]>();
-//		parameters.putAll(immutableParameters);
-//		int quizId = Integer.parseInt(parameters.remove("quizId")[0]);
-//		String name = parameters.remove("name")[0];
-//		String email = parameters.remove("email")[0];
-//		
-//		Enumeration<String> allParameterNames = req.getParameterNames();
-//		while(allParameterNames.hasMoreElements()){
-//			String element = allParameterNames.nextElement();
-//			if(!element.matches("^q[1-9][0-9]*$")){				
-//				parameters.remove(element);
-//			}
-//		}
-//					
-//		quizResponse = new Response(quizId, name, email, parameters);
-//		quizResponse.calculateScore(mongoQuizDao.getQuiz(quizResponse.getQuizId()));
-//		mongoResponseDao.setResponse(quizResponse);		
+		
 	}
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		mongoResponseDao = new MongoResponseDao();
+		mongoQuizDao = new MongoQuizDao();
 	}
 
 }
