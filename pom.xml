@@ -180,6 +180,7 @@
 						<include>**/angular.min.js</include>
 						<include>**/angular-mocks.js</include>
 						<include>**/testSetup.js</include>
+						<include>**/answerQuizCtrl.js</include>
 					</sourceIncludes>
 					<format>progress</format>
 					<specIncludes>

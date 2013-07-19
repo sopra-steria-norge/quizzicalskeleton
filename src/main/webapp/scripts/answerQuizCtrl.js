@@ -1,4 +1,4 @@
-angular.module('quizControllers')
+angular.module('answerQuizControllers')
 .controller('AnswerQuizCtrl', ['$scope', '$http', '$routeParams',
     function($scope, $http, $routeParams) {
 		$scope.quiz = null;
@@ -47,7 +47,7 @@ angular.module('quizControllers')
 			var i = 0;
 			
 			for (i = 0; i < radioButtons.length; i++) {
-				labels[i].className = labels[i].className.replace( /(?:^|\s)quiz-input-choice-box-selected(?!\S)/g , '' );
+				labels[i].className = labels[i].className.replace( /(?:^|\s)quiz-input-choice-box-selected(?!\S)/g , "" );
 				
 				if (radioButtons[i].checked) {
 					labels[i].className += " quiz-input-choice-box-selected";

@@ -1,1 +1,1 @@
-angular.module('quizControllers', []);
+angular.module('answerQuizControllers', []);
