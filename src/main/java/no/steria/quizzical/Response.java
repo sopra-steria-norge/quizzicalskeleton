@@ -1,8 +1,11 @@
 package no.steria.quizzical;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 
 public class Response {
 
@@ -44,10 +47,40 @@ public class Response {
 	}
 
 	public void calculateScore(Quiz quiz){
+		int score = 0;
 		BasicDBList questions = quiz.getQuestions();
-		//questions.g
 		
-		this.score = 1000;
+		for (Object question : questions) {
+			
+			// maa hente ut id-verdien til dette feltet,
+			// deretter hente ut feltet answer som er ritig svaralternativs-id
+			// bruke questionid til aa finne tilsvarende id i hashmappet
+			
+			BasicDBObject bdbo  = (BasicDBObject) question;
+			
+			String key = bdbo.getString("id");
+			// mulig denne maa hentes ut med ("q" + idnr)
+			
+			if (bdbo.get("answer").equals(quizAnswers.get(key))){
+				score++;
+			}
+		}
+		
+		this.score = score;
+		
+		/*
+		Set<String> keys = quiz.getQuestions().keySet();
+		Iterator<String> keyIterator = keys.iterator();
+		
+		while(keyIterator.hasNext()){
+			String key = keyIterator.next();
+			
+			if (questions.get(key).equals(quizAnswers.get(key))) {
+				score++;
+			}
+			
+		}
+		*/
 	}
 
 }
