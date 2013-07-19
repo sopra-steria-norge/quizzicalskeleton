@@ -19,17 +19,12 @@ angular.module('quizControllers')
 			console.log("Error:" + status);
 		});
 		
-		
 		$scope.nextQuestion = function(){
 			currentQuestion++;
 		};
 		
 		$scope.prevQuestion = function(){
 			currentQuestion--;
-		};
-		
-		$scope.showBox = function(value){
-			return value === currentQuestion;
 		};
 		
 		$scope.isCurrent = function(q){
