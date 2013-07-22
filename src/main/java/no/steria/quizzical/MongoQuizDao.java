@@ -53,6 +53,10 @@ public class MongoQuizDao implements QuizDao {
 		
 		DBObject quizObject = collection.findOne(whereQuery);
 		
+		if (quizObject == null){
+			throw new IllegalArgumentException("The requested quiz (quizId=" + quizId + ") is not available.");
+		}
+		
 		String quizName = (String) quizObject.get("name");
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");

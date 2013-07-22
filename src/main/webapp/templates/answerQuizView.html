@@ -10,7 +10,15 @@
 
 	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
+	<div class="" ng-show="isCurrent(-1)">
+		<div class="alert alert-error">
+			<i class="icon-search"></i>
+			{{errorMsg}}
+		</div>
+		<br><br>
+	</div>
 	<form name="quizForm">
+	
 		<div class="" ng-show="isCurrent(0)">
 			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
 			<br><br>

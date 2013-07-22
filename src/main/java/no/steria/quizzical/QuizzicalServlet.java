@@ -22,13 +22,21 @@ public class QuizzicalServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int quizId = Integer.parseInt(req.getParameter("quizId"));			
-
-		ObjectMapper mapper = new ObjectMapper();
-		Quiz quiz = quizDao.getQuiz(quizId);
 		
+		ObjectMapper mapper = new ObjectMapper();
+		Quiz quiz = null;
 		PrintWriter writer = resp.getWriter();
-		mapper.writeValue(writer, quiz);
-		resp.setContentType("text/json");
+		
+		try {
+			quiz = quizDao.getQuiz(quizId);
+			mapper.writeValue(writer, quiz);
+			resp.setContentType("text/json");
+			
+		} catch(IllegalArgumentException e){
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			resp.getWriter().print(e.getMessage());
+		} 
+		
 	}
 
 	public void setQuizDao(QuizDao quizDao) {

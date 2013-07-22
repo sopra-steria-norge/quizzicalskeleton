@@ -8,6 +8,8 @@ angular.module('quizControllers')
 		$scope.userEmail = "";
 		$scope.answers = {};
 		
+		$scope.errorMsg = "";
+		
 		var currentQuestion = 0;
 		
 		$http({method: "GET", url: "retrieveQuiz?quizId=" + $routeParams.quizid}).
@@ -16,7 +18,10 @@ angular.module('quizControllers')
 			$scope.questions = data.questions;
 		}).
 		error(function(data,status) {
-			console.log("Error:" + status);
+			console.log("Error: " + status + "" + data);
+			//alert("Error: Quiz is not available.");
+			currentQuestion = -1;
+			$scope.errorMsg = "Error: The Quiz is not available.";
 		});
 		
 		$scope.nextQuestion = function(){
