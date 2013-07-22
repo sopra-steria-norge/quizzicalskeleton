@@ -7,13 +7,29 @@
         config(['$routeProvider', function($routeProvider) {
                 $routeProvider.
                     when('/', {
-                        templateUrl: 'templates/testTemplate.html', 
-                        controller: 'QuizCtrl'
+                        templateUrl: 'templates/frontpage.html', 
+                        controller: ''
                     }).
                     when('/answerQuiz/:quizid', {
-                        templateUrl: 'templates/userview.html', 
+                        templateUrl: 'templates/answerQuizView.html', 
                         controller: 'AnswerQuizCtrl'
-                    });
+                    }).
+	                when('/admin/', {
+	                    templateUrl: 'templates/adminOverview.html', 
+	                    controller: 'AdminCtrl'
+	                }).
+	                when('/admin/overview', {
+	                    templateUrl: 'templates/adminOverview.html', 
+	                    controller: 'AdminCtrl'
+	                }).
+	                when('/admin/addquiz', {
+	                    templateUrl: 'templates/adminAddQuiz.html', 
+	                    controller: 'AdminCtrl'
+	                }).
+	                when('/admin/results', {
+	                    templateUrl: 'templates/adminResults.html', 
+	                    controller: 'AdminCtrl'
+	                });                
         }]);
         
         angular.bootstrap(document,['quizzical']); 

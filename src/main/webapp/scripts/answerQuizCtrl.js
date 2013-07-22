@@ -10,7 +10,7 @@ angular.module('quizControllers')
 		
 		var currentQuestion = 0;
 		
-		$http({method: "GET", url: "quiz?quizId=" + $routeParams.quizid}).
+		$http({method: "GET", url: "retrieveQuiz?quizId=" + $routeParams.quizid}).
 		success(function(data) {
 			$scope.quiz = data;
 			$scope.questions = data.questions;
@@ -75,7 +75,7 @@ angular.module('quizControllers')
 		$scope.submitQuiz = function(){
 			var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "answers": $scope.answers};
 			
-			$http({method: "POST", url: "submit", data: JSON.stringify(submitData) }).
+			$http({method: "POST", url: "submitQuiz", data: JSON.stringify(submitData) }).
 			success(function(data) {
 				$scope.nextQuestion();
 			}).
