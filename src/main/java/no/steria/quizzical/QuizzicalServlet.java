@@ -21,6 +21,7 @@ public class QuizzicalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		int quizId = Integer.parseInt(req.getParameter("quizId"));			
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -39,6 +40,10 @@ public class QuizzicalServlet extends HttpServlet {
 		
 	}
 
+	//metode som henter inn liste med quiz på et visst brukerid
+	
+	
+	
 	public void setQuizDao(QuizDao quizDao) {
 		this.quizDao = quizDao;
 	}

@@ -115,4 +115,19 @@ public class MongoDemo {
 		return quiz;
 	}
 	
+	public static BasicDBList createSmallTestQuiz(){
+		BasicDBList quiz1 = new BasicDBList();
+		
+		BasicDBList alternatives11 = new BasicDBList();
+		alternatives11.add(new BasicDBObject().append("aid", 1).append("atext", "Oslo"));
+		alternatives11.add(new BasicDBObject().append("aid", 2).append("atext", "Bergen"));
+		quiz1.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives11, 1));
+
+		BasicDBList alternatives12 = new BasicDBList();
+		alternatives12.add(new BasicDBObject().append("aid", 1).append("atext", "Sognsvann"));
+		alternatives12.add(new BasicDBObject().append("aid", 2).append("atext", "Tyrifjorden"));
+		quiz1.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives12, 3));
+
+		return quiz1;
+	}
 }
