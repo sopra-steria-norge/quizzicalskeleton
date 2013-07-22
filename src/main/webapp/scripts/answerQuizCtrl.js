@@ -18,7 +18,7 @@ angular.module('quizControllers')
 			$scope.questions = data.questions;
 		}).
 		error(function(data,status) {
-			console.log("Error: " + status + "" + data);
+			console.log("Error: " + status + ": " + data);
 			//alert("Error: Quiz is not available.");
 			currentQuestion = -1;
 			$scope.errorMsg = "Error: The Quiz is not available.";
