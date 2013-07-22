@@ -49,8 +49,3 @@ body {
 .quiz-input-choice:required {
 	box-shadow: none;
 }
-
-.add-question-radio {
-	 vertical-align: top;
-}
-

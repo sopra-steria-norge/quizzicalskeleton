@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Quiz</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/admin.css" rel="stylesheet">
-    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
-    <script src="../jquery/jquery-1.7.2.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
 
-</head>
-<body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -19,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#/admin/overview"><img alt="Steria" src="../img/steria_logo2.png"> Quizzical</a>
+            <a class="brand" href="#/admin/overview"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-right">
                     Logged in as <a href="#" class="navbar-link">Nikolai Hyldmo</a>
@@ -34,14 +22,14 @@
     </div>
 </div>
 
-<div class="quiz-box">
-	<form method="post" action="">
+<div class="quiz-box" ng-controller="AdminCtrl">
+	<form method="post">
 		<h2 class="quiz-box-heading">Add quiz</h2>
 		<hr>
 		
 		<label class="row">
 			<span class="span3">
-				<input type="text" name="quizName" ng-model="ngQuizName" placeholder="Type a name for the quiz" required="required">
+				<input type="text" name="quizName" ng-model="newquiz.quizName" placeholder="Type a name for the quiz" required="required">
 			</span>
 			<span class="span4">
 				Type a name for the quiz here.
@@ -50,7 +38,7 @@
 		<br>
 		<label class="row">
 			<span class="span3">
-				<textarea class="ta-no-resize" name="quizDescription" ng-model="quizDesc" rows="3" cols="70" placeholder="Describe the quiz here..."></textarea>
+				<textarea class="ta-no-resize" name="quizDescription" ng-model="newquiz.quizDesc" rows="3" cols="70" placeholder="Describe the quiz here..."></textarea>
 			</span>
 			<span class="span4">
 				Describe the quiz here. This text will be shown to the user when the link is opened, right before the quiz starts.
@@ -59,36 +47,40 @@
 		<br>
 		<label class="row">
 			<span class="span3">
-				<textarea class="ta-no-resize" name="quizSubmitMsg" ng-model="quizSubMsg" rows="3" cols="70" placeholder="Type a final message to the user here..."></textarea>
+				<textarea class="ta-no-resize" name="quizSubmitMsg" ng-model="newquiz.submitMsg" rows="3" cols="70" placeholder="Type a final message to the user here..."></textarea>
 			</span>
 			<span class="span4">
 				Type a message that the user will receive after the user has answered the quiz. You may for instance inform when the winner is announced and so on.
 			</span>
 		</label>
 		<hr>
-		<div class="add-question-row" ng-repeat="q in questions">
+		<div class="add-question-row" ng-repeat="q in newquiz.questions">
 			<div class="row">
 				<label class="add-question-name span3">
-					<textarea class="ta-no-resize" name="questionName" ng-model="questionName" rows="2" cols="70" placeholder="Type question here..."></textarea>
+					<textarea class="ta-no-resize" name="questionName" ng-model="q.text" rows="2" cols="70" placeholder="Type question here..."></textarea>
 				</label>
 				<div class="add-question-options span4">
 					<span class="add-question-info">Type in answer options:</span>
 					<br>
 					<div class="add-question-option" ng-repeat="qa in q.alternatives">
 						<div class="span4">
-							<span class="add-question-radio"><input type="radio" name="isCorrect{{aqr.id}}" value="{{aqo.aid}}"></span>
-							<span><input type="text" name="{{aqo.atext}}" placeholder="Type answer alternative here"></span>
+							<span class="add-question-radio">
+								<input type="radio" name="isCorrect{{aqr.id}}" value="{{aqo.aid}}">
+							</span>
+							<span>
+								<input type="text" name="{{aqo.atext}}" ng-model="qa.atext" placeholder="Type answer alternative here">
+							</span>
 						</div>
 					</div>
+					<button type="button" class="btn btn-small" ng-click="addAlternative(q)">Add alternative</button>
 				</div>
-				
 			</div>
 			<hr>
 		</div>
 		
 		<div class="row">
 			<span class="span7 text-center">
-				<button class="btn btn-medium btn-primary" ng-click="">Add question</button>
+				<button type="button" class="btn btn-medium btn-primary" ng-click="addQuestion()">Add question</button>
 			</span>
 		</div>
 		<hr>
@@ -96,5 +88,3 @@
 	</form>
 </div>
 
-</body>
-</html>
