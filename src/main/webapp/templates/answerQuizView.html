@@ -20,7 +20,7 @@
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
 			<h4 class="quiz-box-question">{{q.text}}</h4>
 			<label class="radio quiz-input-choice-box ql{{q.id}}" ng-repeat="qa in q.alternatives">
-				<input type="radio" class="quiz-input-choice" ng-model="qa.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="radioButtonChanged(q.id, qa.aid)">
+				<input type="radio" class="quiz-input-choice" ng-model="qa.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="radioButtonChanged(q.id, qa.aid)"  ng-keydown="pressEnterButton($event)">
 				{{qa.atext}}
 			</label>
 			<br>

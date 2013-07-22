@@ -36,7 +36,7 @@ public class SubmitServlet extends HttpServlet {
 				Iterator<Entry<String,JsonNode>> answerEntries = entry.getValue().getFields();
 				while(answerEntries.hasNext()){
 					Entry<String,JsonNode> answer = answerEntries.next();
-					answersToDB.put(answer.getKey(), answer.getValue().asInt());					
+					answersToDB.put(answer.getKey(), answer.getValue().asInt());
 				}
 			}else if(entry.getKey().equals("quizId")){
 				quizId = Integer.parseInt(entry.getValue().asText());
