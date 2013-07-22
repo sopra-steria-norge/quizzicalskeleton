@@ -10,10 +10,18 @@
 
 	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
-	<div class="" ng-show="isCurrent(-1)">
+	<div class="" ng-show="isCurrent(-2)">
 		<div class="alert alert-error">
-			<i class="icon-search"></i>
+			<i class="icon-warning-sign"></i>
 			{{errorMsg}}
+		</div>
+		<br><br>
+	</div>
+	<div class="" ng-show="isCurrent(-1)">
+		<br>
+		<div class="text-center">Loading...</div>
+		<div class="progress progress-striped active">
+			<div class="bar" style="width: 100%;"></div>
 		</div>
 		<br><br>
 	</div>
