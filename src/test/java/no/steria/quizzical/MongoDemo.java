@@ -11,24 +11,31 @@ import com.mongodb.MongoClient;
 
 public class MongoDemo {
 	
+	private static DB db;
 	private static DBCollection quizzesInDB;
+	private static DBCollection usersInDB;
 	
 	public static void main(String[] args) {
 		Quiz[] quizzesToAdd = new Quiz[2];
 		quizzesToAdd[0] = new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", null);
-		quizzesToAdd[1] = new Quiz(2,"SecondQuiz","QuizDesc2","QuizMsg2",null);		
-		insertDataIntoDB(quizzesToAdd);
+		quizzesToAdd[1] = new Quiz(2,"Science Quiz For Kids","QuizDesc2","QuizMsg2",null);		
+		insertTestQuizzesIntoDB(quizzesToAdd);
+
+		insertTestUsersIntoDB();
 	}
-	
-	public static void insertDataIntoDB(Quiz[] quiz) {
+		
+	private static void init(){
 		MongoClient client = null;
 		try {
 			client = new MongoClient();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		DB db = client.getDB("quizzical");
-
+		db = client.getDB("quizzical");		
+	}
+	
+	public static void insertTestQuizzesIntoDB(Quiz[] quiz) {
+		init();
 		quizzesInDB = db.getCollection("quizzes");
 		quizzesInDB.drop();
 		
@@ -130,4 +137,23 @@ public class MongoDemo {
 
 		return quiz1;
 	}
+	
+	private static void insertTestUsersIntoDB(){
+		init();
+		usersInDB = db.getCollection("users");
+		usersInDB.drop();
+		
+		int userId=1;
+		String username="martin", password="eple";
+
+		BasicDBList quizzesByUser = new BasicDBList();
+		BasicDBObject user = new BasicDBObject();
+		user.put("userId", userId);
+		user.put("username", username);
+		user.put("password", password);
+		quizzesByUser.add(new BasicDBObject().append("quiz1", 7).append("quiz2", 6).append("quiz3", 5));
+		user.put("quizzes", quizzesByUser);
+		usersInDB.insert(user);
+	}
+		
 }
