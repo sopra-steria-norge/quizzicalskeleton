@@ -12,7 +12,7 @@
 
 	<servlet-mapping>
 		<servlet-name>quizzicalServlet</servlet-name>
-		<url-pattern>/quiz/*</url-pattern>
+		<url-pattern>/retrieveQuiz/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -22,6 +22,6 @@
 
 	<servlet-mapping>
 		<servlet-name>submitServlet</servlet-name>
-		<url-pattern>/submit/*</url-pattern>
+		<url-pattern>/submitQuiz/*</url-pattern>
 	</servlet-mapping>
 </web-app>

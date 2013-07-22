@@ -1,8 +1,6 @@
 package no.steria.quizzical;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
