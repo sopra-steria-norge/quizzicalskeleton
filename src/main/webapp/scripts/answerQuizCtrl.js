@@ -1,6 +1,6 @@
 angular.module('quizControllers')
-.controller('AnswerQuizCtrl', ['$scope', '$http', '$routeParams', '$document', 
-    function($scope, $http, $routeParams, $document) {
+.controller('AnswerQuizCtrl', ['$scope', '$http', '$routeParams',
+    function($scope, $http, $routeParams) {
 		$scope.quiz = null;
 		$scope.questions = [];
 		
@@ -35,30 +35,6 @@ angular.module('quizControllers')
 			var key = "q" + qid;
 			$scope.answers[key] = aid;
 		};
-		
-		$scope.pressEnterButton = function($event){
-			alert("key pressed");
-			/*if (typeof e === 'undefined' && window.event){
-				e = window.event;
-			}
-	        if (e.keyCode === 13)
-	        {
-	            $scope.checkRadioButtons(qid);
-	        }*/
-		};
-		
-		// Testing av forskjellige http poster
-/*		$scope.testHttpPost = function(){
-			var str = "{\"quizId\": 1, \"name\": \"nikolai\", \"email\": \"nik@example.com\", \"answers\": {\"q1\":1, \"q1\":2, \"q1\":3, \"q1\":4, \"q2\":1, \"q2\":2, \"q2\":3, \"q2\":4}}";
-			
-			$http({method: "POST", url: "submit", data: str }).
-			success(function(data) {
-				alert("success!");
-			}).
-			error(function(data,status) {
-				console.log("Error:" + status);
-			});
-		};*/
 		
 		$scope.highlightChoosenOption = function(qid){
 			var radioButtons = document.getElementsByName("q" + qid);
