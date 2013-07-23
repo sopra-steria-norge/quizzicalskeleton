@@ -21,7 +21,7 @@ import com.mongodb.BasicDBObject;
 
 public class QuizServletTest {
 	
-	private QuizzicalServlet servlet = new QuizzicalServlet();
+	private QuizServlet servlet = new QuizServlet();
 	private HttpServletRequest req = mock(HttpServletRequest.class);
 	private HttpServletResponse resp = mock(HttpServletResponse.class);
 	

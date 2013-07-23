@@ -4,7 +4,7 @@ angular.module('quizControllers')
 		
 		$scope.quizzes = [];
 	
-		$http({method: "GET", url: "retrieveQuiz?mode=2&userId=1"}).
+		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
 		success(function(data) {
 			$scope.quizzes = data;
 		}).
@@ -18,14 +18,6 @@ angular.module('quizControllers')
 				submitMsg: "",
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}]
 		};
-
-		$http({method: "GET", url: "retrieveQuiz?mode=2&userId=1"}).
-		success(function(data) {
-			$scope.quizzes = data;
-		}).
-		error(function(data,status) {
-			console.log("Error: " + status + ": " + data);
-		});
 		
 		$scope.addAlternative = function(question){
 			var numberOfAlternatives = question.alternatives.length;

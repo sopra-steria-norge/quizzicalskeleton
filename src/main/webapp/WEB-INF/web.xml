@@ -6,22 +6,17 @@
          metadata-complete="false">
 
 	<servlet>
-		<servlet-name>quizzicalServlet</servlet-name>
-		<servlet-class>no.steria.quizzical.QuizzicalServlet</servlet-class>
+		<servlet-name>quizServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.QuizServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>quizzicalServlet</servlet-name>
+		<servlet-name>quizServlet</servlet-name>
 		<url-pattern>/retrieveQuiz/*</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>submitServlet</servlet-name>
-		<servlet-class>no.steria.quizzical.SubmitServlet</servlet-class>
-	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>submitServlet</servlet-name>
+		<servlet-name>quizServlet</servlet-name>
 		<url-pattern>/submitQuiz/*</url-pattern>
 	</servlet-mapping>
 	

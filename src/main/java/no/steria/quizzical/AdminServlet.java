@@ -1,6 +1,8 @@
 package no.steria.quizzical;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -18,7 +20,10 @@ import com.mongodb.BasicDBObject;
 public class AdminServlet extends HttpServlet {
 
 	private Quiz quiz;
+	private QuizDao quizDao;
 	private MongoQuizDao mongoQuizDao;
+	private MongoUserDao mongoUserDao;
+	private MongoResponseDao mongoResponseDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -111,12 +116,36 @@ public class AdminServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		ObjectMapper mapper = new ObjectMapper();
+		PrintWriter writer = resp.getWriter();
+		
+		int mode = Integer.parseInt(req.getParameter("mode"));
+		
+		if(mode == 2){
+			// Retrieves all quizzes by a userId
+			int userId = Integer.parseInt(req.getParameter("userId"));
+			ArrayList<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
+			ArrayList<Quiz> requestedQuizzes = new ArrayList<Quiz>();
+			for(Integer quizId : usersQuizIds){
+				requestedQuizzes.add(quizDao.getQuiz(quizId));
+			}			
+			mapper.writeValue(writer, requestedQuizzes);
+			resp.setContentType("text/json");
+		}
+		else if(mode == 3){
+			// Checks current number of responses. PS: This section should be moved to adminServlet soon!
+			int quizId = Integer.parseInt(req.getParameter("quizId"));
+			resp.getWriter().write(mongoResponseDao.countResponsesForQuiz(quizId));
+			resp.setContentType("text");
+		}
 	}
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		mongoQuizDao = new MongoQuizDao();
+		quizDao = new MongoQuizDao();
+		mongoUserDao = new MongoUserDao();
+		mongoResponseDao = new MongoResponseDao();
 	}
 
 }
