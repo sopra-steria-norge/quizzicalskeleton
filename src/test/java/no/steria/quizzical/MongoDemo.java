@@ -18,8 +18,8 @@ public class MongoDemo {
 	
 	public static void main(String[] args) {
 		Quiz[] quizzesToAdd = new Quiz[2];
-		quizzesToAdd[0] = new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", null);
-		quizzesToAdd[1] = new Quiz(2,"Science Quiz For Kids","QuizDesc2","QuizMsg2",null);		
+		quizzesToAdd[0] = new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", null);
+		quizzesToAdd[1] = new Quiz(2,"Science Quiz For Kids","This quiz contains question relevant for children with interest in science. Use this quiz vicely as kids can be extremely interested in science, and possibly learn too much.","Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM year 2017",null);		
 		insertTestQuizzesIntoDB(quizzesToAdd);
 
 		insertTestUsersIntoDB();
@@ -144,13 +144,11 @@ public class MongoDemo {
 		usersInDB = db.getCollection("users");
 		usersInDB.drop();
 		
-		ArrayList<Integer> quizzes = new ArrayList<Integer>();
-		quizzes.add(1);
-		quizzes.add(2);
-		quizzes.add(5);
-		
 		int userId=1;
 		String username="martin", password="eple";
+		ArrayList<Integer> quizzes = new ArrayList<Integer>();
+		quizzes.add(1);
+		quizzes.add(2);		
 
 		BasicDBObject user = new BasicDBObject();
 		user.put("userId", userId);

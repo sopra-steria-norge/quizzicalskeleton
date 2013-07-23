@@ -1,7 +1,16 @@
 angular.module('quizControllers')
 .controller('AdminCtrl', ['$scope', '$http',
     function($scope, $http) {
-		var currentaid = {};
+		
+		$scope.quizzes = [];
+	
+		$http({method: "GET", url: "retrieveQuiz?mode=2&userId=1"}).
+		success(function(data) {
+			$scope.quizzes = data;
+		}).
+		error(function(data,status) {
+			console.log("Error: " + status + ": " + data);
+		});
 		
 		$scope.newquiz = {
 				quizName: "",
@@ -9,6 +18,14 @@ angular.module('quizControllers')
 				submitMsg: "",
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}]
 		};
+
+		$http({method: "GET", url: "retrieveQuiz?mode=2&userId=1"}).
+		success(function(data) {
+			$scope.quizzes = data;
+		}).
+		error(function(data,status) {
+			console.log("Error: " + status + ": " + data);
+		});
 		
 		$scope.addAlternative = function(question){
 			var numberOfAlternatives = question.alternatives.length;
@@ -30,7 +47,7 @@ angular.module('quizControllers')
 			}).
 			error(function(data,status) {
 				console.log("Error:" + status);
-			});
-			
+			});			
 		};
+			
 }]);

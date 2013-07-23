@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#/admin/overview"><img alt="Steria" src="../img/steria_logo2.png"> Quizzical</a>
+            <a class="brand" href="#/admin/overview"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-right">
                     Logged in as <a href="#" class="navbar-link">Nikolai Hyldmo</a>
@@ -23,89 +23,23 @@
 
 <div class="admin-quiz-box">
     <h2 class="quiz-box-heading">Results</h2>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Science Quiz</h4>
-            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
-            <br>
-            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
-            <br>
-            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
-        </div>
-        <div class="span1">
-            <p class="lead text-success">
-                <br>
-                1001 respondents
-            </p>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Geography Quiz</h4>
-            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
-            <br>
-            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
-            <br>
-            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
-        </div>
-        <div class="span1">
-            <p class="lead text-success">
-                <br>
-                888 respondents
-            </p>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Astronomy Quiz</h4>
-            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
-            <br>
-            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
-            <br>
-            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
-        </div>
-        <div class="span1">
-            <p class="lead text-success">
-                <br>
-                433 respondents
-            </p>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Geography Quiz</h4>
-            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
-            <br>
-            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
-            <br>
-            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
-        </div>
-        <div class="span1">
-            <p class="lead text-success">
-                <br>
-                888 respondents
-            </p>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Astronomy Quiz</h4>
-            <strong>New today:</strong> 16 people (50%<i class="icon-arrow-up"></i> from yesterday)
-            <br>
-            <strong>New this week:</strong> 30 people (3%<i class="icon-arrow-up"></i> from last week)
-            <br>
-            <strong>Current leader(s):</strong> martin@gmail.com (100% score)
-        </div>
-        <div class="span1">
-            <p class="lead text-success">
-                <br>
-                433 respondents
-            </p>
-        </div>
-    </div>
+	<div ng-repeat="quiz in quizzes">
+	    <hr>
+	    <div class="row">
+	        <div class="span4">
+	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
+	            <strong>New today:</strong><br>16 people (50%<i class="icon-arrow-up"></i> from yesterday)
+	            <br>
+	            <strong>New this week:</strong><br> 30 people (3%<i class="icon-arrow-up"></i> from last week)
+	            <br>
+	            <strong>Current leader(s):</strong><br> martin@gmail.com (100% score)
+	        </div>
+	        <div class="span1">
+	            <p class="lead text-success">
+	                <br>
+	                1001 respondents
+	            </p>
+	        </div>
+	    </div>
+	</div>
 </div>

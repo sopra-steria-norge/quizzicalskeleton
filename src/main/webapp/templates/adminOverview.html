@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#/admin/overview"><img alt="Steria" src="../img/steria_logo2.png"> Quizzical</a>
+            <a class="brand" href="#/admin/overview"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-right">
                     Logged in as <a href="#" class="navbar-link">Nikolai Hyldmo</a>
@@ -23,72 +23,18 @@
 
 <div class="admin-quiz-box">
     <h2 class="quiz-box-heading">Overview</h2>
-    <hr>	
-
-
-
-	
-    <div class="row" ng-repeat="question in overviewQuestions">
-        <div class="span4">
-            <h4 class="quiz-box-question">{{question.name}}</h4>
-			{{question.description}}
-        </div>
-        <div class="span1 pull-right">
-            <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
-            <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
-            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
-        </div>
-    </div>
-
-	
-
-
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Geography Quiz</h4>
-            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
-        </div>
-        <div class="span1 pull-right">
-            <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
-            <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
-            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Astronomy Quiz</h4>
-            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
-        </div>
-        <div class="span1 pull-right">
-            <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
-            <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
-            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Geography Quiz</h4>
-            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
-        </div>
-        <div class="span1 pull-right">
-            <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
-            <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
-            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="span4">
-            <h4 class="quiz-box-question">Astronomy Quiz</h4>
-            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
-        </div>
-        <div class="span1 pull-right">
-            <button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button>
-            <button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button>
-            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
-        </div>
+	<div ng-repeat="quiz in quizzes">
+		<hr>		
+	    <div class="row">
+	        <div class="span4">
+	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
+				{{quiz.quizDesc}}
+	        </div>
+	        <div class="span1 pull-right">
+	            <a href="#/answerQuiz/{{quiz.quizId}}"><button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button></a>
+	            <a href="#/admin/addquiz/{{quiz.quizId}}"><button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button></a>
+	            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
+	        </div>
+	    </div>
     </div>
 </div>
