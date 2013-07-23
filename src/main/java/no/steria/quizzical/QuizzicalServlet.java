@@ -2,6 +2,7 @@ package no.steria.quizzical;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class QuizzicalServlet extends HttpServlet {
 
 	private QuizDao quizDao;
+	private MongoUserDao mongoUserDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,28 +23,29 @@ public class QuizzicalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		int quizId = Integer.parseInt(req.getParameter("quizId"));			
-		
+	
 		ObjectMapper mapper = new ObjectMapper();
 		Quiz quiz = null;
 		PrintWriter writer = resp.getWriter();
 		
-		try {
-			quiz = quizDao.getQuiz(quizId);
-			mapper.writeValue(writer, quiz);
+		int mode = Integer.parseInt(req.getParameter("mode"));
+		if(mode == 1){
+			int quizId = Integer.parseInt(req.getParameter("quizId"));
+			try {
+				quiz = quizDao.getQuiz(quizId);
+				mapper.writeValue(writer, quiz);
+				resp.setContentType("text/json");				
+			} catch(IllegalArgumentException e){
+				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				resp.getWriter().print(e.getMessage());
+			}			
+		}else if(mode == 2){
+			int userId = Integer.parseInt(req.getParameter("userId"));
+			ArrayList<Integer> quizIds = mongoUserDao.getUser(userId).getQuizIds();
+			mapper.writeValue(writer, quizIds);
 			resp.setContentType("text/json");
-			
-		} catch(IllegalArgumentException e){
-			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			resp.getWriter().print(e.getMessage());
-		} 
-		
+		}
 	}
-
-	//metode som henter inn liste med quiz på et visst brukerid
-	
-	
 	
 	public void setQuizDao(QuizDao quizDao) {
 		this.quizDao = quizDao;
@@ -53,6 +56,7 @@ public class QuizzicalServlet extends HttpServlet {
 		super.init();
 	
 		quizDao = new MongoQuizDao();
+		mongoUserDao = new MongoUserDao();
 	}
 
 }

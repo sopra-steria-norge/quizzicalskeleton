@@ -1,6 +1,7 @@
 package no.steria.quizzical;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -143,16 +144,19 @@ public class MongoDemo {
 		usersInDB = db.getCollection("users");
 		usersInDB.drop();
 		
+		ArrayList<Integer> quizzes = new ArrayList<Integer>();
+		quizzes.add(1);
+		quizzes.add(2);
+		quizzes.add(5);
+		
 		int userId=1;
 		String username="martin", password="eple";
 
-		BasicDBList quizzesByUser = new BasicDBList();
 		BasicDBObject user = new BasicDBObject();
 		user.put("userId", userId);
 		user.put("username", username);
 		user.put("password", password);
-		quizzesByUser.add(new BasicDBObject().append("quiz1", 7).append("quiz2", 6).append("quiz3", 5));
-		user.put("quizzes", quizzesByUser);
+		user.put("quizzes", quizzes);
 		usersInDB.insert(user);
 	}
 		

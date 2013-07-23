@@ -30,6 +30,7 @@ public class QuizServletTest {
 		when(req.getMethod()).thenReturn("GET");
 		when(req.getPathInfo()).thenReturn("/getQuizQuestions");
 		when(req.getParameter("quizId")).thenReturn("1");
+		when(req.getParameter("mode")).thenReturn("1");
 		
 		StringWriter htmlDoc = new StringWriter();
         when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
