@@ -24,4 +24,15 @@
 		<servlet-name>submitServlet</servlet-name>
 		<url-pattern>/submitQuiz/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.AdminServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>adminServlet</servlet-name>
+		<url-pattern>/adminQuiz/*</url-pattern>
+	</servlet-mapping>
+
 </web-app>

@@ -7,7 +7,7 @@ body {
 	box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
 }
 
-.quiz-box {
+.answer-quiz-box {
 	max-width: 350px;
 	padding: 10px 29px 29px;
 	margin: 0 auto 20px;

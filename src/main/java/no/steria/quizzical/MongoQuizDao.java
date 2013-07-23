@@ -65,5 +65,15 @@ public class MongoQuizDao implements QuizDao {
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
 		return quiz;
 	}
+
+	@Override
+	public void insertQuizToDB(Quiz quiz) {
+		BasicDBObject document = new BasicDBObject();
+		document.put("quizName", quiz.getQuizName());
+		document.put("quizDesc", quiz.getQuizDesc());
+		document.put("submitMsg", quiz.getSubmitMsg());
+		document.put("questions", quiz.getQuestions());
+		collection.insert(document);
+	}
 	
 }

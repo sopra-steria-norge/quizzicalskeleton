@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="quiz-box" ng-controller="AdminCtrl">
+<div class="admin-quiz-box" ng-controller="AdminCtrl">
 	<form method="post">
 		<h2 class="quiz-box-heading">Add quiz</h2>
 		<hr>
@@ -64,10 +64,10 @@
 					<div class="add-question-option" ng-repeat="qa in q.alternatives">
 						<div class="span4">
 							<span class="add-question-radio">
-								<input type="radio" name="isCorrect{{aqr.id}}" value="{{aqo.aid}}">
+								<input type="radio" name="isCorrect{{q.id}}" value="{{qa.aid}}" ng-model="q.answer" required="required">
 							</span>
 							<span>
-								<input type="text" name="{{aqo.atext}}" ng-model="qa.atext" placeholder="Type answer alternative here">
+								<input type="text" name="qaText{{qa.aid}}" ng-model="qa.atext" placeholder="Type answer alternative here">
 							</span>
 						</div>
 					</div>
@@ -83,6 +83,6 @@
 			</span>
 		</div>
 		<hr>
-		<button class="btn btn-large btn-primary" type="submit">Create quiz</button>
+		<button class="btn btn-large btn-primary" type="submit" ng-click="submitQuiz()">Create quiz</button>
 	</form>
 </div>
