@@ -47,7 +47,6 @@ public class QuizServlet extends HttpServlet {
 				email = entry.getValue().asText();
 			}
 		}
-		
 		quizResponse = new Response(quizId, name, email, answersToDB);
 		quizResponse.calculateScore(mongoQuizDao.getQuiz(quizId));
 		mongoResponseDao.setResponse(quizResponse);
@@ -74,7 +73,6 @@ public class QuizServlet extends HttpServlet {
 				resp.getWriter().print(e.getMessage());
 			}
 		}
-
 	}
 	
 	public void setQuizDao(QuizDao quizDao) {
@@ -84,7 +82,6 @@ public class QuizServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-	
 		quizDao = new MongoQuizDao();
 		mongoResponseDao = new MongoResponseDao();
 	}
