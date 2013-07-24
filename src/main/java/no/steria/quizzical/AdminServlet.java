@@ -97,7 +97,7 @@ public class AdminServlet extends HttpServlet {
 				}
 				
 			} else if(entry.getKey().equals("quizId")){
-				quizId = Integer.parseInt(entry.getValue().asText());
+				quizId = entry.getValue().asInt();
 			} else if(entry.getKey().equals("quizName")){
 				quizName = entry.getValue().asText();
 			} else if(entry.getKey().equals("quizDesc")){

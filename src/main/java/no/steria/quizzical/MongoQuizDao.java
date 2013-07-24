@@ -68,8 +68,15 @@ public class MongoQuizDao implements QuizDao {
 
 	@Override
 	public void insertQuizToDB(Quiz quiz) {
+		int quizId = quiz.getQuizId();
 		BasicDBObject document = new BasicDBObject();
-		document.put("quizId", quiz.getQuizId());
+		
+		if (quizId == -1){
+			quizId = getAvailableQuizId();
+		} else {
+			makeSureAvailable(quizId);
+		}
+		document.put("quizId", quizId);
 		document.put("name", quiz.getQuizName());
 		document.put("desc", quiz.getQuizDesc());
 		document.put("submitMsg", quiz.getSubmitMsg());
@@ -77,4 +84,25 @@ public class MongoQuizDao implements QuizDao {
 		collection.insert(document);
 	}
 	
+	private int getAvailableQuizId(){
+		int index = 1;
+		DBCursor cursor = collection.find();
+		while (cursor.hasNext()){
+			DBObject dbo = cursor.next();	
+			if (dbo.containsField("quizId")){
+				int currentIndex = ((Integer) dbo.get("quizId")).intValue();
+				if (currentIndex >= index){
+					index = currentIndex + 1;
+				}
+			}
+		}
+		return index;
+	}
+	
+	private void makeSureAvailable(int quizId){
+		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
+		if (cursor.hasNext()){
+			collection.remove(cursor.next());
+		}
+	}
 }

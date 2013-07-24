@@ -30,7 +30,7 @@ angular.module('quizControllers')
 					}
 				}
 			}
-		};
+		}
 		
 		$scope.addAlternative = function(question){
 			var numberOfAlternatives = question.alternatives.length;
