@@ -100,7 +100,7 @@ public class MongoDemo {
 	
 	private static BasicDBObject createQuizHelper(int quizId, String quizName, String quizDescription, String quizSubmittedMsg, BasicDBList questions){
 		BasicDBObject quiz = new BasicDBObject();
-		quiz.put("quizid", quizId);
+		quiz.put("quizId", quizId);
 		quiz.put("name", quizName);
 		quiz.put("desc", quizDescription);
 		quiz.put("submitMsg", quizSubmittedMsg);
@@ -110,7 +110,7 @@ public class MongoDemo {
 	
 	public static Quiz getQuizHelper(int quizId) {
 		BasicDBObject whereQuery = new BasicDBObject();
-		whereQuery.put("quizid", quizId);
+		whereQuery.put("quizId", quizId);
 		
 		DBObject quizObject = quizzesInDB.findOne(whereQuery);
 		

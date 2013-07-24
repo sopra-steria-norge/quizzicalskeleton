@@ -32,7 +32,7 @@ public class MongoQuizDao implements QuizDao {
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
 		while(cursor.hasNext()){
 			DBObject next = cursor.next();
-			Integer quizId = (Integer) next.get("quizid");
+			Integer quizId = (Integer) next.get("quizId");
 			String quizName = (String) next.get("name");
 			String quizDesc = (String) next.get("desc");
 			String submitMsg = (String) next.get("submitMsg");
@@ -49,7 +49,7 @@ public class MongoQuizDao implements QuizDao {
 	@Override
 	public Quiz getQuiz(int quizId) {
 		BasicDBObject whereQuery = new BasicDBObject();
-		whereQuery.put("quizid", quizId);
+		whereQuery.put("quizId", quizId);
 		
 		DBObject quizObject = collection.findOne(whereQuery);
 		
@@ -69,7 +69,7 @@ public class MongoQuizDao implements QuizDao {
 	@Override
 	public void insertQuizToDB(Quiz quiz) {
 		BasicDBObject document = new BasicDBObject();
-		document.put("quizid", quiz.getQuizId());
+		document.put("quizId", quiz.getQuizId());
 		document.put("name", quiz.getQuizName());
 		document.put("desc", quiz.getQuizDesc());
 		document.put("submitMsg", quiz.getSubmitMsg());

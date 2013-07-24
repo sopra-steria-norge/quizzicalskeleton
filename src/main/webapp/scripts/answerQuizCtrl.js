@@ -12,7 +12,7 @@ angular.module('quizControllers')
 		
 		var currentQuestion = -1;
 		
-		$http({method: "GET", url: "retrieveQuiz?mode=1&quizId=" + $routeParams.quizid}).
+		$http({method: "GET", url: "retrieveQuiz?mode=1&quizId=" + $routeParams.quizId}).
 		success(function(data) {
 			$scope.quiz = data;
 			$scope.questions = data.questions;

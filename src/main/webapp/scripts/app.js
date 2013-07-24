@@ -10,7 +10,7 @@
                         templateUrl: 'templates/frontpage.html', 
                         controller: ''
                     }).
-                    when('/answerQuiz/:quizid', {
+                    when('/answerQuiz/:quizId', {
                         templateUrl: 'templates/answerQuizView.html', 
                         controller: 'AnswerQuizCtrl'
                     }).
@@ -20,6 +20,10 @@
 	                }).
 	                when('/admin/overview', {
 	                    templateUrl: 'templates/adminOverview.html', 
+	                    controller: 'AdminCtrl'
+	                }).
+	                when('/admin/addquiz/:quizId', {
+	                    templateUrl: 'templates/adminAddQuiz.html', 
 	                    controller: 'AdminCtrl'
 	                }).
 	                when('/admin/addquiz', {
