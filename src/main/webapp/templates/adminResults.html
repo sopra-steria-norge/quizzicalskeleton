@@ -26,18 +26,16 @@
 	<div ng-repeat="quiz in quizzes">
 	    <hr>
 	    <div class="row">
-	        <div class="span4">
+	        <div class="span3">
 	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
-	            <strong>New today:</strong><br>16 people (50%<i class="icon-arrow-up"></i> from yesterday)
-	            <br>
-	            <strong>New this week:</strong><br> 30 people (3%<i class="icon-arrow-up"></i> from last week)
-	            <br>
-	            <strong>Current leader(s):</strong><br> martin@gmail.com (100% score)
+	            <strong>Picked winner:</strong><br>
+	            {{quiz.winner[0]}} {{quiz.winner[1]}}
 	        </div>
-	        <div class="span1">
+	        <div class="span2">
 	            <p class="lead text-success">
-	                <br>
 	                {{quiz.responses}} respondents
+					<br>
+					<button type="button" class="btn btn-info" ng-click="drawRandomWinner(quiz.quizId)">Pick a random winner</button>
 	            </p>
 	        </div>
 	    </div>

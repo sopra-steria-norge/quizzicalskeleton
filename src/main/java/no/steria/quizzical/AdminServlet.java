@@ -139,6 +139,12 @@ public class AdminServlet extends HttpServlet {
 			mapper.writeValue(writer, mongoResponseDao.countResponsesForQuiz(quizId));
 			resp.setContentType("text/json");
 		}
+		else if(mode == 4){
+			// Picks a random winner of a quiz
+			int quizId = Integer.parseInt(req.getParameter("quizId"));
+			mapper.writeValue(writer, mongoResponseDao.drawRandomWinner(quizId));
+			resp.setContentType("text/json");
+		}
 	}
 	
 	@Override

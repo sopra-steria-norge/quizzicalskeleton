@@ -54,5 +54,23 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});			
 		};
+
+		$scope.winner = [];
+		$scope.buttonPushed = "";		
+		
+		$scope.drawRandomWinner = function(quizId){
+			$scope.buttonPushed = quizId;
+			$http({method: "GET", url: "adminQuiz?mode=4&quizId=" + quizId}).
+			success(function(data) {
+				for (i = 0; i < $scope.quizzes.length; i++){
+					if ($scope.quizzes[i].quizId === parseInt(quizId, 10)){
+						$scope.quizzes[i].winner = data;
+					}
+				}				
+			}).
+			error(function(data,status) {
+				console.log("Error:" + status);
+			});			
+		};
 		
 }]);
