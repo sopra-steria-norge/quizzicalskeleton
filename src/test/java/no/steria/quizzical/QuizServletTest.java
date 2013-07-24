@@ -35,11 +35,11 @@ public class QuizServletTest {
 		StringWriter htmlDoc = new StringWriter();
         when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
         
-        QuizDao quizDao = mock(QuizDao.class);
+        MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
         Quiz quiz = new Quiz(1, "Geography Quiz", "This is a quiz about Norwegian geography", "Thank you for taking the quiz", createQuiz());
-        when(quizDao.getQuiz(1)).thenReturn(quiz);
+        when(mongoQuizDao.getQuiz(1)).thenReturn(quiz);
 
-        servlet.setQuizDao(quizDao);
+        servlet.setQuizDao(mongoQuizDao);
         servlet.service(req, resp);
 		
 		ObjectMapper mapper = new ObjectMapper();

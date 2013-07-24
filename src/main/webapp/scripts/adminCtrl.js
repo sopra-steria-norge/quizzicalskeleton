@@ -54,5 +54,5 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});			
 		};
-			
+		
 }]);

@@ -8,6 +8,7 @@ public class Quiz {
 	private String quizDesc;
 	private String submitMsg;
 	private BasicDBList questions;
+	private int responses;
 	
 	public Quiz(){
 		
@@ -39,5 +40,13 @@ public class Quiz {
 
 	public BasicDBList getQuestions() {
 		return questions;
+	}
+	
+	public void setResponses(int responses){
+		this.responses = responses;
+	}
+	
+	public int getResponses(){
+		return responses;
 	}
 }

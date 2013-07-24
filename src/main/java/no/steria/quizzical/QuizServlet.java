@@ -16,7 +16,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class QuizServlet extends HttpServlet {
 
-	private QuizDao quizDao;
 	private Response quizResponse;
 	private MongoQuizDao mongoQuizDao;
 	private MongoResponseDao mongoResponseDao;
@@ -65,7 +64,7 @@ public class QuizServlet extends HttpServlet {
 			// Retrieves a quiz with quizId
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			try {
-				quiz = quizDao.getQuiz(quizId);
+				quiz = mongoQuizDao.getQuiz(quizId);
 				mapper.writeValue(writer, quiz);
 				resp.setContentType("text/json");				
 			} catch(IllegalArgumentException e){
@@ -75,14 +74,14 @@ public class QuizServlet extends HttpServlet {
 		}
 	}
 	
-	public void setQuizDao(QuizDao quizDao) {
-		this.quizDao = quizDao;
+	public void setQuizDao(MongoQuizDao quizDao) {
+		this.mongoQuizDao = quizDao;
 	}
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		quizDao = new MongoQuizDao();
+		mongoQuizDao = new MongoQuizDao();
 		mongoResponseDao = new MongoResponseDao();
 	}
 

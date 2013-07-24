@@ -20,7 +20,6 @@ import com.mongodb.BasicDBObject;
 public class AdminServlet extends HttpServlet {
 
 	private Quiz quiz;
-	private QuizDao quizDao;
 	private MongoQuizDao mongoQuizDao;
 	private MongoUserDao mongoUserDao;
 	private MongoResponseDao mongoResponseDao;
@@ -127,23 +126,25 @@ public class AdminServlet extends HttpServlet {
 			ArrayList<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
 			ArrayList<Quiz> requestedQuizzes = new ArrayList<Quiz>();
 			for(Integer quizId : usersQuizIds){
-				requestedQuizzes.add(quizDao.getQuiz(quizId));
+				Quiz quiz = mongoQuizDao.getQuiz(quizId);
+				quiz.setResponses(mongoResponseDao.countResponsesForQuiz(quizId));
+				requestedQuizzes.add(quiz);
 			}			
 			mapper.writeValue(writer, requestedQuizzes);
 			resp.setContentType("text/json");
 		}
 		else if(mode == 3){
-			// Checks current number of responses. PS: This section should be moved to adminServlet soon!
+			// Checks current number of responses
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			resp.getWriter().write(mongoResponseDao.countResponsesForQuiz(quizId));
-			resp.setContentType("text");
+			mapper.writeValue(writer, mongoResponseDao.countResponsesForQuiz(quizId));
+			resp.setContentType("text/json");
 		}
 	}
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		quizDao = new MongoQuizDao();
+		mongoQuizDao = new MongoQuizDao();
 		mongoUserDao = new MongoUserDao();
 		mongoResponseDao = new MongoResponseDao();
 	}
