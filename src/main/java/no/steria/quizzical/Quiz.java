@@ -25,6 +25,10 @@ public class Quiz {
 	public int getQuizId() {
 		return quizId;
 	}
+	
+	public void setQuizId(int quizId){
+		this.quizId = quizId;
+	}
 
 	public String getQuizName() {
 		return quizName;

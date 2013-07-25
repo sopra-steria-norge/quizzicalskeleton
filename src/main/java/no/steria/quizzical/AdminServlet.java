@@ -109,7 +109,6 @@ public class AdminServlet extends HttpServlet {
 			
 		}
 		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
-		
 		mongoQuizDao.insertQuizToDB(quiz, userId);
 	}
 	

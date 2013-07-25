@@ -40,12 +40,20 @@ public class MongoUserDao{
 	}
 
 	public void addQuizIdToUser(int quizId, int userId) {
-		// Implement method
+		DBObject document = collection.findOne(new BasicDBObject("userId",userId));
+		@SuppressWarnings("unchecked")
+		ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
+		if(!quizzes.contains(quizId)){
+			collection.remove(document);
+			quizzes.add(quizId);
+			document.put("quizzes", quizzes);
+			collection.insert(document);
+		}
 	}
 
 	public void removeQuizIdFromUsers(int quizId){
 		DBCursor cursor = collection.find();
-		while (cursor.hasNext()){
+		while(cursor.hasNext()){
 			DBObject document = cursor.next();	
 			@SuppressWarnings("unchecked")
 			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");

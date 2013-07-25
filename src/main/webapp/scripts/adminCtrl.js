@@ -106,15 +106,16 @@ angular.module('quizControllers')
 		$scope.drawRandomWinner = function(quizId){
 			$http({method: "GET", url: "adminQuiz?mode=4&quizId=" + quizId}).
 			success(function(data) {
-				for (i = 0; i < $scope.quizzes.length; i++){
-					if ($scope.quizzes[i].quizId === parseInt(quizId, 10)){
+				for(i = 0; i < $scope.quizzes.length; i++){
+					if($scope.quizzes[i].quizId === parseInt(quizId, 10)){
 						$scope.quizzes[i].winner = data;
 					}
 				}
+		
 			}).
 			error(function(data,status){
 				console.log("Error:" + status);
-			});			
+			});	
 		};
 		
 		$scope.removeQuiz = function(quiz){

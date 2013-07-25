@@ -18,6 +18,7 @@ public class MongoQuizDao implements QuizDao {
 	private MongoUserDao mongoUserDao;
 	
 	public MongoQuizDao() {
+		mongoUserDao = new MongoUserDao();
 		try {
 			MongoClient client = new MongoClient();
 			db = client.getDB("quizzical");
@@ -66,15 +67,13 @@ public class MongoQuizDao implements QuizDao {
 
 	@Override
 	public void insertQuizToDB(Quiz quiz, int userId) {
-		int quizId = quiz.getQuizId();
 		BasicDBObject document = new BasicDBObject();
-		
-		if (quizId == -1){
-			quizId = getAvailableQuizId();
+		if (quiz.getQuizId() == -1){
+			quiz.setQuizId(getAvailableQuizId());
 		} else {
-			remove(quizId);
+			remove(quiz.getQuizId());
 		}
-		document.put("quizId", quizId);
+		document.put("quizId", quiz.getQuizId());
 		document.put("name", quiz.getQuizName());
 		document.put("desc", quiz.getQuizDesc());
 		document.put("submitMsg", quiz.getSubmitMsg());
@@ -103,7 +102,6 @@ public class MongoQuizDao implements QuizDao {
 		if (cursor.hasNext()){
 			collection.remove(cursor.next());
 		}
-		mongoUserDao = new MongoUserDao();
 		mongoUserDao.removeQuizIdFromUsers(quizId);
 		
 	}

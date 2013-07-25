@@ -47,11 +47,17 @@ public class MongoResponseDao{
 	public String[] drawRandomWinner(int quizId){
 		DBCursor cursor = collection.find(new BasicDBObject("quizId",quizId));
 		Random rand = new Random();
-		cursor.skip(rand.nextInt(cursor.count()));
-		DBObject next = cursor.next();
+		int length = cursor.count();
 		String[] winner = new String[2];
-		winner[0] = (String) next.get("name");
-		winner[1] = (String) next.get("email");
+		if(length>0){
+			cursor.skip(rand.nextInt(length));
+			DBObject next = cursor.next();
+			winner[0] = (String) next.get("name");
+			winner[1] = (String) next.get("email");
+		}else{
+			winner[0] = "No responses yet!";
+			winner[1] = "";
+		}
 		return winner;
 	}
 	
