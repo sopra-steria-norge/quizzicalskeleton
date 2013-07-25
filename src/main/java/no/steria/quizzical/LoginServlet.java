@@ -10,12 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class LoginServlet extends HttpServlet {
 	
-	private DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("YYYYMMddHHmmss"); 
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -44,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		session.setAttribute("username", username);
-		session.setAttribute("valid", dateTimeFormat.print(validUntil));
+		session.setAttribute("valid", validUntil);
 		resp.sendRedirect("#/admin");
 	}
 

@@ -27,6 +27,7 @@ public class LoginServletTest {
 	private HttpServletRequest req = mock(HttpServletRequest.class);
 	private HttpServletResponse resp = mock(HttpServletResponse.class);
 	private LoginServlet servlet = new LoginServlet();
+	private DateTime currentTime = new DateTime(2013, 7, 25, 16, 5, 0);
 	
 	
 	@Test
@@ -61,7 +62,7 @@ public class LoginServletTest {
 		
 		verify(resp).sendRedirect("#/admin");
 		verify(mockSession).setAttribute("username", "admin");
-		verify(mockSession).setAttribute("valid", "20130725163500");
+		verify(mockSession).setAttribute("valid", currentTime.plusMinutes(30));
 	}
 	
 	@Test
@@ -94,7 +95,7 @@ public class LoginServletTest {
 	
 	@Before
 	public void setFixedTime() {
-		DateTimeUtils.setCurrentMillisFixed(new DateTime(2013, 7, 25, 16, 5, 0).getMillis());
+		DateTimeUtils.setCurrentMillisFixed(currentTime.getMillis());
 	}
 	
 	
