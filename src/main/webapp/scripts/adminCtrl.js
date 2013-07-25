@@ -9,16 +9,38 @@ angular.module('quizControllers')
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}]
 		};
 		
+		$scope.newquizInitialCopy;
+		
 		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
 		success(function(data) {
 			$scope.quizzes = data;
-			fillForm();
+			initAddQuiz();
+			$scope.newquizInitialCopy = angular.copy($scope.newquiz);
 		}).
 		error(function(data,status) {
 			console.log("Error: " + status + ": " + data);
 		});
 		
-		function fillForm(){
+		
+		$scope.$on("$locationChangeStart", function(event){
+			if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
+				var copyOfNewquiz =  angular.copy($scope.newquiz);
+				
+				delete copyOfNewquiz.questions[0]["$$hashKey"];
+				delete copyOfNewquiz.questions[0].alternatives[0]["$$hashKey"];
+				
+				if (JSON.stringify(copyOfNewquiz) === JSON.stringify($scope.newquizInitialCopy)){
+					window.onbeforeunload = null;
+				} else if(!confirm("Your quiz is not submitted, are you sure you want to leave this page?")){
+					event.preventDefault();
+				}
+				/*else { 
+					window.onbeforeunload = null;
+				}*/
+			}
+		});
+		
+		function initAddQuiz(){
 			if ($route.current.templateUrl === "templates/adminAddQuiz.html"){
 				if ($routeParams.quizId !== ""){
 					var i;
@@ -29,6 +51,18 @@ angular.module('quizControllers')
 						}
 					}
 				}
+				window.onbeforeunload = function (event) {
+					var message = "Your quiz is not submitted, are you sure you want to exit?";
+					if (typeof event === 'undefined') {
+						event = window.event;
+					}
+					if (event) {
+						if($route.current.templateUrl === "templates/adminAddQuiz.html"){
+							event.returnValue = message;
+						}
+					}
+					return message;
+				};
 			}
 		}
 		
