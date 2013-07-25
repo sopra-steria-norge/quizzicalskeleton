@@ -65,9 +65,12 @@ public class QuizServlet extends HttpServlet {
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			try {
 				quiz = mongoQuizDao.getQuiz(quizId);
+				if(!quiz.getActive()){
+					throw new IllegalArgumentException();
+				}				
 				mapper.writeValue(writer, quiz);
 				resp.setContentType("text/json");				
-			} catch(IllegalArgumentException e){
+			}catch(IllegalArgumentException e){
 				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				resp.getWriter().print(e.getMessage());
 			}
