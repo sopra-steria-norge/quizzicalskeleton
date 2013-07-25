@@ -21,15 +21,15 @@ public class AdminServlet extends HttpServlet {
 
 	private Quiz quiz;
 	private MongoQuizDao mongoQuizDao;
+	private MongoUserDao mongoUserDao;
 	private MongoResponseDao mongoResponseDao;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ObjectMapper mapper = new ObjectMapper();		 
 		JsonNode rootNode = mapper.readTree(req.getReader().readLine());
-		System.out.println();
 		
-		int quizId = -1;
+		int quizId = -1, userId = 0;
 		String quizName = "", quizDesc = "", submitMsg = "";
 		
 		BasicDBList questions = new BasicDBList();
@@ -47,10 +47,9 @@ public class AdminServlet extends HttpServlet {
 					
 					BasicDBObject questionObject = new BasicDBObject();
 					
-					int questionId = 0;
+					int questionId = 0, correctAnswer = 0;
 					String questionText = "";
 					BasicDBList alternativesList = new BasicDBList();
-					int correctAnswer = 0;
 					
 					while(questionFields.hasNext()){
 						Entry<String, JsonNode> questionField = questionFields.next();
@@ -103,12 +102,15 @@ public class AdminServlet extends HttpServlet {
 				quizDesc = entry.getValue().asText();
 			} else if(entry.getKey().equals("submitMsg")){
 				submitMsg = entry.getValue().asText();
-			}
+			} else if(entry.getKey().equals("userId")){
+				userId = entry.getValue().asInt();
+			} 
+			
 			
 		}
 		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
 		
-		mongoQuizDao.insertQuizToDB(quiz);
+		mongoQuizDao.insertQuizToDB(quiz, userId);
 	}
 	
 	@Override
@@ -122,7 +124,7 @@ public class AdminServlet extends HttpServlet {
 		if(mode == 2){
 			// Retrieves all quizzes by a userId
 			int userId = Integer.parseInt(req.getParameter("userId"));
-			ArrayList<Integer> usersQuizIds = MongoUserDao.getUser(userId).getQuizIds();
+			ArrayList<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
 			ArrayList<Quiz> requestedQuizzes = new ArrayList<Quiz>();
 			for(Integer quizId : usersQuizIds){
 				Quiz quiz = mongoQuizDao.getQuiz(quizId);
@@ -155,6 +157,7 @@ public class AdminServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		mongoQuizDao = new MongoQuizDao();
+		mongoUserDao = new MongoUserDao();
 		mongoResponseDao = new MongoResponseDao();
 	}
 

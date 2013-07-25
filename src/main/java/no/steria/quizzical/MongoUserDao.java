@@ -12,8 +12,8 @@ import com.mongodb.MongoClient;
 
 public class MongoUserDao{
 			
-	private static DB db;
-	private static DBCollection collection;
+	private DB db;
+	private DBCollection collection;
 	
 	public MongoUserDao() {
 		try {
@@ -25,7 +25,7 @@ public class MongoUserDao{
 		collection = db.getCollection("users");
 	}
 		
-	public static User getUser(int userId){
+	public User getUser(int userId){
 		User user = null;
 		DBCursor cursor = collection.find(new BasicDBObject("userId",userId));
 		while(cursor.hasNext()){
@@ -39,11 +39,11 @@ public class MongoUserDao{
 		return user;
 	}
 
-	public static void addQuizIdToUser(int userId, int quizId) {
+	public void addQuizIdToUser(int quizId, int userId) {
 		// Implement method
 	}
 
-	public static void removeQuizIdFromUsers(int quizId){
+	public void removeQuizIdFromUsers(int quizId){
 		DBCursor cursor = collection.find();
 		while (cursor.hasNext()){
 			DBObject document = cursor.next();	
