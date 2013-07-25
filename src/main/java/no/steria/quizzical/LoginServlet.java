@@ -37,8 +37,18 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		DateTime validUntil = new DateTime().plusMinutes(30);
 		HttpSession session = req.getSession();
-		session.setAttribute("username", req.getParameter("user"));
+		String username = req.getParameter("user");
+		if (username == null || username.trim().isEmpty() || !validatePassword(req)) {
+			resp.sendRedirect("login");
+			return;
+		}
+		
+		session.setAttribute("username", username);
 		session.setAttribute("valid", dateTimeFormat.print(validUntil));
 		resp.sendRedirect("#/admin");
+	}
+
+	private boolean validatePassword(HttpServletRequest req) {
+		return "password".equals(req.getParameter("password"));
 	}
 }

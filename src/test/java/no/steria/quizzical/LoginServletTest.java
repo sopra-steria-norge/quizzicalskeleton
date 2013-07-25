@@ -1,8 +1,10 @@
 package no.steria.quizzical;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -61,6 +63,34 @@ public class LoginServletTest {
 		verify(mockSession).setAttribute("username", "admin");
 		verify(mockSession).setAttribute("valid", "20130725163500");
 	}
+	
+	@Test
+	public void shouldDenyMissingUsername() throws Exception {
+		when(req.getMethod()).thenReturn("POST");
+		when(req.getParameter("password")).thenReturn("password");
+		HttpSession mockSession = mock(HttpSession.class);
+		when(req.getSession()).thenReturn(mockSession);
+		
+		servlet.service(req, resp);
+		
+		verify(resp).sendRedirect("login");
+		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
+	}
+	
+	@Test
+	public void shouldDenyIllegal() throws Exception {
+		when(req.getMethod()).thenReturn("POST");
+		when(req.getParameter("user")).thenReturn("admin");
+		when(req.getParameter("password")).thenReturn("pasx");
+		HttpSession mockSession = mock(HttpSession.class);
+		when(req.getSession()).thenReturn(mockSession);
+		
+		servlet.service(req, resp);
+		
+		verify(resp).sendRedirect("login");
+		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
+	}
+
 	
 	@Before
 	public void setFixedTime() {
