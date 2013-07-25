@@ -9,7 +9,7 @@ angular.module('quizControllers')
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}]
 		};
 		
-		$scope.newquizInitialCopy;
+		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
 		
 		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
@@ -27,8 +27,8 @@ angular.module('quizControllers')
 			if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
 				var copyOfNewquiz =  angular.copy($scope.newquiz);
 				
-				delete copyOfNewquiz.questions[0]["$$hashKey"];
-				delete copyOfNewquiz.questions[0].alternatives[0]["$$hashKey"];
+				delete copyOfNewquiz.questions[0].$$hashKey;
+				delete copyOfNewquiz.questions[0].alternatives[0].$$hashKey;
 				
 				if (JSON.stringify(copyOfNewquiz) === JSON.stringify($scope.newquizInitialCopy)){
 					window.onbeforeunload = null;
@@ -73,9 +73,18 @@ angular.module('quizControllers')
 			question.alternatives.push({aid: (numberOfAlternatives + 1), atext: ""});
 		};
 		
+		$scope.removeAlternative = function(question, index){
+			question.alternatives.splice(index, 1);
+		};
+		
 		$scope.addQuestion = function(){
 			var numberOfQuestions = $scope.newquiz.questions.length;
 			$scope.newquiz.questions.push({id: (numberOfQuestions + 1), text: "", alternatives: [{aid:1, atext: ""}], answer: 0});
+		};
+		
+		$scope.removeQuestion = function(questions, index){
+			//$scope.newquiz.questions.splice(index, 1);
+			questions.splice(index, 1);
 		};
 		
 		$scope.submitQuiz = function(){

@@ -55,9 +55,15 @@
 		<hr>
 		<div class="add-question-row" ng-repeat="q in newquiz.questions">
 			<div class="row">
+				<div class="row span6">
+					<h4>Question {{$index + 1}}</h4>
+					<a class="btn btn-danger" ng-click="removeQuestion(newquiz.questions, $index)"><i class="icon-trash"></i></a>
+				</div>
+				<div>
 				<label class="add-question-name span3">
 					<textarea class="ta-no-resize" name="questionName" ng-model="q.text" rows="2" cols="70" placeholder="Type question here..."></textarea>
 				</label>
+				</div>
 				<div class="add-question-options span4">
 					<span class="add-question-info">Type in answer options:</span>
 					<br>
@@ -68,6 +74,7 @@
 							</span>
 							<span>
 								<input type="text" name="qaText{{qa.aid}}" ng-model="qa.atext" placeholder="Type answer alternative here">
+								<a class="btn" ng-click="removeAlternative(q, $index)"><i class="icon-trash"></i></a>
 							</span>
 						</div>
 					</div>
