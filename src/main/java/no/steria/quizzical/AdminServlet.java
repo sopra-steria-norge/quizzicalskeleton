@@ -150,6 +150,12 @@ public class AdminServlet extends HttpServlet {
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			mongoQuizDao.remove(quizId);
 		}
+		else if(mode == 7){
+			// Retrieves a list of respondents
+			int quizId = Integer.parseInt(req.getParameter("quizId"));
+			mapper.writeValue(writer, mongoResponseDao.getRespondents(quizId));
+			resp.setContentType("text/json");
+		}
 	}
 	
 	@Override

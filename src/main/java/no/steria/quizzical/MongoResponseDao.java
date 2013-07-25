@@ -1,6 +1,7 @@
 package no.steria.quizzical;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.mongodb.BasicDBObject;
@@ -59,6 +60,24 @@ public class MongoResponseDao{
 			winner[1] = "";
 		}
 		return winner;
+	}
+	
+	public ArrayList<Response> getRespondents(int quizId){
+		ArrayList<Response> respondents = new ArrayList<Response>();
+		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
+		
+		while(cursor.hasNext()){
+			DBObject document = cursor.next();
+			
+			String name = (String) document.get("name");
+			String email = (String) document.get("email");
+			int score = (Integer) document.get("score");
+			
+			Response respondent = new Response(quizId, name, email, null);
+			respondent.setScore(score);
+			respondents.add(respondent);
+		}
+		return respondents;
 	}
 	
 }

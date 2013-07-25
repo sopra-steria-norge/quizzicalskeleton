@@ -136,4 +136,20 @@ angular.module('quizControllers')
 			});
 		}
 		
+		$scope.respondentsList = [];
+		
+		function getRespondentsFromDB(quizId){
+			$http({method: "GET", url: "adminQuiz?mode=7&quizId=" + quizId}).
+			success(function(data){
+				$scope.respondentsList = data;
+			}).
+			error(function(data,status){
+				console.log("Error:" + status);
+			});
+		}
+		
+		$scope.showRespondents = function(quizId){
+			getRespondentsFromDB(quizId);
+		};
+		
 }]);

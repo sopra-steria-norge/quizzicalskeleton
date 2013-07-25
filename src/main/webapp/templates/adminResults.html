@@ -39,10 +39,22 @@
 					<button type="button" class="btn" ng-click="showRespondents(quiz.quizId)">Show respondents</button>
 	            </p>
 	        </div>
-	    </div>
-	    <div class="row">
-	    	
-	    
+	  	</div>
+	    <div class="row" ng-show="true">
+	    	<table class="table">
+	    		<tr>
+	    			<th>#</th>
+	    			<th>Name</th>
+	    			<th>Email</th>
+	    			<th>Score</th>
+	    		</tr>
+	    		<tr ng-repeat="respondent in respondentsList">
+	    			<td>{{$index + 1}}</td>
+	    			<td>{{respondent.name}}</td>
+	    			<td>{{respondent.email}}</td>
+	    			<td>{{respondent.score}}</td>
+	    		</tr>
+	    	</table>
 	    </div>
 	</div>
 </div>
