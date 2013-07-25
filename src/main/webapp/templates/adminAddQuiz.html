@@ -22,7 +22,7 @@
 </div>
 
 <div class="admin-quiz-box">
-	<form method="post">
+	<form name="createQuizForm">
 		<h2 class="quiz-box-heading">Add quiz</h2>
 		<h4 class="" ng-show="isEditing">(editing quiz "{{newquiz.quizName}}")</h4>
 		<hr>
@@ -94,6 +94,6 @@
 			</span>
 		</div>
 		<hr>
-		<button class="btn btn-large btn-primary" type="submit" ng-click="submitQuiz()">Save quiz</button>
+		<button type="button" class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="createQuizForm.$invalid">Save quiz</button>
 	</form>
 </div>
