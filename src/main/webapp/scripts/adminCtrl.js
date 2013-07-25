@@ -38,9 +38,6 @@ angular.module('quizControllers')
 					} else if(!confirm("Your quiz is not submitted, are you sure you want to leave this page?")){
 						event.preventDefault();
 					}
-					/*else { 
-					window.onbeforeunload = null;
-				}*/
 				}
 			}
 		});
