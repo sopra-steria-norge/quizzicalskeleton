@@ -24,6 +24,19 @@
 		<servlet-name>adminServlet</servlet-name>
 		<servlet-class>no.steria.quizzical.AdminServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>loginServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.LoginServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>loginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	
+
 
 	<servlet-mapping>
 		<servlet-name>adminServlet</servlet-name>
