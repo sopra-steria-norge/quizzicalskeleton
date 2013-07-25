@@ -55,9 +55,13 @@
 		<hr>
 		<div class="add-question-row" ng-repeat="q in newquiz.questions">
 			<div class="row">
-				<div class="row span6">
-					<h4>Question {{$index + 1}}</h4>
-					<a class="btn btn-danger" ng-click="removeQuestion(newquiz.questions, $index)"><i class="icon-trash"></i></a>
+				<div class="row">
+					<div class="span5">
+						<h4>Question {{$index + 1}}</h4>
+					</div>
+					<div class="span2">
+						<a class="btn btn-danger" ng-click="removeQuestion(newquiz.questions, $index)"><i class="icon-trash"></i></a>
+					</div>
 				</div>
 				<div>
 				<label class="add-question-name span3">
@@ -90,6 +94,6 @@
 			</span>
 		</div>
 		<hr>
-		<button class="btn btn-large btn-primary" type="submit" ng-click="submitQuiz()">Create quiz</button>
+		<button class="btn btn-large btn-primary" type="submit" ng-click="submitQuiz()">Save quiz</button>
 	</form>
 </div>

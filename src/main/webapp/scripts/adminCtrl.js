@@ -1,6 +1,6 @@
 angular.module('quizControllers')
-.controller('AdminCtrl', ['$scope', '$http', '$route', '$routeParams',
-    function($scope, $http, $route, $routeParams) {
+.controller('AdminCtrl', ['$scope', '$http', '$route', '$routeParams', '$location',
+    function($scope, $http, $route, $routeParams, $location) {
 		$scope.quizzes = [];
 		$scope.newquiz = {
 				quizName: "",
@@ -11,6 +11,7 @@ angular.module('quizControllers')
 		
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
+		var isSubmitting = false;
 		
 		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
 		success(function(data) {
@@ -24,20 +25,22 @@ angular.module('quizControllers')
 		
 		
 		$scope.$on("$locationChangeStart", function(event){
-			if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
-				var copyOfNewquiz =  angular.copy($scope.newquiz);
-				
-				delete copyOfNewquiz.questions[0].$$hashKey;
-				delete copyOfNewquiz.questions[0].alternatives[0].$$hashKey;
-				
-				if (JSON.stringify(copyOfNewquiz) === JSON.stringify($scope.newquizInitialCopy)){
-					window.onbeforeunload = null;
-				} else if(!confirm("Your quiz is not submitted, are you sure you want to leave this page?")){
-					event.preventDefault();
-				}
-				/*else { 
+			if (!isSubmitting){
+				if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
+					var copyOfNewquiz =  angular.copy($scope.newquiz);
+					
+					delete copyOfNewquiz.questions[0].$$hashKey;
+					delete copyOfNewquiz.questions[0].alternatives[0].$$hashKey;
+					
+					if (JSON.stringify(copyOfNewquiz) === JSON.stringify($scope.newquizInitialCopy)){
+						window.onbeforeunload = null;
+					} else if(!confirm("Your quiz is not submitted, are you sure you want to leave this page?")){
+						event.preventDefault();
+					}
+					/*else { 
 					window.onbeforeunload = null;
 				}*/
+				}
 			}
 		});
 		
@@ -89,11 +92,11 @@ angular.module('quizControllers')
 		
 		$scope.submitQuiz = function(){
 			var submitData = $scope.newquiz;
-			alert(JSON.stringify(submitData));
 			
 			$http({method: "POST", url: "adminQuiz", data: JSON.stringify(submitData) }).
 			success(function(data) {
-				alert("Submitted!");
+				isSubmitting = true;
+				$location.path("/admin/overview/");
 			}).
 			error(function(data,status) {
 				console.log("Error:" + status);
@@ -109,7 +112,7 @@ angular.module('quizControllers')
 					if ($scope.quizzes[i].quizId === parseInt(quizId, 10)){
 						$scope.quizzes[i].winner = data;
 					}
-				}				
+				}
 			}).
 			error(function(data,status){
 				console.log("Error:" + status);
