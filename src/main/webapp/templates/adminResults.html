@@ -28,14 +28,14 @@
 	    <div class="row">
 	        <div class="span3">
 	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
-	            <strong>Picked winner:</strong><br>
+	            <strong>Picked winner (from all respondents):</strong><br>
 	            {{quiz.winner[0]}} {{quiz.winner[1]}}
 	        </div>
 	        <div class="span2">
 	            <p class="lead text-success">
 	                {{quiz.responses}} respondents
 					<br>
-					<button type="button" class="btn btn-info" ng-click="drawRandomWinner(quiz.quizId)">Pick a random winner</button>
+					<button class="btn" ng-click="drawRandomWinner(quiz.quizId)">Pick a random winner</button>
 	            </p>
 	        </div>
 	    </div>

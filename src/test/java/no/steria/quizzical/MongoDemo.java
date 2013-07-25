@@ -144,18 +144,44 @@ public class MongoDemo {
 		usersInDB = db.getCollection("users");
 		usersInDB.drop();
 		
-		int userId=1;
-		String username="martin", password="eple";
-		ArrayList<Integer> quizzes = new ArrayList<Integer>();
-		quizzes.add(1);
-		quizzes.add(2);		
+		int userId1=1;
+		String username1="martin", password1="eple";
+		ArrayList<Integer> quizzes1 = new ArrayList<Integer>();
+		quizzes1.add(1);
+		quizzes1.add(2);		
 
-		BasicDBObject user = new BasicDBObject();
-		user.put("userId", userId);
-		user.put("username", username);
-		user.put("password", password);
-		user.put("quizzes", quizzes);
-		usersInDB.insert(user);
+		BasicDBObject user1 = new BasicDBObject();
+		user1.put("userId", userId1);
+		user1.put("username", username1);
+		user1.put("password", password1);
+		user1.put("quizzes", quizzes1);
+		usersInDB.insert(user1);
+
+		int userId2=2;
+		String username2="nikolai", password2="sopp";
+		ArrayList<Integer> quizzes2 = new ArrayList<Integer>();
+		quizzes2.add(3);
+		quizzes2.add(4);		
+
+		BasicDBObject user2 = new BasicDBObject();
+		user2.put("userId", userId2);
+		user2.put("username", username2);
+		user2.put("password", password2);
+		user2.put("quizzes", quizzes2);
+		usersInDB.insert(user2);
+		
+		int userId3=3;
+		String username3="andy", password3="sitron";
+		ArrayList<Integer> quizzes3 = new ArrayList<Integer>();
+		quizzes3.add(1);
+		quizzes3.add(5);		
+
+		BasicDBObject user3 = new BasicDBObject();
+		user3.put("userId", userId3);
+		user3.put("username", username3);
+		user3.put("password", password3);
+		user3.put("quizzes", quizzes3);
+		usersInDB.insert(user3);
 	}
 		
 }

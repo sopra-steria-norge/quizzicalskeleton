@@ -26,14 +26,14 @@
 	<div ng-repeat="quiz in quizzes">
 		<hr>		
 	    <div class="row">
-	        <div class="span4">
+	        <div class="span5">
 	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
 				{{quiz.quizDesc}}
-	        </div>
-	        <div class="span1 pull-right">
-	            <a href="#/answerQuiz/{{quiz.quizId}}"><button class="btn btn-success btn-block"><i class="icon-play"></i> Test</button></a>
-	            <a href="#/admin/addquiz/{{quiz.quizId}}"><button class="btn btn-warning btn-block"><i class="icon-pencil"></i> Edit</button></a>
-	            <button class="btn btn-danger btn-block"><i class="icon-remove"></i> Delete</button>
+				<br><br>
+	            <a href="#/answerQuiz/{{quiz.quizId}}"><button class="btn"><i class="icon-play"></i> Test</button></a>
+	            <a href="#/admin/addquiz/{{quiz.quizId}}"><button class="btn"><i class="icon-pencil"></i> Edit</button></a>
+	            <button class="btn" ng-click=""><i class="icon-ban-circle"></i> Deactivate</button>
+	            <button class="btn" ng-click="removeQuiz(quiz)"><i class="icon-trash"></i> Delete</button>
 	        </div>
 	    </div>
     </div>

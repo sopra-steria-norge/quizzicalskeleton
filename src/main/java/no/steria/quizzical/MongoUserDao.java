@@ -12,8 +12,8 @@ import com.mongodb.MongoClient;
 
 public class MongoUserDao{
 			
-	private DB db;
-	private DBCollection collection;
+	private static DB db;
+	private static DBCollection collection;
 	
 	public MongoUserDao() {
 		try {
@@ -25,23 +25,37 @@ public class MongoUserDao{
 		collection = db.getCollection("users");
 	}
 		
-	public User getUser(int userId){
+	public static User getUser(int userId){
 		User user = null;
 		DBCursor cursor = collection.find(new BasicDBObject("userId",userId));
 		while(cursor.hasNext()){
-			DBObject next = cursor.next();
-			String username = (String) next.get("username");
-			String password = (String) next.get("password");			
+			DBObject document = cursor.next();
+			String username = (String) document.get("username");
+			String password = (String) document.get("password");			
 			@SuppressWarnings("unchecked")
-			ArrayList<Integer> quizzes = (ArrayList<Integer>) next.get("quizzes");
+			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
 			user = new User(userId, username, password, quizzes);
 		}
 		return user;
 	}
 
-	
-	public void addQuizToUser(int userId, int quizId) {
+	public static void addQuizIdToUser(int userId, int quizId) {
 		// Implement method
 	}
 
+	public static void removeQuizIdFromUsers(int quizId){
+		DBCursor cursor = collection.find();
+		while (cursor.hasNext()){
+			DBObject document = cursor.next();	
+			@SuppressWarnings("unchecked")
+			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
+			if(quizzes.contains(quizId)){
+				collection.remove(document);
+				quizzes.remove((Object)quizId);
+				document.put("quizzes", quizzes);
+				collection.insert(document);
+			}
+		}
+	}
+	
 }

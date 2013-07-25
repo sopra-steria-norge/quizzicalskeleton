@@ -21,7 +21,6 @@ public class AdminServlet extends HttpServlet {
 
 	private Quiz quiz;
 	private MongoQuizDao mongoQuizDao;
-	private MongoUserDao mongoUserDao;
 	private MongoResponseDao mongoResponseDao;
 	
 	@Override
@@ -123,7 +122,7 @@ public class AdminServlet extends HttpServlet {
 		if(mode == 2){
 			// Retrieves all quizzes by a userId
 			int userId = Integer.parseInt(req.getParameter("userId"));
-			ArrayList<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
+			ArrayList<Integer> usersQuizIds = MongoUserDao.getUser(userId).getQuizIds();
 			ArrayList<Quiz> requestedQuizzes = new ArrayList<Quiz>();
 			for(Integer quizId : usersQuizIds){
 				Quiz quiz = mongoQuizDao.getQuiz(quizId);
@@ -145,13 +144,17 @@ public class AdminServlet extends HttpServlet {
 			mapper.writeValue(writer, mongoResponseDao.drawRandomWinner(quizId));
 			resp.setContentType("text/json");
 		}
+		else if(mode == 5){
+			// Delete a quiz
+			int quizId = Integer.parseInt(req.getParameter("quizId"));
+			mongoQuizDao.remove(quizId);
+		}
 	}
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		mongoQuizDao = new MongoQuizDao();
-		mongoUserDao = new MongoUserDao();
 		mongoResponseDao = new MongoResponseDao();
 	}
 

@@ -101,10 +101,8 @@ angular.module('quizControllers')
 		};
 
 		$scope.winner = [];
-		$scope.buttonPushed = "";		
 		
 		$scope.drawRandomWinner = function(quizId){
-			$scope.buttonPushed = quizId;
 			$http({method: "GET", url: "adminQuiz?mode=4&quizId=" + quizId}).
 			success(function(data) {
 				for (i = 0; i < $scope.quizzes.length; i++){
@@ -113,9 +111,27 @@ angular.module('quizControllers')
 					}
 				}				
 			}).
-			error(function(data,status) {
+			error(function(data,status){
 				console.log("Error:" + status);
 			});			
 		};
+		
+		$scope.removeQuiz = function(quiz){
+			var confirmDelete = confirm("Are you sure you want to delete \""+quiz.quizName+"\"?");
+			if(confirmDelete){
+				removeQuizFromDB(quiz.quizId);
+			}
+		};
+		
+		function removeQuizFromDB(quizId){
+			$http({method: "GET", url: "adminQuiz?mode=5&quizId=" + quizId}).
+			success(function(data){
+				window.location.assign("#/admin/overview");
+				window.location.reload(true);
+			}).
+			error(function(data,status){
+				console.log("Error:" + status);
+			});	
+		}
 		
 }]);

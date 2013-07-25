@@ -48,10 +48,7 @@ public class MongoQuizDao implements QuizDao {
 
 	@Override
 	public Quiz getQuiz(int quizId) {
-		BasicDBObject whereQuery = new BasicDBObject();
-		whereQuery.put("quizId", quizId);
-		
-		DBObject quizObject = collection.findOne(whereQuery);
+		DBObject quizObject = collection.findOne(new BasicDBObject("quizId", quizId));
 		
 		if (quizObject == null){
 			throw new IllegalArgumentException("The requested quiz (quizId=" + quizId + ") is not available.");
@@ -74,7 +71,7 @@ public class MongoQuizDao implements QuizDao {
 		if (quizId == -1){
 			quizId = getAvailableQuizId();
 		} else {
-			makeSureAvailable(quizId);
+			remove(quizId);
 		}
 		document.put("quizId", quizId);
 		document.put("name", quiz.getQuizName());
@@ -99,10 +96,13 @@ public class MongoQuizDao implements QuizDao {
 		return index;
 	}
 	
-	private void makeSureAvailable(int quizId){
+	public void remove(int quizId){
 		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
 		if (cursor.hasNext()){
 			collection.remove(cursor.next());
 		}
+		MongoUserDao.removeQuizIdFromUsers(quizId);
+		
 	}
+			
 }
