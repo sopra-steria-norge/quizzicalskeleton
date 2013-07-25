@@ -10,6 +10,7 @@ angular.module('quizControllers')
 		};
 		
 		$scope.newquizInitialCopy;
+		$scope.isEditing = false;
 		
 		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
 		success(function(data) {
@@ -42,7 +43,7 @@ angular.module('quizControllers')
 		
 		function initAddQuiz(){
 			if ($route.current.templateUrl === "templates/adminAddQuiz.html"){
-				if ($routeParams.quizId !== ""){
+				if ($routeParams.quizId !== undefined){
 					var i;
 					for (i = 0; i < $scope.quizzes.length; i++){
 						var quiz = $scope.quizzes[i];
@@ -50,6 +51,7 @@ angular.module('quizControllers')
 							$scope.newquiz = quiz;
 						}
 					}
+					$scope.isEditing = true;
 				}
 				window.onbeforeunload = function (event) {
 					var message = "Your quiz is not submitted, are you sure you want to exit?";

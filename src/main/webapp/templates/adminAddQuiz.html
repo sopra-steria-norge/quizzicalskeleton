@@ -24,8 +24,8 @@
 <div class="admin-quiz-box">
 	<form method="post">
 		<h2 class="quiz-box-heading">Add quiz</h2>
+		<h4 class="" ng-show="isEditing">(editing quiz "{{newquiz.quizName}}")</h4>
 		<hr>
-		
 		<label class="row">
 			<span class="span3">
 				<input type="text" name="quizName" ng-model="newquiz.quizName" placeholder="Type a name for the quiz" required="required">
