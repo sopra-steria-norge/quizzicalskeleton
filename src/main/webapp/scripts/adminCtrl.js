@@ -24,7 +24,6 @@ angular.module('quizControllers')
 			console.log("Error: " + status + ": " + data);
 		});
 		
-		
 		$scope.$on("$locationChangeStart", function(event){
 			if (!isSubmitting){
 				if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
