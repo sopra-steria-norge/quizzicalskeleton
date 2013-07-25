@@ -6,7 +6,8 @@ angular.module('quizControllers')
 				quizName: "",
 				quizDesc: "",
 				submitMsg: "",
-				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}]
+				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}],
+				userId: "1"
 		};
 		
 		$scope.newquizInitialCopy = {};

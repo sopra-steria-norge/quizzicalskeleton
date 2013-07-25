@@ -8,6 +8,6 @@ public interface QuizDao {
 	
 	Quiz getQuiz(int quizId);
 	
-	void insertQuizToDB(Quiz quiz);
+	void insertQuizToDB(Quiz quiz, int userId);
 	
 }
