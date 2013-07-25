@@ -27,7 +27,7 @@
 		<hr>		
 	    <div class="row quiz-active-{{quiz.active}}">
 	        <div class="span5">
-	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
+	            <h4 class="quiz-box-question">{{quiz.quizName}} <div ng-show="!quiz.active">(not active)</div></h4>
 				{{quiz.quizDesc}}
 				<br><br>
 	            <a href="#/answerQuiz/{{quiz.quizId}}"><button class="btn"><i class="icon-play"></i> Test</button></a>
