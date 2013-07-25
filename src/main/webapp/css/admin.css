@@ -46,4 +46,9 @@ textarea.ta-no-resize {
 	box-shadow: none;
 }
 
-
+.quiz-active-false{
+	background-color: #e5e5e5;
+}
+.quiz-active-true{
+		
+}

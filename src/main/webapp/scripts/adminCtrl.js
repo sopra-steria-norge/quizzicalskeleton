@@ -83,14 +83,13 @@ angular.module('quizControllers')
 		};
 		
 		$scope.removeQuestion = function(questions, index){
-			//$scope.newquiz.questions.splice(index, 1);
 			questions.splice(index, 1);
 		};
 		
 		$scope.submitQuiz = function(){
 			var submitData = $scope.newquiz;
 			
-			$http({method: "POST", url: "adminQuiz", data: JSON.stringify(submitData) }).
+			$http({method: "POST", url: "adminQuiz", data: JSON.stringify(submitData)}).
 			success(function(data) {
 				isSubmitting = true;
 				$location.path("/admin/overview/");
@@ -135,7 +134,7 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});
 		}
-		
+	
 		$scope.respondentsList = [];
 		
 		function getRespondentsFromDB(quizId){
@@ -151,5 +150,15 @@ angular.module('quizControllers')
 		$scope.showRespondents = function(quizId){
 			getRespondentsFromDB(quizId);
 		};
-		
+
+		$scope.changeActiveStatusTo = function(active, quizId){
+			$http({method: "GET", url: "adminQuiz?mode=6&quizId=" + quizId + "&userId=1&active=" + active}).
+			success(function(data){
+				window.location.reload(true);
+			}).
+			error(function(data,status){
+				console.log("Error:" + status);
+			});	
+		};
+
 }]);

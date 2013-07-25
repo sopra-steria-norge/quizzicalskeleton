@@ -104,9 +104,7 @@ public class AdminServlet extends HttpServlet {
 				submitMsg = entry.getValue().asText();
 			} else if(entry.getKey().equals("userId")){
 				userId = entry.getValue().asInt();
-			} 
-			
-			
+			}
 		}
 		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
 		mongoQuizDao.insertQuizToDB(quiz, userId);
@@ -132,25 +130,29 @@ public class AdminServlet extends HttpServlet {
 			}			
 			mapper.writeValue(writer, requestedQuizzes);
 			resp.setContentType("text/json");
-		}
-		else if(mode == 3){
+		}else if(mode == 3){
 			// Checks current number of responses
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			mapper.writeValue(writer, mongoResponseDao.countResponsesForQuiz(quizId));
 			resp.setContentType("text/json");
-		}
-		else if(mode == 4){
+		}else if(mode == 4){
 			// Picks a random winner of a quiz
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			mapper.writeValue(writer, mongoResponseDao.drawRandomWinner(quizId));
 			resp.setContentType("text/json");
-		}
-		else if(mode == 5){
+		}else if(mode == 5){
 			// Delete a quiz
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			mongoQuizDao.remove(quizId);
-		}
-		else if(mode == 7){
+		}else if(mode == 6){
+			// Change active status of quiz
+			int quizId = Integer.parseInt(req.getParameter("quizId"));
+			int userId = Integer.parseInt(req.getParameter("userId"));
+			Boolean active = Boolean.parseBoolean(req.getParameter("active"));
+			Quiz quiz = mongoQuizDao.getQuiz(quizId);
+			quiz.setActive(active);
+			mongoQuizDao.insertQuizToDB(quiz, userId);
+		}else if(mode == 7){
 			// Retrieves a list of respondents
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			mapper.writeValue(writer, mongoResponseDao.getRespondents(quizId));

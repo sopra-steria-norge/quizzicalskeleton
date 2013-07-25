@@ -60,8 +60,10 @@ public class MongoQuizDao implements QuizDao {
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
+		Boolean active = (Boolean) quizObject.get("active");
 		
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
+		quiz.setActive(active);
 		return quiz;
 	}
 
@@ -78,6 +80,7 @@ public class MongoQuizDao implements QuizDao {
 		document.put("desc", quiz.getQuizDesc());
 		document.put("submitMsg", quiz.getSubmitMsg());
 		document.put("questions", quiz.getQuestions());
+		document.put("active", quiz.getActive());
 		collection.insert(document);
 		mongoUserDao.addQuizIdToUser(quiz.getQuizId(), userId);
 	}

@@ -9,6 +9,7 @@ public class Quiz {
 	private String submitMsg;
 	private BasicDBList questions;
 	private int responses;
+	private boolean active;
 	
 	public Quiz(){
 		
@@ -20,6 +21,7 @@ public class Quiz {
 		this.quizDesc = quizDesc;
 		this.submitMsg = submitMsg;
 		this.questions = questions;
+		this.active = true;
 	}
 
 	public int getQuizId() {
@@ -53,4 +55,13 @@ public class Quiz {
 	public int getResponses(){
 		return responses;
 	}
+	
+	public boolean getActive(){
+		return active;
+	}
+	
+	public void setActive(boolean active){
+		this.active = active;
+	}
+	
 }

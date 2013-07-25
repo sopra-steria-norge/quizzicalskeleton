@@ -105,14 +105,12 @@ public class MongoDemo {
 		quiz.put("desc", quizDescription);
 		quiz.put("submitMsg", quizSubmittedMsg);
 		quiz.put("questions", questions);
+		quiz.put("active", true);
 		return quiz;
 	}
 	
 	public static Quiz getQuizHelper(int quizId) {
-		BasicDBObject whereQuery = new BasicDBObject();
-		whereQuery.put("quizId", quizId);
-		
-		DBObject quizObject = quizzesInDB.findOne(whereQuery);
+		DBObject quizObject = quizzesInDB.findOne(new BasicDBObject("quizId", quizId));
 		
 		String quizName = (String) quizObject.get("name");
 		String quizDesc = (String) quizObject.get("desc");
