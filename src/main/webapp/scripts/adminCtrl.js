@@ -94,6 +94,7 @@ angular.module('quizControllers')
 			success(function(data) {
 				isSubmitting = true;
 				$location.path("/admin/overview/");
+				window.onbeforeunload = null;
 			}).
 			error(function(data,status) {
 				console.log("Error:" + status);

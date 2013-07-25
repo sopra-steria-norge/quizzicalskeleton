@@ -31,13 +31,18 @@
 	            <strong>Picked winner (from all respondents):</strong><br>
 	            {{quiz.winner[0]}} {{quiz.winner[1]}}
 	        </div>
-	        <div class="span2">
+	        <div class="span4">
 	            <p class="lead text-success">
 	                {{quiz.responses}} respondents
 					<br>
-					<button class="btn" ng-click="drawRandomWinner(quiz.quizId)">Pick a random winner</button>
+					<button type="button" class="btn" ng-click="drawRandomWinner(quiz.quizId)" ng-disabled="quiz.responses < 1">Pick a random winner</button>
+					<button type="button" class="btn" ng-click="showRespondents(quiz.quizId)">Show respondents</button>
 	            </p>
 	        </div>
+	    </div>
+	    <div class="row">
+	    	
+	    
 	    </div>
 	</div>
 </div>
