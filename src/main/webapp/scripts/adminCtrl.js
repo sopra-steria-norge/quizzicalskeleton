@@ -132,7 +132,7 @@ angular.module('quizControllers')
 			}).
 			error(function(data,status){
 				console.log("Error:" + status);
-			});	
+			});
 		}
 		
 }]);
