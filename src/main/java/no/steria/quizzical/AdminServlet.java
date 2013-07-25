@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 
-public class AdminServlet extends HttpServlet {
+public class AdminServlet extends SecuredServlet {
 
 	private Quiz quiz;
 	private MongoQuizDao mongoQuizDao;

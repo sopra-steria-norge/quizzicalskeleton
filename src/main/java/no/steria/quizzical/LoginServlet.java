@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet {
 		writer
 		.append("<html>") //
 		.append("<body>")
+		.append("<p>Login using any user and password: 'password'</p>")
 		.append("<form action='login' method='POST'>")
 		.append("User <input type='text' name='user'/><br/>")
 		.append("Password <input type='password' name='password'/><br/>")
