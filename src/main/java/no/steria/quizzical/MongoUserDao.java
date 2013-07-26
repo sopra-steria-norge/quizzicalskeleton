@@ -24,12 +24,19 @@ public class MongoUserDao{
 		}
 		collection = db.getCollection("users");
 	}
-		
+
 	public User getUser(int userId){
+		return this.getUser("userId",userId);
+	}
+	public User getUser(String username){
+		return this.getUser("username", username);
+	}
+	private User getUser(String key, Object value){
 		User user = null;
-		DBCursor cursor = collection.find(new BasicDBObject("userId",userId));
+		DBCursor cursor = collection.find(new BasicDBObject(key,value));
 		while(cursor.hasNext()){
 			DBObject document = cursor.next();
+			Integer userId = (Integer) document.get("userId");
 			String username = (String) document.get("username");
 			String password = (String) document.get("password");			
 			@SuppressWarnings("unchecked")
@@ -38,7 +45,8 @@ public class MongoUserDao{
 		}
 		return user;
 	}
-
+	
+	
 	public void addQuizIdToUser(int quizId, int userId) {
 		DBObject document = collection.findOne(new BasicDBObject("userId",userId));
 		@SuppressWarnings("unchecked")

@@ -11,22 +11,13 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.DateTime;
 
 public class LoginServlet extends HttpServlet {
-	
+
+	private MongoUserDao mongoUserDao;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-//		PrintWriter writer = resp.getWriter();
-//		writer
-//		.append("<html>") //
-//		.append("<body>")
-//		.append("<div class='container'>")
-//		.append("<h2 class='form-signin-heading'>Login using any user and password: 'password'</h2>")
-//		.append("<form action='login' method='POST'>")
-//		.append("<input type='text' name='user' class='input-block-level' placeholder='Username'/>")
-//		.append("<input type='password' name='password' class='input-block-level' placeholder='Password'/>")
-//		.append("<button type='submit' name='loginButton' class='bt btn-large btn-primary'>Login</button>")
-//		.append("</form></div></body></html>");
+
 	}
 	
 	@Override
@@ -36,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		String username = req.getParameter("user");
 		if (username == null || username.trim().isEmpty() || !validatePassword(req)) {
-			resp.sendRedirect("login");
+			resp.sendError(401);
 		}else{
 			session.setAttribute("username", username);
 			session.setAttribute("valid", validUntil);
@@ -45,6 +36,21 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	private boolean validatePassword(HttpServletRequest req) {
-		return "password".equals(req.getParameter("password"));
+		User user = null;
+		Boolean validated = false;
+		try{
+			user = mongoUserDao.getUser(req.getParameter("user"));
+			validated = user.getPassword().equals(req.getParameter("password"));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return validated;
+
+	}
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		mongoUserDao = new MongoUserDao();
 	}
 }

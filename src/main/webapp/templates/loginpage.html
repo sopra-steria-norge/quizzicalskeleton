@@ -8,7 +8,13 @@
 
 <div class="answer-quiz-box">
 	<form class="quizForm" action="login" method="POST">
-		<h2 class="quiz-box-heading">Login using any user and password: "password"</h2>
+		<h2 class="quiz-box-heading">Admin area login</h2>
+		<div class="" ng-show="loginError">
+			<div class="alert alert-error">
+				<i class="icon-warning-sign"></i>
+				{{errorMsg}}
+			</div>
+		</div>		
 		<input type="text" class="input-block-level" name="user" placeholder="Username"/>
 		<input type="password" class="input-block-level" name="password" placeholder="Password"/>
 		<button type="submit" class="bt btn-large btn-primary" name="loginButton">Login</button>

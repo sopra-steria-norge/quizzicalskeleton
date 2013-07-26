@@ -7,7 +7,7 @@
         config(['$routeProvider', function($routeProvider) {
                 $routeProvider.
                     when('/', {
-                        templateUrl: 'templates/frontpage.html', 
+                        templateUrl: 'templates/loginpage.html', 
                         controller: ''
                     }).
                     when('/answerQuiz/:quizId', {

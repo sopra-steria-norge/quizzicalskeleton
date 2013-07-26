@@ -13,6 +13,8 @@ angular.module('quizControllers')
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
 		var isSubmitting = false;
+
+		$scope.winner = [];
 		
 		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
 		success(function(data) {
@@ -99,8 +101,6 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});			
 		};
-
-		$scope.winner = [];
 		
 		$scope.drawRandomWinner = function(quizId){
 			$http({method: "GET", url: "adminQuiz?mode=4&quizId=" + quizId}).
