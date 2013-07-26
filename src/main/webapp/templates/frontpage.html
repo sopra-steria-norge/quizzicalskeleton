@@ -1,3 +1,16 @@
-<h1>Hello from Quizzical</h1>
-<p>Nothing here.. heyhey</p>
-<p><a href="login">Admin Login</a></p>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="#"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
+        </div>
+    </div>
+</div>
+
+<div class="answer-quiz-box">
+	<form class="quizForm" action="login" method="POST">
+		<h2 class="quiz-box-heading">Login using any user and password: "password"</h2>
+		<input type="text" class="input-block-level" name="user" placeholder="Username"/>
+		<input type="password" class="input-block-level" name="password" placeholder="Password"/>
+		<button type="submit" class="bt btn-large btn-primary" name="loginButton">Login</button>
+	</form>
+</div>

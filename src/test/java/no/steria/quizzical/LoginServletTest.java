@@ -1,6 +1,5 @@
 package no.steria.quizzical;
 
-import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -8,14 +7,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.dom4j.DocumentHelper;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.junit.After;
@@ -30,25 +25,23 @@ public class LoginServletTest {
 	private DateTime currentTime = new DateTime(2013, 7, 25, 16, 5, 0);
 	
 	
-	@Test
-	public void shouldDisplayLoginPage() throws Exception {
-		when(req.getMethod()).thenReturn("GET");
-		StringWriter htmlDoc = new StringWriter();
-		when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
-		servlet.service(req, resp);
-		
-		assertThat(htmlDoc.toString()) //
-			.contains("<html>") //
-			.contains("<body>")
-			.contains("<form action='login' method='POST'")
-			.contains("User <input type='text' name='user'")
-			.contains("Password <input type='password' name='password'")
-			.contains("<input type='submit' name='loginButton' value='Login'")
-			;
-		
-		DocumentHelper.parseText(htmlDoc.toString());
-		
-	}
+//	@Test
+//	public void shouldDisplayLoginPage() throws Exception {
+//		when(req.getMethod()).thenReturn("GET");
+//		StringWriter htmlDoc = new StringWriter();
+//		when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
+//		servlet.service(req, resp);
+//		
+//		assertThat(htmlDoc.toString())
+//			.contains("<form action='login' method='POST'")
+//			.contains("<input type='text' name='user'")
+//			.contains("<input type='password' name='password'")
+//			.contains("<button type='submit' name='loginButton'")
+//			;
+//		
+//		DocumentHelper.parseText(htmlDoc.toString());
+//		
+//	}
 	
 	@Test
 	public void shouldLogin() throws Exception {
