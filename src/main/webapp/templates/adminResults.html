@@ -36,11 +36,12 @@
 	                {{quiz.responses}} respondents
 					<br>
 					<button type="button" class="btn" ng-click="drawRandomWinner(quiz.quizId)" ng-disabled="quiz.responses < 1">Pick a random winner</button>
-					<button type="button" class="btn" ng-click="showRespondents(quiz.quizId)">Show respondents</button>
+					<button type="button" class="btn" ng-click="showRespondents(quiz.quizId)" ng-hide="showRespondentState['q' + quiz.quizId]">Show respondents</button>
+					<button type="button" class="btn" ng-click="hideRespondents(quiz.quizId)" ng-show="showRespondentState['q' + quiz.quizId]">Hide respondents</button>
 	            </p>
 	        </div>
 	  	</div>
-	    <div class="row" ng-show="true">
+	    <div class="row" ng-show="showRespondentState['q' + quiz.quizId]">
 	    	<table class="table">
 	    		<tr>
 	    			<th>#</th>
@@ -48,7 +49,7 @@
 	    			<th>Email</th>
 	    			<th>Score</th>
 	    		</tr>
-	    		<tr ng-repeat="respondent in respondentsList">
+	    		<tr ng-repeat="respondent in quiz.respondentsList | orderBy:'-score'">
 	    			<td>{{$index + 1}}</td>
 	    			<td>{{respondent.name}}</td>
 	    			<td>{{respondent.email}}</td>

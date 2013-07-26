@@ -106,7 +106,7 @@ angular.module('quizControllers')
 			$http({method: "GET", url: "adminQuiz?mode=4&quizId=" + quizId}).
 			success(function(data) {
 				for(i = 0; i < $scope.quizzes.length; i++){
-					if($scope.quizzes[i].quizId === parseInt(quizId, 10)){
+					if($scope.quizzes[i].quizId === quizId){
 						$scope.quizzes[i].winner = data;
 					}
 				}
@@ -134,21 +134,31 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});
 		}
-	
-		$scope.respondentsList = [];
 		
-		function getRespondentsFromDB(quizId){
+		function updateRespondentsFromDB(quizId){
 			$http({method: "GET", url: "adminQuiz?mode=7&quizId=" + quizId}).
 			success(function(data){
-				$scope.respondentsList = data;
+				for(i = 0; i < $scope.quizzes.length; i++){
+					if($scope.quizzes[i].quizId === quizId){
+						$scope.quizzes[i].respondentsList = data;
+						$scope.quizzes[i].responses = $scope.quizzes[i].respondentsList.length;
+					}
+				}
 			}).
 			error(function(data,status){
 				console.log("Error:" + status);
 			});
 		}
 		
+		$scope.showRespondentState = {};
+		
 		$scope.showRespondents = function(quizId){
-			getRespondentsFromDB(quizId);
+			$scope.showRespondentState["q" + quizId] = true;
+			updateRespondentsFromDB(quizId);
+		};
+		
+		$scope.hideRespondents = function(quizId){
+			$scope.showRespondentState["q" + quizId] = false;
 		};
 
 		$scope.changeActiveStatusTo = function(active, quizId){
