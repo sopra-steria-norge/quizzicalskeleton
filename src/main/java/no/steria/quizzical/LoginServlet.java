@@ -15,12 +15,6 @@ public class LoginServlet extends HttpServlet {
 	private MongoUserDao mongoUserDao;
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		DateTime validUntil = new DateTime().plusMinutes(30);
@@ -38,12 +32,8 @@ public class LoginServlet extends HttpServlet {
 	private boolean validatePassword(HttpServletRequest req) {
 		User user = null;
 		Boolean validated = false;
-		try{
-			user = mongoUserDao.getUser(req.getParameter("user"));
-			validated = user.getPassword().equals(req.getParameter("password"));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		user = mongoUserDao.getUser(req.getParameter("user"));
+		validated = user != null && user.getPassword().equals(req.getParameter("password"));
 		return validated;
 
 	}
@@ -52,5 +42,9 @@ public class LoginServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		mongoUserDao = new MongoUserDao();
+	}
+	
+	public void setMongoUserDao(MongoUserDao mongoUserDao) {
+		this.mongoUserDao = mongoUserDao;
 	}
 }
