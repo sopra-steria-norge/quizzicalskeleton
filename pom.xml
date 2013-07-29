@@ -274,6 +274,7 @@
 						<include>**/angular-mocks.js</include>
 						<include>**/testSetup.js</include>
 						<include>**/answerQuizCtrl.js</include>
+						<include>**/adminCtrl.js</include>
 					</sourceIncludes>
 					<format>progress</format>
 					<specIncludes>

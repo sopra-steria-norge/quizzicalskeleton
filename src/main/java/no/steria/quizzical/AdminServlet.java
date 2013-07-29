@@ -127,7 +127,8 @@ public class AdminServlet extends SecuredServlet {
 				Quiz quiz = mongoQuizDao.getQuiz(quizId);
 				quiz.setResponses(mongoResponseDao.countResponsesForQuiz(quizId));
 				requestedQuizzes.add(quiz);
-			}			
+			}
+			resp.setContentType("text/json");
 			mapper.writeValue(writer, requestedQuizzes);
 			
 		}else if(mode == 3){
