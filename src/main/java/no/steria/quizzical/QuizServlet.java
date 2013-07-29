@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+
 public class QuizServlet extends HttpServlet {
 
 	private Response quizResponse;
@@ -53,7 +56,8 @@ public class QuizServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+		resp.setContentType("text/json");
+		
 		ObjectMapper mapper = new ObjectMapper();
 		Quiz quiz = null;
 		PrintWriter writer = resp.getWriter();
@@ -65,11 +69,22 @@ public class QuizServlet extends HttpServlet {
 			int quizId = Integer.parseInt(req.getParameter("quizId"));
 			try {
 				quiz = mongoQuizDao.getQuiz(quizId);
+				
+				BasicDBList inputQuestions = quiz.getQuestions();
+				BasicDBList outputQuestions = new BasicDBList();
+				Iterator<Object> it = inputQuestions.iterator();
+				while (it.hasNext()){
+					BasicDBObject question = (BasicDBObject) it.next();
+					question.removeField("answer");
+					outputQuestions.add(question);
+				}
+				
 				if(!quiz.getActive()){
 					throw new IllegalArgumentException();
-				}				
+				}
+				
+				quiz.setResponses(-1);
 				mapper.writeValue(writer, quiz);
-				resp.setContentType("text/json");				
 			}catch(IllegalArgumentException e){
 				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				resp.getWriter().print(e.getMessage());

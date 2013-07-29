@@ -76,7 +76,17 @@ angular.module('quizControllers')
 		};
 		
 		$scope.removeAlternative = function(question, index){
+			if (question.alternatives[index].aid === question.answer){
+				question.answer = undefined;
+			} else if (question.alternatives[index].aid < question.answer){
+				question.answer--;
+			}
 			question.alternatives.splice(index, 1);
+			
+			var i;
+			for (i = 0; i < question.alternatives.length; i++){
+				question.alternatives[i].aid = 1 + i;
+			}
 		};
 		
 		$scope.addQuestion = function(){
@@ -86,6 +96,9 @@ angular.module('quizControllers')
 		
 		$scope.removeQuestion = function(questions, index){
 			questions.splice(index, 1);
+			for (i = 0; i < questions.length; i++){
+				questions[i].id = 1 + i;
+			}
 		};
 		
 		$scope.submitQuiz = function(){

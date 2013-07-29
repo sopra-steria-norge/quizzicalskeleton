@@ -111,6 +111,7 @@ public class AdminServlet extends SecuredServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setCharacterEncoding("UTF-8");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		PrintWriter writer = resp.getWriter();
@@ -128,7 +129,7 @@ public class AdminServlet extends SecuredServlet {
 				requestedQuizzes.add(quiz);
 			}			
 			mapper.writeValue(writer, requestedQuizzes);
-			resp.setContentType("text/json");
+			
 		}else if(mode == 3){
 			// Checks current number of responses
 			int quizId = Integer.parseInt(req.getParameter("quizId"));

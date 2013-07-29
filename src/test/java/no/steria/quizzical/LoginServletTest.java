@@ -15,7 +15,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class LoginServletTest {
@@ -24,26 +23,9 @@ public class LoginServletTest {
 	private HttpServletResponse resp = mock(HttpServletResponse.class);
 	private LoginServlet servlet = new LoginServlet();
 	private DateTime currentTime = new DateTime(2013, 7, 25, 16, 5, 0);
+	private MongoUserDao mongoUserDao = mock(MongoUserDao.class);
 	
-	
-//	@Ignore("Needs to be adapted for template use")
-//	public void shouldDisplayLoginPage() throws Exception {
-//		when(req.getMethod()).thenReturn("GET");
-//		StringWriter htmlDoc = new StringWriter();
-//		when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
-//		servlet.service(req, resp);
-//		
-//		assertThat(htmlDoc.toString())
-//			.contains("<form action='login' method='POST'")
-//			.contains("<input type='text' name='user'")
-//			.contains("<input type='password' name='password'")
-//			.contains("<button type='submit' name='loginButton'")
-//			;
-//		
-//		DocumentHelper.parseText(htmlDoc.toString());
-//	}
-	
-	@Ignore("Needs to be adapted for user database")
+	@Test
 	public void shouldLogin() throws Exception {
 		when(req.getMethod()).thenReturn("POST");
 		when(req.getParameter("user")).thenReturn("admin");
@@ -71,8 +53,23 @@ public class LoginServletTest {
 		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
 	}
 	
-	@Ignore("Needs to be adapted for user database")
-	public void shouldDenyIllegal() throws Exception {
+	@Test
+	public void shouldDenyUnknownUser() throws Exception {
+		when(req.getMethod()).thenReturn("POST");
+		when(req.getParameter("user")).thenReturn("unknown");
+		when(req.getParameter("password")).thenReturn("pasx");
+		HttpSession mockSession = mock(HttpSession.class);
+		when(req.getSession()).thenReturn(mockSession);
+		
+		servlet.service(req, resp);
+		
+		verify(resp).sendError(401);
+		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
+		
+	}
+	
+	@Test
+	public void shouldDenyIllegalPassword() throws Exception {
 		when(req.getMethod()).thenReturn("POST");
 		when(req.getParameter("user")).thenReturn("admin");
 		when(req.getParameter("password")).thenReturn("pasx");
@@ -87,7 +84,9 @@ public class LoginServletTest {
 
 	
 	@Before
-	public void setFixedTime() {
+	public void setup() {
+		when(mongoUserDao.getUser("admin")).thenReturn(new User(1, "admin", "password", null));
+		servlet.setMongoUserDao(mongoUserDao);
 		DateTimeUtils.setCurrentMillisFixed(currentTime.getMillis());
 	}
 	
