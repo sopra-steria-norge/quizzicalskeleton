@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>quizzical</groupId>
 	<artifactId>quizzical</artifactId>
-	<packaging>war</packaging>
 	<version>1.0</version>
+	<packaging>war</packaging>
 	<name>quizzical</name>
 
 	<repositories>
@@ -19,7 +19,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>eap</id>
@@ -31,14 +31,20 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
+
+		<pluginRepository>
+			<name>oss.sonatype.org</name>
+			<id>oss.sonatype.org</id>
+			<url>http://oss.sonatype.org/content/groups/public</url>
+		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
@@ -133,6 +139,91 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>prepare-war</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<useCache>true</useCache>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.2</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<file>target/quizzical-1.0/index.html</file>
+					<regexFlags>
+						<regexFlag>CASE_INSENSITIVE</regexFlag>
+						<regexFlag>MULTILINE</regexFlag>
+						<regexFlag>DOTALL</regexFlag>
+					</regexFlags>
+
+					<replacements>
+						<replacemmt>
+							<token>&lt;!-- MINIFY --&gt;.*&lt;!-- END MINIFY --&gt;</token>
+							<value>&lt;script src="scripts/all-min.js"&gt;&lt;/script&gt;</value>
+						</replacemmt>
+					</replacements>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/ext/angular.min.js</exclude>
+						<exclude>**/ext/jquery.min.js</exclude>
+						<exclude>**/ext/bootstrap.min.js</exclude>
+						<exclude>**/app.js</exclude>
+						<exclude>**/answerQuizCtrl.js</exclude>
+						<exclude>**/adminCtrl.js</exclude>
+					</excludes>
+					<aggregations>
+						<aggregation>
+							<insertNewLine>false</insertNewLine>
+							<removeIncluded>false</removeIncluded>
+							<includes>
+								<include>**/ext/angular.min.js</include>
+								<include>**/ext/jquery.min.js</include>
+								<include>**/ext/bootstrap.min.js</include>
+								<include>**/app.js</include>
+								<include>**/answerQuizCtrl.js</include>
+								<include>**/adminCtrl.js</include>
+							</includes>
+							<output>src/main/webapp/scripts/all.js</output>
+						</aggregation>
+					</aggregations>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jslint-maven-plugin</artifactId>
 				<version>1.0.1</version>
@@ -143,6 +234,8 @@
 					</includes>
 					<excludes>
 						<exclude>**/ext/*.js</exclude>
+						<exclude>**/all-min.js</exclude>
+						<exclude>**/all.js</exclude>
 					</excludes>
 					<disallowInsecureCharsInRegExp>false</disallowInsecureCharsInRegExp>
 					<disallowUndefinedVariables>false</disallowUndefinedVariables>
@@ -189,8 +282,9 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
@@ -211,6 +305,7 @@
 							<outputDirectory>webapps</outputDirectory>
 							<warName>ROOT</warName>
 						</configuration>
+
 					</plugin>
 					<plugin>
 						<artifactId>maven-compiler-plugin</artifactId>
