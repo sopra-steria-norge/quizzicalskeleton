@@ -76,28 +76,15 @@ angular.module('quizControllers')
 		};
 		
 		$scope.removeAlternative = function(question, index){
-//			if (question.answer < index){
-//				question.answer = index - 1;
-//			} else {
-//				// 
-//			}
-			alert("Question.ans: " + question.answer + ", question.alternatives[index].aid: " + question.alternatives[index].aid);
-			
-			if (question.alternatives[index].aid == question.answer){
+			if (question.alternatives[index].aid === question.answer){
 				question.answer = undefined;
-			} else if (question.answer > question.alternatives[index].aid){
+			} else if (question.alternatives[index].aid < question.answer){
 				question.answer--;
 			}
 			question.alternatives.splice(index, 1);
 			
 			var i;
 			for (i = 0; i < question.alternatives.length; i++){
-				alert("question.answer=" + question.answer + ", [i].aid" + question.alternatives[i].aid);
-				
-				//if (question.answer === question.alternatives[i].aid){
-					
-					//question.answer = i;
-				// }
 				question.alternatives[i].aid = 1 + i;
 			}
 		};
