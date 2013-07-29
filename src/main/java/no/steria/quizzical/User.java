@@ -1,14 +1,14 @@
 package no.steria.quizzical;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 	private int userId;
 	private String username;
 	private String password;
-	private ArrayList<Integer> quizzes;
+	private List<Integer> quizzes;
 	
-	public User(int userId, String username, String password, ArrayList<Integer> quizzes) {
+	public User(int userId, String username, String password, List<Integer> quizzes) {
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
@@ -27,7 +27,7 @@ public class User {
 		return password;
 	}
 
-	public ArrayList<Integer> getQuizIds() {
+	public List<Integer> getQuizIds() {
 		return quizzes;
 	}
 	

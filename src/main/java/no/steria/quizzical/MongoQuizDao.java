@@ -2,6 +2,8 @@ package no.steria.quizzical;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -37,11 +39,10 @@ public class MongoQuizDao implements QuizDao {
 			Integer quizId = (Integer) next.get("quizId");
 			String quizName = (String) next.get("name");
 			String quizDesc = (String) next.get("desc");
-			String submitMsg = (String) next.get("submitMsg");
-			
+			String submitMsg = (String) next.get("submitMsg");			
 			BasicDBList questions = (BasicDBList) next.get("questions");
 			
-			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
+			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions));
 			quizzes.add(quiz);
 		}
 		
@@ -62,9 +63,34 @@ public class MongoQuizDao implements QuizDao {
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
 		Boolean active = (Boolean) quizObject.get("active");
 		
-		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
+		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions));
 		quiz.setActive(active);
 		return quiz;
+	}
+	
+	public List<Question> createQuestionObject(BasicDBList questionsBasicDBList){
+		List<Question> questionsList = new ArrayList<Question>();
+		Iterator<Object> questionsIterator = questionsBasicDBList.iterator();
+		while(questionsIterator.hasNext()){
+			BasicDBObject questionBasicDBObject = (BasicDBObject) questionsIterator.next();
+			int id = (int) questionBasicDBObject.get("id");
+			String text = (String) questionBasicDBObject.get("text");
+			BasicDBList alternativesBasicDBList = (BasicDBList) questionBasicDBObject.get("alternatives");
+			int answer = (int) questionBasicDBObject.get("answer");
+
+			List<Alternative> alternativesList = new ArrayList<Alternative>();
+			Iterator<Object> alternativesIterator = alternativesBasicDBList.iterator();
+			while(alternativesIterator.hasNext()){
+				BasicDBObject alternativeBasicDBObject = (BasicDBObject) alternativesIterator.next();
+				int aid = (int) alternativeBasicDBObject.get("aid");
+				String atext = (String) alternativeBasicDBObject.get("atext");
+				Alternative alternative = new Alternative(aid, atext);
+				alternativesList.add(alternative);
+			}
+			Question question = new Question(id, text, alternativesList, answer);
+			questionsList.add(question);
+		}
+		return questionsList;
 	}
 
 	@Override

@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.mongodb.BasicDBList;
@@ -105,7 +108,7 @@ public class AdminServlet extends SecuredServlet {
 				userId = entry.getValue().asInt();
 			}
 		}
-		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
+		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, mongoQuizDao.createQuestionObject(questions));
 		mongoQuizDao.insertQuizToDB(quiz, userId);
 	}
 	
@@ -119,46 +122,71 @@ public class AdminServlet extends SecuredServlet {
 		int mode = Integer.parseInt(req.getParameter("mode"));
 		
 		if(mode == 2){
-			// Retrieves all quizzes by a userId
-			int userId = Integer.parseInt(req.getParameter("userId"));
-			ArrayList<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
-			ArrayList<Quiz> requestedQuizzes = new ArrayList<Quiz>();
-			for(Integer quizId : usersQuizIds){
-				Quiz quiz = mongoQuizDao.getQuiz(quizId);
-				quiz.setResponses(mongoResponseDao.countResponsesForQuiz(quizId));
-				requestedQuizzes.add(quiz);
-			}
-			resp.setContentType("text/json");
-			mapper.writeValue(writer, requestedQuizzes);
-			
+			retriveQuizzesByUserId(req, resp, mapper, writer);
 		}else if(mode == 3){
-			// Checks current number of responses
-			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			mapper.writeValue(writer, mongoResponseDao.countResponsesForQuiz(quizId));
-			resp.setContentType("text/json");
+			retrieveNumberOfResponsesByQuizId(req, resp, mapper, writer);
 		}else if(mode == 4){
-			// Picks a random winner of a quiz
-			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			mapper.writeValue(writer, mongoResponseDao.drawRandomWinner(quizId));
-			resp.setContentType("text/json");
+			retrieveRandomWinnerOfQuiz(req, resp, mapper, writer);
 		}else if(mode == 5){
-			// Delete a quiz
-			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			mongoQuizDao.remove(quizId);
+			deleteQuiz(req);
 		}else if(mode == 6){
-			// Change active status of quiz
-			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			int userId = Integer.parseInt(req.getParameter("userId"));
-			Boolean active = Boolean.parseBoolean(req.getParameter("active"));
-			Quiz quiz = mongoQuizDao.getQuiz(quizId);
-			quiz.setActive(active);
-			mongoQuizDao.insertQuizToDB(quiz, userId);
+			changeActiveStatusOfQuiz(req);
 		}else if(mode == 7){
-			// Retrieves a list of respondents
-			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			mapper.writeValue(writer, mongoResponseDao.getRespondents(quizId));
-			resp.setContentType("text/json");
+			retrieveListOfRespondents(req, resp, mapper, writer);
 		}
+	}
+
+	private void retrieveListOfRespondents(HttpServletRequest req,
+			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
+			throws IOException, JsonGenerationException, JsonMappingException {
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		mapper.writeValue(writer, mongoResponseDao.getRespondents(quizId));
+		resp.setContentType("text/json");
+	}
+
+	private void changeActiveStatusOfQuiz(HttpServletRequest req) {
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		int userId = Integer.parseInt(req.getParameter("userId"));
+		Boolean active = Boolean.parseBoolean(req.getParameter("active"));
+		Quiz quiz = mongoQuizDao.getQuiz(quizId);
+		quiz.setActive(active);
+		mongoQuizDao.insertQuizToDB(quiz, userId);
+	}
+
+	private void deleteQuiz(HttpServletRequest req) {
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		mongoQuizDao.remove(quizId);
+	}
+
+	private void retrieveRandomWinnerOfQuiz(HttpServletRequest req,
+			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
+			throws IOException, JsonGenerationException, JsonMappingException {
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		mapper.writeValue(writer, mongoResponseDao.drawRandomWinner(quizId));
+		resp.setContentType("text/json");
+	}
+
+	private void retrieveNumberOfResponsesByQuizId(HttpServletRequest req,
+			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
+			throws IOException, JsonGenerationException, JsonMappingException {
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		mapper.writeValue(writer, mongoResponseDao.countResponsesForQuiz(quizId));
+		resp.setContentType("text/json");
+	}
+
+	private void retriveQuizzesByUserId(HttpServletRequest req,
+			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
+			throws IOException, JsonGenerationException, JsonMappingException {
+		int userId = Integer.parseInt(req.getParameter("userId"));
+		List<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
+		List<Quiz> requestedQuizzes = new ArrayList<Quiz>();
+		for(Integer quizId : usersQuizIds){
+			Quiz quiz = mongoQuizDao.getQuiz(quizId);
+			quiz.setResponses(mongoResponseDao.countResponsesForQuiz(quizId));
+			requestedQuizzes.add(quiz);
+		}			
+		mapper.writeValue(writer, requestedQuizzes);
+		resp.setContentType("text/json");
 	}
 	
 	@Override
@@ -167,6 +195,18 @@ public class AdminServlet extends SecuredServlet {
 		mongoQuizDao = new MongoQuizDao();
 		mongoUserDao = new MongoUserDao();
 		mongoResponseDao = new MongoResponseDao();
+	}
+	
+	public void setMongoUserDao(MongoUserDao mongoUserDao) {
+		this.mongoUserDao = mongoUserDao;
+	}
+	
+	public void setMongoQuizDao(MongoQuizDao mongoQuizDao) {
+		this.mongoQuizDao = mongoQuizDao;
+	}
+	
+	public void setMongoResponseDao(MongoResponseDao mongoResponseDao) {
+		this.mongoResponseDao = mongoResponseDao;
 	}
 
 }

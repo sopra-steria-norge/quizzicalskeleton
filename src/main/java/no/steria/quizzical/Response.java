@@ -1,9 +1,7 @@
 package no.steria.quizzical;
 
 import java.util.HashMap;
-
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
+import java.util.Iterator;
 
 public class Response {
 
@@ -50,14 +48,16 @@ public class Response {
 
 	public void calculateScore(Quiz quiz){
 		int score = 0;
-		BasicDBList questions = quiz.getQuestions();
-		for (Object question : questions) {
-			BasicDBObject bdbo  = (BasicDBObject) question;
-			String key = "q" + bdbo.getString("id");
-			if (bdbo.getInt("answer") == (quizAnswers.get(key))){
-				score++;
+		Iterator<Question> iterator = quiz.getQuestions().iterator();
+		while(iterator.hasNext()){
+			Question question = iterator.next();
+			Integer userAnswer = quizAnswers.get("q"+question.getId());
+			if(userAnswer != null){
+				if(question.getAnswer() == userAnswer){
+					score++;
+				}				
 			}
-		}		
+		}
 		this.score = score;
 	}
 

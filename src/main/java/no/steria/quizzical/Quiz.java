@@ -1,13 +1,13 @@
 package no.steria.quizzical;
 
-import com.mongodb.BasicDBList;
+import java.util.List;
 
 public class Quiz {
 	private int quizId;
 	private String quizName;
 	private String quizDesc;
 	private String submitMsg;
-	private BasicDBList questions;
+	private List<Question> questions;
 	private int responses;
 	private boolean active;
 	
@@ -15,7 +15,7 @@ public class Quiz {
 		
 	}
 	
-	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, BasicDBList questions) {
+	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions) {
 		this.quizId = quizId;
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
@@ -44,7 +44,7 @@ public class Quiz {
 		return submitMsg;
 	}
 
-	public BasicDBList getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 	

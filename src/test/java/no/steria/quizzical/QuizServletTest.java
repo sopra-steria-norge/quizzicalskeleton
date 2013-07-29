@@ -16,9 +16,6 @@ import org.codehaus.jackson.type.TypeReference;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-
 public class QuizServletTest {
 	
 	private QuizServlet servlet = new QuizServlet();
@@ -36,7 +33,7 @@ public class QuizServletTest {
         when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
         
         MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-        Quiz quiz = new Quiz(1, "Geography Quiz", "This is a quiz about Norwegian geography", "Thank you for taking the quiz", createQuiz());
+        Quiz quiz = new Quiz(1, "Geography Quiz", "This is a quiz about Norwegian geography", "Thank you for taking the quiz", MongoDemo.createSomeTestQuestions());
         when(mongoQuizDao.getQuiz(1)).thenReturn(quiz);
 
         servlet.setQuizDao(mongoQuizDao);
@@ -49,29 +46,5 @@ public class QuizServletTest {
 	
 		Mockito.verify(resp).setContentType("text/json");
 	}	
-	
-	private BasicDBList createQuiz(){
-		BasicDBList quiz1 = new BasicDBList();
-		
-		BasicDBList alternatives11 = new BasicDBList();
-		alternatives11.add(new BasicDBObject().append("aid", 1).append("atext", "Oslo"));
-		alternatives11.add(new BasicDBObject().append("aid", 2).append("atext", "Bergen"));
-		quiz1.add(createQuestionDBObject(1, "What is the capital of Norway?", alternatives11, 1));
 
-		BasicDBList alternatives12 = new BasicDBList();
-		alternatives12.add(new BasicDBObject().append("aid", 1).append("atext", "Sognsvann"));
-		alternatives12.add(new BasicDBObject().append("aid", 2).append("atext", "Tyrifjorden"));
-		quiz1.add(createQuestionDBObject(2, "What is the largest lake in Norway?", alternatives12, 3));
-
-		return quiz1;
-	}
-	
-	private static BasicDBObject createQuestionDBObject(int idValue, String textValue, BasicDBList alternativeValues, int answerValue){
-		BasicDBObject document = new BasicDBObject();
-		document.put("id", idValue);
-		document.put("text", textValue);
-		document.put("alternatives", alternativeValues);
-		document.put("answer", answerValue);
-		return document;
-	}
 }

@@ -2,8 +2,8 @@ package no.steria.quizzical;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -42,21 +42,21 @@ public class MongoDemo {
 		
 		// Quiz number one		
 		if(quiz[0].getQuestions() == null){
-			BasicDBList quiz1 = new BasicDBList();
+			List<Question> quiz1 = new ArrayList<Question>();
 			
-			BasicDBList alternatives11 = new BasicDBList();
-			alternatives11.add(new BasicDBObject().append("aid", 1).append("atext", "Oslo"));
-			alternatives11.add(new BasicDBObject().append("aid", 2).append("atext", "Bergen"));
-			alternatives11.add(new BasicDBObject().append("aid", 3).append("atext", "Trondheim"));
-			alternatives11.add(new BasicDBObject().append("aid", 4).append("atext", "Kristiansand"));
-			quiz1.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives11, 1));
+			List<Alternative> alternatives11 = new ArrayList<Alternative>();
+			alternatives11.add(new Alternative(1, "Oslo"));
+			alternatives11.add(new Alternative(2, "Bergen"));
+			alternatives11.add(new Alternative(3, "Trondheim"));
+			alternatives11.add(new Alternative(4, "Kristiansand"));
+//			quiz1.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives11, 1));
 
-			BasicDBList alternatives12 = new BasicDBList();
-			alternatives12.add(new BasicDBObject().append("aid", 1).append("atext", "Sognsvann"));
-			alternatives12.add(new BasicDBObject().append("aid", 2).append("atext", "Tyrifjorden"));
-			alternatives12.add(new BasicDBObject().append("aid", 3).append("atext", "Mjosa"));
-			alternatives12.add(new BasicDBObject().append("aid", 4).append("atext", "Burudvann"));
-			quiz1.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives12, 3));
+			List<Alternative> alternatives12 = new ArrayList<Alternative>();
+			alternatives12.add(new Alternative(1, "Sognsvann"));
+			alternatives12.add(new Alternative(2, "Tyrifjorden"));
+			alternatives12.add(new Alternative(3, "Mjosa"));
+			alternatives12.add(new Alternative(4, "Burudvann"));
+//			quiz1.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives12, 3));
 
 			quizzesInDB.insert(createQuizHelper(quiz[0].getQuizId(), quiz[0].getQuizName(), quiz[0].getQuizDesc(), quiz[0].getSubmitMsg(), quiz1));			
 
@@ -67,21 +67,21 @@ public class MongoDemo {
 
 		// Quiz number two
 		if(quiz[0].getQuestions() == null){
-			BasicDBList quiz2 = new BasicDBList();
+			List<Question> quiz2 = new ArrayList<Question>();
 			
-			BasicDBList alternatives21 = new BasicDBList();
-			alternatives21.add(new BasicDBObject().append("aid", 1).append("atext", "Oslo"));
-			alternatives21.add(new BasicDBObject().append("aid", 2).append("atext", "Bergen"));
-			alternatives21.add(new BasicDBObject().append("aid", 3).append("atext", "Trondheim"));
-			alternatives21.add(new BasicDBObject().append("aid", 4).append("atext", "Kristiansand"));
-			quiz2.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives21, 1));
-	
-			BasicDBList alternatives22 = new BasicDBList();
-			alternatives22.add(new BasicDBObject().append("aid", 1).append("atext", "Sognsvann"));
-			alternatives22.add(new BasicDBObject().append("aid", 2).append("atext", "Tyrifjorden"));
-			alternatives22.add(new BasicDBObject().append("aid", 3).append("atext", "Mjosa"));
-			alternatives22.add(new BasicDBObject().append("aid", 4).append("atext", "Burudvann"));
-			quiz2.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives22, 3));
+			List<Alternative> alternatives21 = new ArrayList<Alternative>();
+			alternatives21.add(new Alternative(1, "Oslo"));
+			alternatives21.add(new Alternative(2, "Bergen"));
+			alternatives21.add(new Alternative(3, "Trondheim"));
+			alternatives21.add(new Alternative(4, "Kristiansand"));
+//			quiz2.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives21, 1));
+
+			List<Alternative> alternatives22 = new ArrayList<Alternative>();
+			alternatives22.add(new Alternative(1, "Sognsvann"));
+			alternatives22.add(new Alternative(2, "Tyrifjorden"));
+			alternatives22.add(new Alternative(3, "Mjosa"));
+			alternatives22.add(new Alternative(4, "Burudvann"));
+//			quiz2.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives22, 3));
 	
 			quizzesInDB.insert(createQuizHelper(quiz[1].getQuizId(), quiz[1].getQuizName(), quiz[1].getQuizDesc(), quiz[1].getSubmitMsg(), quiz2));
 		}else{
@@ -89,16 +89,16 @@ public class MongoDemo {
 		}
 	}
 	
-	private static BasicDBObject createQuestionHelper(int idValue, String textValue, BasicDBList alternativeValues, int answerValue){
+	private static BasicDBObject createQuestionHelper(int idValue, String textValue, List<Alternative> alternatives, int answerValue){
 		BasicDBObject document = new BasicDBObject();
 		document.put("id", idValue);
 		document.put("text", textValue);
-		document.put("alternatives", alternativeValues);
+		document.put("alternatives", alternatives);
 		document.put("answer", answerValue);
 		return document;
 	}
 	
-	private static BasicDBObject createQuizHelper(int quizId, String quizName, String quizDescription, String quizSubmittedMsg, BasicDBList questions){
+	private static BasicDBObject createQuizHelper(int quizId, String quizName, String quizDescription, String quizSubmittedMsg, List<Question> questions){
 		BasicDBObject quiz = new BasicDBObject();
 		quiz.put("quizId", quizId);
 		quiz.put("name", quizName);
@@ -115,24 +115,25 @@ public class MongoDemo {
 		String quizName = (String) quizObject.get("name");
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
-		BasicDBList questions = (BasicDBList) quizObject.get("questions");
+		@SuppressWarnings("unchecked")
+		List<Question> questions = (List<Question>) quizObject.get("questions");
 		
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions);
 		return quiz;
 	}
 	
-	public static BasicDBList createSmallTestQuiz(){
-		BasicDBList quiz1 = new BasicDBList();
+	public static List<Question> createSomeTestQuestions(){
+		List<Question> quiz1 = new ArrayList<Question>();
 		
-		BasicDBList alternatives11 = new BasicDBList();
-		alternatives11.add(new BasicDBObject().append("aid", 1).append("atext", "Oslo"));
-		alternatives11.add(new BasicDBObject().append("aid", 2).append("atext", "Bergen"));
-		quiz1.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives11, 1));
+		List<Alternative> alternatives11 = new ArrayList<Alternative>();
+		alternatives11.add(new Alternative(1, "Oslo"));
+		alternatives11.add(new Alternative(2, "Bergen"));
+//		quiz1.add(createQuestionHelper(1, "What is the capital of Norway?", alternatives11, 1));
 
-		BasicDBList alternatives12 = new BasicDBList();
-		alternatives12.add(new BasicDBObject().append("aid", 1).append("atext", "Sognsvann"));
-		alternatives12.add(new BasicDBObject().append("aid", 2).append("atext", "Tyrifjorden"));
-		quiz1.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives12, 3));
+		List<Alternative> alternatives12 = new ArrayList<Alternative>();
+		alternatives12.add(new Alternative(1, "Sognsvann"));
+		alternatives12.add(new Alternative(2, "Tyrifjorden"));
+//		quiz1.add(createQuestionHelper(2, "What is the largest lake in Norway?", alternatives12, 3));
 
 		return quiz1;
 	}
