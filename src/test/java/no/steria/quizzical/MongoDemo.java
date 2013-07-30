@@ -18,11 +18,13 @@ public class MongoDemo {
 	private static DBCollection usersInDB;
 	
 	public static void main(String[] args) {
+		init();
 		insertQuizzesIntoDB(createQuizData());
 		insertTestUsersIntoDB();
 	}
 	
 	public static void insertTestQuizzes(){
+		init();
 		insertQuizzesIntoDB(createQuizData());
 	}
 		
@@ -44,7 +46,6 @@ public class MongoDemo {
 	}
 	
 	private static void insertQuizzesIntoDB(List<Quiz> quizzes){
-		init();
 		quizzesToDB = db.getCollection("quizzes");
 		quizzesToDB.drop();		
 		for(Quiz quizData : quizzes){
@@ -89,7 +90,6 @@ public class MongoDemo {
 	
 	
 	private static void insertTestUsersIntoDB(){
-		init();
 		usersInDB = db.getCollection("users");
 		usersInDB.drop();
 		
