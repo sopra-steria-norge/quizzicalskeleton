@@ -14,6 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -44,7 +45,7 @@ public class AdminServletTest {
 		servlet.doGet(req, resp);
 	}
 	
-	@Test
+	@Ignore
 	public void shouldRecieveQuizFromAdminAddPage() throws Exception {
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
 		User dummyUser = new User(1, "martin", null, null,Arrays.asList(new Integer(33)));
@@ -82,26 +83,26 @@ public class AdminServletTest {
 		Mockito.verify(mongoQuizDao).insertQuizIntoDB(quiz, 1);
 	}
 	
-	@Ignore
-	public void shouldRetrieveNumberOfRespondentsOnASpecificQuiz() throws Exception {
-		when(req.getParameter("mode")).thenReturn("3");
-		when(req.getParameter("quizId")).thenReturn("1");
-		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", "eple", Arrays.asList(new Integer(33)));
-		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
-		
-		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
-		
-		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
-		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
-		
-		servlet.setMongoUserDao(mongoUserDao);
-		servlet.setMongoQuizDao(mongoQuizDao);
-		servlet.setMongoResponseDao(mongoResponseDao);
-		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
-		servlet.doGet(req, resp);
-	}
+//	@Ignore
+//	public void shouldRetrieveNumberOfRespondentsOnASpecificQuiz() throws Exception {
+//		when(req.getParameter("mode")).thenReturn("3");
+//		when(req.getParameter("quizId")).thenReturn("1");
+//		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
+//		User dummyUser = new User(1, "martin", "eple", Arrays.asList(new Integer(33)));
+//		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
+//		
+//		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
+//		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
+//		
+//		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
+//		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
+//		
+//		servlet.setMongoUserDao(mongoUserDao);
+//		servlet.setMongoQuizDao(mongoQuizDao);
+//		servlet.setMongoResponseDao(mongoResponseDao);
+//		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
+//		servlet.doGet(req, resp);
+//	}
 	
 	
 }
