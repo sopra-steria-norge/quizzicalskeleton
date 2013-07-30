@@ -108,8 +108,8 @@ public class AdminServlet extends SecuredServlet {
 				userId = entry.getValue().asInt();
 			}
 		}
-		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, mongoQuizDao.createQuestionObject(questions));
-		mongoQuizDao.insertQuizToDB(quiz, userId);
+		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, mongoQuizDao.createQuestionObject(questions), true);
+		mongoQuizDao.insertQuizIntoDB(quiz, userId);
 	}
 	
 	@Override
@@ -150,7 +150,7 @@ public class AdminServlet extends SecuredServlet {
 		Boolean active = Boolean.parseBoolean(req.getParameter("active"));
 		Quiz quiz = mongoQuizDao.getQuiz(quizId);
 		quiz.setActive(active);
-		mongoQuizDao.insertQuizToDB(quiz, userId);
+		mongoQuizDao.insertQuizIntoDB(quiz, userId);
 	}
 
 	private void deleteQuiz(HttpServletRequest req) {

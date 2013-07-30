@@ -41,8 +41,9 @@ public class MongoQuizDao implements QuizDao {
 			String quizDesc = (String) next.get("desc");
 			String submitMsg = (String) next.get("submitMsg");			
 			BasicDBList questions = (BasicDBList) next.get("questions");
+			boolean active = (boolean) next.get("active");
 			
-			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions));
+			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions), active);
 			quizzes.add(quiz);
 		}
 		
@@ -61,10 +62,9 @@ public class MongoQuizDao implements QuizDao {
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
-		Boolean active = (Boolean) quizObject.get("active");
+		boolean active = (boolean) quizObject.get("active");
 		
-		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions));
-		quiz.setActive(active);
+		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions), active);
 		return quiz;
 	}
 	
@@ -92,22 +92,34 @@ public class MongoQuizDao implements QuizDao {
 		}
 		return questionsList;
 	}
-
-	@Override
-	public void insertQuizToDB(Quiz quiz, int userId) {
-		BasicDBObject document = new BasicDBObject();
+	
+	public void insertQuizIntoDB(Quiz quiz, int userId){	
 		if (quiz.getQuizId() == -1){
 			quiz.setQuizId(getAvailableQuizId());
 		} else {
 			remove(quiz.getQuizId());
+		}		
+		BasicDBObject quizToDB = new BasicDBObject();
+		quizToDB.put("quizId", quiz.getQuizId());
+		quizToDB.put("name", quiz.getQuizName());
+		quizToDB.put("desc", quiz.getQuizDesc());
+		quizToDB.put("submitMsg", quiz.getSubmitMsg());
+		BasicDBList questionsToDB = new BasicDBList();
+		for(Question questionData : quiz.getQuestions()){
+			BasicDBObject questionToDB = new BasicDBObject();
+			questionToDB.put("id", questionData.getId());
+			questionToDB.put("text", questionData.getText());
+			questionToDB.put("answer", questionData.getAnswer());
+			BasicDBList alternativesToDB = new BasicDBList();
+			for(Alternative alternativeData : questionData.getAlternatives()){
+				alternativesToDB.add(new BasicDBObject().append("aid", alternativeData.getAid()).append("atext", alternativeData.getAtext()));
+			}
+			questionToDB.put("alternatives", alternativesToDB);
+			questionsToDB.add(questionToDB);
 		}
-		document.put("quizId", quiz.getQuizId());
-		document.put("name", quiz.getQuizName());
-		document.put("desc", quiz.getQuizDesc());
-		document.put("submitMsg", quiz.getSubmitMsg());
-		document.put("questions", quiz.getQuestions());
-		document.put("active", quiz.getActive());
-		collection.insert(document);
+		quizToDB.put("questions", questionsToDB);
+		quizToDB.put("active", quiz.getActive());
+		collection.insert(quizToDB);
 		mongoUserDao.addQuizIdToUser(quiz.getQuizId(), userId);
 	}
 	

@@ -31,7 +31,7 @@ public class AdminServletTest {
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>()));
+		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
 		
 		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
 		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
