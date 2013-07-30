@@ -12,76 +12,98 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoURI;
 
 public class MongoQuizDao implements QuizDao {
-	
+
 	private DB db;
 	private DBCollection collection;
 	private MongoUserDao mongoUserDao;
-	
+
 	public MongoQuizDao() {
 		mongoUserDao = new MongoUserDao();
-		try {
-			MongoClient client = new MongoClient();
-			db = client.getDB("quizzical");
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
+
+		String env = System.getenv("MONGOHQ_URL");
+		if (env == null) {
+			try {
+				MongoClient client = new MongoClient();
+				db = client.getDB("quizzical");
+			} catch (UnknownHostException e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			MongoURI mongoURI = new MongoURI(env);
+			try {
+				db = mongoURI.connectDB();
+				db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+			} catch (UnknownHostException e) {
+				throw new RuntimeException(e);
+			}
 		}
+
 		collection = db.getCollection("quizzes");
 	}
-	
+
 	@Override
 	public ArrayList<Quiz> getQuizzes() {
 		DBCursor cursor = collection.find();
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-		while(cursor.hasNext()){
+		while (cursor.hasNext()) {
 			DBObject next = cursor.next();
 			Integer quizId = (Integer) next.get("quizId");
 			String quizName = (String) next.get("name");
 			String quizDesc = (String) next.get("desc");
-			String submitMsg = (String) next.get("submitMsg");			
+			String submitMsg = (String) next.get("submitMsg");
 			BasicDBList questions = (BasicDBList) next.get("questions");
 			boolean active = (boolean) next.get("active");
-			
-			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions), active);
+
+			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
+					createQuestionObject(questions), active);
 			quizzes.add(quiz);
 		}
-		
+
 		return quizzes;
 	}
 
 	@Override
 	public Quiz getQuiz(int quizId) {
-		DBObject quizObject = collection.findOne(new BasicDBObject("quizId", quizId));
-		
-		if (quizObject == null){
-			throw new IllegalArgumentException("The requested quiz (quizId=" + quizId + ") is not available.");
+		DBObject quizObject = collection.findOne(new BasicDBObject("quizId",
+				quizId));
+
+		if (quizObject == null) {
+			throw new IllegalArgumentException("The requested quiz (quizId="
+					+ quizId + ") is not available.");
 		}
-		
+
 		String quizName = (String) quizObject.get("name");
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
 		boolean active = (boolean) quizObject.get("active");
-		
-		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, createQuestionObject(questions), active);
+
+		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
+				createQuestionObject(questions), active);
 		return quiz;
 	}
-	
-	public List<Question> createQuestionObject(BasicDBList questionsBasicDBList){
+
+	public List<Question> createQuestionObject(BasicDBList questionsBasicDBList) {
 		List<Question> questionsList = new ArrayList<Question>();
 		Iterator<Object> questionsIterator = questionsBasicDBList.iterator();
-		while(questionsIterator.hasNext()){
-			BasicDBObject questionBasicDBObject = (BasicDBObject) questionsIterator.next();
+		while (questionsIterator.hasNext()) {
+			BasicDBObject questionBasicDBObject = (BasicDBObject) questionsIterator
+					.next();
 			int id = (int) questionBasicDBObject.get("id");
 			String text = (String) questionBasicDBObject.get("text");
-			BasicDBList alternativesBasicDBList = (BasicDBList) questionBasicDBObject.get("alternatives");
+			BasicDBList alternativesBasicDBList = (BasicDBList) questionBasicDBObject
+					.get("alternatives");
 			int answer = (int) questionBasicDBObject.get("answer");
 
 			List<Alternative> alternativesList = new ArrayList<Alternative>();
-			Iterator<Object> alternativesIterator = alternativesBasicDBList.iterator();
-			while(alternativesIterator.hasNext()){
-				BasicDBObject alternativeBasicDBObject = (BasicDBObject) alternativesIterator.next();
+			Iterator<Object> alternativesIterator = alternativesBasicDBList
+					.iterator();
+			while (alternativesIterator.hasNext()) {
+				BasicDBObject alternativeBasicDBObject = (BasicDBObject) alternativesIterator
+						.next();
 				int aid = (int) alternativeBasicDBObject.get("aid");
 				String atext = (String) alternativeBasicDBObject.get("atext");
 				Alternative alternative = new Alternative(aid, atext);
@@ -92,27 +114,29 @@ public class MongoQuizDao implements QuizDao {
 		}
 		return questionsList;
 	}
-	
-	public void insertQuizIntoDB(Quiz quiz, int userId){	
-		if (quiz.getQuizId() == -1){
+
+	public void insertQuizIntoDB(Quiz quiz, int userId) {
+		if (quiz.getQuizId() == -1) {
 			quiz.setQuizId(getAvailableQuizId());
 		} else {
 			remove(quiz.getQuizId());
-		}		
+		}
 		BasicDBObject quizToDB = new BasicDBObject();
 		quizToDB.put("quizId", quiz.getQuizId());
 		quizToDB.put("name", quiz.getQuizName());
 		quizToDB.put("desc", quiz.getQuizDesc());
 		quizToDB.put("submitMsg", quiz.getSubmitMsg());
 		BasicDBList questionsToDB = new BasicDBList();
-		for(Question questionData : quiz.getQuestions()){
+		for (Question questionData : quiz.getQuestions()) {
 			BasicDBObject questionToDB = new BasicDBObject();
 			questionToDB.put("id", questionData.getId());
 			questionToDB.put("text", questionData.getText());
 			questionToDB.put("answer", questionData.getAnswer());
 			BasicDBList alternativesToDB = new BasicDBList();
-			for(Alternative alternativeData : questionData.getAlternatives()){
-				alternativesToDB.add(new BasicDBObject().append("aid", alternativeData.getAid()).append("atext", alternativeData.getAtext()));
+			for (Alternative alternativeData : questionData.getAlternatives()) {
+				alternativesToDB.add(new BasicDBObject().append("aid",
+						alternativeData.getAid()).append("atext",
+						alternativeData.getAtext()));
 			}
 			questionToDB.put("alternatives", alternativesToDB);
 			questionsToDB.add(questionToDB);
@@ -122,29 +146,29 @@ public class MongoQuizDao implements QuizDao {
 		collection.insert(quizToDB);
 		mongoUserDao.addQuizIdToUser(quiz.getQuizId(), userId);
 	}
-	
-	private int getAvailableQuizId(){
+
+	private int getAvailableQuizId() {
 		int index = 1;
 		DBCursor cursor = collection.find();
-		while (cursor.hasNext()){
-			DBObject dbo = cursor.next();	
-			if (dbo.containsField("quizId")){
+		while (cursor.hasNext()) {
+			DBObject dbo = cursor.next();
+			if (dbo.containsField("quizId")) {
 				int currentIndex = ((Integer) dbo.get("quizId")).intValue();
-				if (currentIndex >= index){
+				if (currentIndex >= index) {
 					index = currentIndex + 1;
 				}
 			}
 		}
 		return index;
 	}
-	
-	public void remove(int quizId){
+
+	public void remove(int quizId) {
 		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
-		if (cursor.hasNext()){
+		if (cursor.hasNext()) {
 			collection.remove(cursor.next());
 		}
 		mongoUserDao.removeQuizIdFromUsers(quizId);
-		
+
 	}
-			
+
 }
