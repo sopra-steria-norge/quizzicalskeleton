@@ -34,7 +34,9 @@ public class MongoUserDao{
 			String password = (String) document.get("password");			
 			@SuppressWarnings("unchecked")
 			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
-			user = new User(userId, username, password, quizzes);
+			byte[] salt = (byte[]) document.get("salt");
+			byte[] encryptetPassword= (byte[]) document.get("encpassword");
+			user = new User(userId, username, password, quizzes,salt,encryptetPassword);
 		}
 		return user;
 	}

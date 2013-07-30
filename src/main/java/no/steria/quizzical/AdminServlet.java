@@ -16,9 +16,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-
 public class AdminServlet extends SecuredServlet {
 
 	private Quiz quiz;

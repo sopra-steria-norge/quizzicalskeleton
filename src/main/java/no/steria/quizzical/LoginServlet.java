@@ -1,6 +1,8 @@
 package no.steria.quizzical;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +35,13 @@ public class LoginServlet extends HttpServlet {
 		User user = null;
 		Boolean validated = false;
 		user = mongoUserDao.getUser(req.getParameter("user"));
-		validated = user != null && user.getPassword().equals(req.getParameter("password"));
+//		validated = user != null && user.getPassword().equals(req.getParameter("password"));
+		try {
+			validated = user != null && user.getSalt() != null && new PasswordUtil().authenticate(
+					req.getParameter("password"), user.getEncryptedPassword(), user.getSalt());
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			validated = false;
+		}
 		return validated;
 
 	}

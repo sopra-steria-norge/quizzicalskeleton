@@ -103,12 +103,7 @@ public class MongoDemo {
 		quizzes1.add(1);
 		quizzes1.add(2);		
 
-		BasicDBObject user1 = new BasicDBObject();
-		user1.put("userId", userId1);
-		user1.put("username", username1);
-		user1.put("password", password1);
-		user1.put("quizzes", quizzes1);
-		usersInDB.insert(user1);
+		createUser(userId1, username1, password1, quizzes1);
 
 		int userId2=2;
 		String username2="nikolai", password2="sopp";
@@ -116,12 +111,7 @@ public class MongoDemo {
 		quizzes2.add(3);
 		quizzes2.add(4);		
 
-		BasicDBObject user2 = new BasicDBObject();
-		user2.put("userId", userId2);
-		user2.put("username", username2);
-		user2.put("password", password2);
-		user2.put("quizzes", quizzes2);
-		usersInDB.insert(user2);
+		createUser(userId2, username2, password2, quizzes2);
 		
 		int userId3=3;
 		String username3="andy", password3="sitron";
@@ -129,13 +119,29 @@ public class MongoDemo {
 		quizzes3.add(1);
 		quizzes3.add(5);		
 
-		BasicDBObject user3 = new BasicDBObject();
-		user3.put("userId", userId3);
-		user3.put("username", username3);
-		user3.put("password", password3);
-		user3.put("quizzes", quizzes3);
-		usersInDB.insert(user3);
+		createUser(userId3, username3, password3, quizzes3);
 		
+	}
+
+	private static void createUser(int userId, String username,
+			String password, List<Integer> quizzes) {
+		try {
+			BasicDBObject user = new BasicDBObject();
+			user.put("userId", userId);
+			user.put("username", username);
+			user.put("password", password);
+			user.put("quizzes", quizzes);
+			PasswordUtil passwordUtil = new PasswordUtil();
+			byte[] salt = passwordUtil.generateSalt();
+			byte[] encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
+			
+			user.put("salt", salt);
+			user.put("encpassword", encryptedPassword);
+			
+			usersInDB.insert(user);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 		
 	public static Quiz testQuiz1(){

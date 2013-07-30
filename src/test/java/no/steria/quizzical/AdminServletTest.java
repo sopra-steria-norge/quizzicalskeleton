@@ -15,7 +15,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -31,7 +30,7 @@ public class AdminServletTest {
 		when(req.getParameter("mode")).thenReturn("2");
 		when(req.getParameter("userId")).thenReturn("1");
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", "eple", Arrays.asList(new Integer(33)));
+		User dummyUser = new User(1, "martin", "password", Arrays.asList(new Integer(33)),null,null);
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
@@ -50,7 +49,7 @@ public class AdminServletTest {
 	@Test
 	public void shouldRecieveQuizFromAdmin() throws Exception {
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", "eple", Arrays.asList(new Integer(33)));
+		User dummyUser = new User(1, "martin", "eple", Arrays.asList(new Integer(33)),null,null);
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser);
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);

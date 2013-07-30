@@ -27,6 +27,8 @@ public class LoginServletTest {
 	
 	@Test
 	public void shouldLogin() throws Exception {
+		
+		
 		when(req.getMethod()).thenReturn("POST");
 		when(req.getParameter("user")).thenReturn("admin");
 		when(req.getParameter("password")).thenReturn("password");
@@ -84,8 +86,13 @@ public class LoginServletTest {
 
 	
 	@Before
-	public void setup() {
-		when(mongoUserDao.getUser("admin")).thenReturn(new User(1, "admin", "password", null));
+	public void setup() throws Exception {
+		PasswordUtil passwordUtil = new PasswordUtil();
+		byte[] salt = passwordUtil.generateSalt();
+		byte[] encryptedPassword = passwordUtil.getEncryptedPassword("password", salt);
+		
+		when(mongoUserDao.getUser("admin")).thenReturn(new User(1, "admin", "password", null, salt,encryptedPassword));
+
 		servlet.setMongoUserDao(mongoUserDao);
 		DateTimeUtils.setCurrentMillisFixed(currentTime.getMillis());
 	}
