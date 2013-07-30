@@ -99,7 +99,8 @@ public class AdminServlet extends SecuredServlet {
 			}
 		}
 		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, true);
-		mongoQuizDao.insertQuizIntoDB(quiz, mongoUserDao.getUser((String) req.getSession().getAttribute("username")).getUserId());
+		String username = (String) req.getSession().getAttribute("username");
+		mongoQuizDao.insertQuizIntoDB(quiz, mongoUserDao.getUser(username).getUserId());
 	}
 	
 	@Override
