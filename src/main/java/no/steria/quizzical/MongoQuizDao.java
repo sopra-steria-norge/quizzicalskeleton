@@ -1,6 +1,5 @@
 package no.steria.quizzical;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,8 +10,6 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoURI;
 
 public class MongoQuizDao implements QuizDao {
 
@@ -23,26 +20,12 @@ public class MongoQuizDao implements QuizDao {
 	public MongoQuizDao() {
 		mongoUserDao = new MongoUserDao();
 
-		String env = System.getenv("MONGOHQ_URL");
-		if (env == null) {
-			try {
-				MongoClient client = new MongoClient();
-				db = client.getDB("quizzical");
-			} catch (UnknownHostException e) {
-				throw new RuntimeException(e);
-			}
-		} else {
-			MongoURI mongoURI = new MongoURI(env);
-			try {
-				db = mongoURI.connectDB();
-				db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
-			} catch (UnknownHostException e) {
-				throw new RuntimeException(e);
-			}
-		}
+		db = MongoConnection.getConnection();
 
 		collection = db.getCollection("quizzes");
 	}
+
+	
 
 	@Override
 	public ArrayList<Quiz> getQuizzes() {

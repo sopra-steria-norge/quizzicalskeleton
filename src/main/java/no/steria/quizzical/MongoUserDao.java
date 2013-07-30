@@ -1,6 +1,5 @@
 package no.steria.quizzical;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import com.mongodb.BasicDBObject;
@@ -8,7 +7,6 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 
 public class MongoUserDao{
 			
@@ -16,12 +14,7 @@ public class MongoUserDao{
 	private DBCollection collection;
 	
 	public MongoUserDao() {
-		try {
-			MongoClient client = new MongoClient();
-			db = client.getDB("quizzical");
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
-		}
+		db = MongoConnection.getConnection();
 		collection = db.getCollection("users");
 	}
 
