@@ -35,7 +35,7 @@ public class MongoUserDao{
 			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
 			byte[] salt = (byte[]) document.get("salt");
 			byte[] encryptetPassword= (byte[]) document.get("encpassword");
-			user = new User(userId, username, quizzes, salt,encryptetPassword);
+			user = new User(userId, username, salt, encryptetPassword,quizzes);
 		}
 		return user;
 	}
