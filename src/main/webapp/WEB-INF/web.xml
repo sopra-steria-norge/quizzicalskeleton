@@ -40,4 +40,15 @@
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>statusServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.StatusServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>statusServlet</servlet-name>
+		<url-pattern>/status</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>
