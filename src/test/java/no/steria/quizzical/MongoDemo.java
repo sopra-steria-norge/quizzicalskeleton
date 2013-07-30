@@ -19,8 +19,12 @@ public class MongoDemo {
 	
 	public static void main(String[] args) {
 		init();
-		insertQuizzesIntoDB(createQuizData());
-		insertTestUsersIntoDB();
+		if (args != null && args.length > 0 && "delete".equals(args[0])) {
+			System.out.println("TODO not impl yet");
+		} else {
+			insertQuizzesIntoDB(createQuizData());
+			insertTestUsersIntoDB();
+		}
 	}
 	
 	public static void insertTestQuizzes(){
