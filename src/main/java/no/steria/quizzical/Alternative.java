@@ -5,6 +5,10 @@ public class Alternative {
 	private int aid;
 	private String atext;
 	
+	public Alternative(){
+		
+	}
+	
 	public Alternative(int aid, String atext){
 		this.aid = aid;
 		this.atext = atext;

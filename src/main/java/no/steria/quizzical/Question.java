@@ -9,6 +9,10 @@ public class Question {
 	private List<Alternative> alternatives;
 	private int answer;
 	
+	public Question(){
+		
+	}
+	
 	public Question(int id, String text, List<Alternative> alternatives, int answer){
 		this.id = id;
 		this.text = text;

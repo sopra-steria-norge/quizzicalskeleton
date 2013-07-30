@@ -74,7 +74,6 @@ public class QuizServlet extends HttpServlet {
 				throw new IllegalArgumentException();
 			}
 			mapper.writeValue(writer, quiz);
-
 		}
 	}
 	

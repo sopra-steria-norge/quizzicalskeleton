@@ -4,6 +4,8 @@ package no.steria.quizzical;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,7 +39,7 @@ public class AdminServletTest {
 		servlet.setMongoUserDao(mongoUserDao);
 		servlet.setMongoQuizDao(mongoQuizDao);
 		servlet.setMongoResponseDao(mongoResponseDao);
-		
+		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
 		servlet.doGet(req, resp);
 	}
 	

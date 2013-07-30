@@ -15,7 +15,7 @@ public class ResponseTest {
 	private Response response = new Response(1, "Ola", "o@example.com", quizUserAnswers);
 	
 	public ResponseTest() {
-		quiz = new Quiz(1, "GeoQuiz", "Geo", "GeoQuiz", MongoDemo.createSomeTestQuestions());
+		quiz = MongoDemo.testQuiz1();
 		quizUserAnswers = new HashMap<String, Integer>();
 	}
 	
