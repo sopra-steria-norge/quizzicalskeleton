@@ -64,4 +64,22 @@ public class Quiz {
 		this.active = active;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		boolean isEqual = false;
+		
+		if (obj instanceof Quiz){
+			Quiz quiz = (Quiz) obj;
+			
+			if (this.quizId == quiz.quizId && 
+				this.quizName.equals(quiz.quizName) && 
+				this.quizDesc.equals(quiz.quizDesc) && 
+				this.submitMsg.equals(quiz.submitMsg) && 
+				this.questions.equals(quiz.questions) &&
+				this.active == quiz.active ){
+					isEqual = true;
+			}
+		}
+		return isEqual;
+	}
 }
