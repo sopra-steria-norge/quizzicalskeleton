@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
+
 public class AdminServletTest {
 	private HttpServletRequest req = mock(HttpServletRequest.class);
 	private HttpServletResponse resp = mock(HttpServletResponse.class);

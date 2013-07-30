@@ -34,7 +34,7 @@ public class AdminServlet extends SecuredServlet {
 		int quizId = -1, userId = 0;
 		String quizName = "", quizDesc = "", submitMsg = "";
 		
-		BasicDBList questions = new BasicDBList();
+		List<Question> questions = new ArrayList<Question>();
 		
 		Iterator<Entry<String,JsonNode>> allEntries = rootNode.getFields();
 		
@@ -44,14 +44,13 @@ public class AdminServlet extends SecuredServlet {
 				Iterator<JsonNode> questionEntries = entry.getValue().getElements();
 				
 				while(questionEntries.hasNext()){
-					JsonNode question = questionEntries.next();
-					Iterator<Entry<String, JsonNode>> questionFields = question.getFields();
-					
-					BasicDBObject questionObject = new BasicDBObject();
+					JsonNode jsonQuestion = questionEntries.next();
+					Iterator<Entry<String, JsonNode>> questionFields = jsonQuestion.getFields();
 					
 					int questionId = 0, correctAnswer = 0;
 					String questionText = "";
-					BasicDBList alternativesList = new BasicDBList();
+					
+					List<Alternative> alternatives = new ArrayList<Alternative>();
 					
 					while(questionFields.hasNext()){
 						Entry<String, JsonNode> questionField = questionFields.next();
@@ -61,11 +60,11 @@ public class AdminServlet extends SecuredServlet {
 						} else if (questionField.getKey().equals("text")){
 							questionText = questionField.getValue().asText();
 						} else if (questionField.getKey().equals("alternatives")){
-							Iterator<JsonNode> alternatives = questionField.getValue().getElements();
+							Iterator<JsonNode> jsonAlternatives = questionField.getValue().getElements();
 							
-							while(alternatives.hasNext()){
-								JsonNode alternative = alternatives.next();
-								Iterator<Entry<String, JsonNode>> alternativeField = alternative.getFields();
+							while(jsonAlternatives.hasNext()){
+								JsonNode jsonAlternative = jsonAlternatives.next();
+								Iterator<Entry<String, JsonNode>> alternativeField = jsonAlternative.getFields();
 								
 								int alternativeId = 0;
 								String alternativeText = "";
@@ -77,23 +76,17 @@ public class AdminServlet extends SecuredServlet {
 										alternativeId = alternativeKeys.getValue().asInt();
 									} else if (alternativeKeys.getKey().equals("atext")){
 										alternativeText = alternativeKeys.getValue().asText();
-									}
-									
+									}	
 								}
-								BasicDBObject alternativeObject = new BasicDBObject();
-								alternativeObject.append("aid", alternativeId);
-								alternativeObject.append("atext", alternativeText);
-								alternativesList.add(alternativeObject);
+								Alternative alternative = new Alternative(alternativeId, alternativeText);
+								alternatives.add(alternative);
 							}
 						} else if (questionField.getKey().equals("answer")){
 							correctAnswer = questionField.getValue().asInt();
 						}
 					}
-					questionObject.append("id", questionId);
-					questionObject.append("text", questionText);
-					questionObject.append("alternatives", alternativesList);
-					questionObject.append("answer", correctAnswer);
-					questions.add(questionObject);
+					Question question = new Question(questionId, questionText, alternatives, correctAnswer);
+					questions.add(question);
 				}
 				
 			} else if(entry.getKey().equals("quizId")){
@@ -108,7 +101,7 @@ public class AdminServlet extends SecuredServlet {
 				userId = entry.getValue().asInt();
 			}
 		}
-		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, mongoQuizDao.createQuestionObject(questions), true);
+		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, true);
 		mongoQuizDao.insertQuizIntoDB(quiz, userId);
 	}
 	
