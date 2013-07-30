@@ -15,7 +15,7 @@ angular.module('quizControllers')
 		var isSubmitting = false;
 
 		$scope.winner = [];
-	
+		
 		$scope.user = null;
 			
 		$http({method: "GET", url: "adminQuiz?mode=8"}).
@@ -87,7 +87,7 @@ angular.module('quizControllers')
 		};
 		
 		$scope.removeAlternative = function(question, index){
-			if (question.alternatives[index].aid === question.answer){
+			if (question.alternatives[index].aid === parseInt(question.answer, 10)){
 				question.answer = undefined;
 			} else if (question.alternatives[index].aid < question.answer){
 				question.answer--;
