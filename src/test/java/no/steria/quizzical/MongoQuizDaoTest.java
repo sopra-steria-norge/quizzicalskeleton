@@ -21,7 +21,7 @@ public class MongoQuizDaoTest {
 		QuizDao dao = createDao();
 		ArrayList<Quiz> quizzes = dao.getQuizzes();		
 		
-		assertThat(quizzes).hasSize(2);
+		assertThat(quizzes).hasSize(3);
 	}
 
 	private QuizDao createDao() {

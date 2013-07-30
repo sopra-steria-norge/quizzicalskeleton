@@ -46,6 +46,7 @@ public class MongoDemo {
 		List<Quiz> quizzes = new ArrayList<Quiz>();
 		quizzes.add(testQuiz1());
 		quizzes.add(testQuiz2());
+		quizzes.add(testQuiz3());
 		return quizzes;
 	}
 	
@@ -109,7 +110,7 @@ public class MongoDemo {
 		String username2="nikolai", password2="sopp";
 		ArrayList<Integer> quizzes2 = new ArrayList<Integer>();
 		quizzes2.add(3);
-		quizzes2.add(4);		
+		quizzes2.add(1);		
 
 		createUser(userId2, username2, password2, quizzes2);
 		
@@ -183,4 +184,25 @@ public class MongoDemo {
 
 		return new Quiz(2,"Science Quiz For Kids","This quiz contains question relevant for children with interest in science. Use this quiz vicely as kids can be extremely interested in science, and possibly learn too much.","Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM year 2017", questions, true);	
 	}
+	
+	private static Quiz testQuiz3(){
+		List<Question> questions = new ArrayList<Question>();
+		
+		List<Alternative> alternatives1 = new ArrayList<Alternative>();
+		alternatives1.add(new Alternative(1, "Oslo"));
+		alternatives1.add(new Alternative(2, "Bergen"));
+		alternatives1.add(new Alternative(3, "Trondheim"));
+		alternatives1.add(new Alternative(4, "Kristiansand"));
+		questions.add(new Question(1, "What is the capital of Norway?", alternatives1, 1));
+		
+		List<Alternative> alternatives2 = new ArrayList<Alternative>();
+		alternatives2.add(new Alternative(1, "Sognsvann"));
+		alternatives2.add(new Alternative(2, "Tyrifjorden"));
+		alternatives2.add(new Alternative(3, "Mjosa"));
+		alternatives2.add(new Alternative(4, "Burudvann"));
+		questions.add(new Question(2, "What is the largest lake in Norway?", alternatives2, 3));		
+		
+		return new Quiz(3,"Nikkos Superquiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions, true);	
+	}
+	
 }

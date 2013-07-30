@@ -7,7 +7,7 @@ angular.module('quizControllers')
 				quizDesc: "",
 				submitMsg: "",
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}],
-				userId: "1"
+				userId: ""
 		};
 		
 		$scope.newquizInitialCopy = {};
@@ -17,8 +17,16 @@ angular.module('quizControllers')
 		$scope.winner = [];
 	
 		$scope.user = null;
-		
-		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
+			
+		$http({method: "GET", url: "adminQuiz?mode=8"}).
+		success(function(data){
+			$scope.user = data;
+		}).
+		error(function(data,status){
+			console.log("Error:" + status);
+		});
+
+		$http({method: "GET", url: "adminQuiz?mode=12"}).
 		success(function(data) {
 			$scope.quizzes = data;
 			initAddQuiz();
@@ -27,8 +35,7 @@ angular.module('quizControllers')
 		error(function(data,status) {
 			console.log("Error: " + status + ": " + data);
 		});
-		
-
+				
 		$scope.$on("$locationChangeStart", function(event){
 			if (!isSubmitting){
 				if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
@@ -54,6 +61,7 @@ angular.module('quizControllers')
 						var quiz = $scope.quizzes[i];
 						if (quiz.quizId === parseInt($routeParams.quizId, 10)){
 							$scope.newquiz = quiz;
+							$scope.newquiz.userId = $scope.user.userId;
 						}
 					}
 					$scope.isEditing = true;
@@ -178,7 +186,7 @@ angular.module('quizControllers')
 		};
 
 		$scope.changeActiveStatusTo = function(active, quizId){
-			$http({method: "GET", url: "adminQuiz?mode=6&quizId=" + quizId + "&userId=1&active=" + active}).
+			$http({method: "GET", url: "adminQuiz?mode=6&quizId=" + quizId + "&active=" + active}).
 			success(function(data){
 				window.location.reload(true);
 			}).
@@ -197,13 +205,5 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});
 		};
-		
-		$http({method: "GET", url: "adminQuiz?mode=8"}).
-		success(function(data){
-			$scope.user = data;
-		}).
-		error(function(data,status){
-			console.log("Error:" + status);
-		});	
 
 }]);

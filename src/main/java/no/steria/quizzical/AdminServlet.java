@@ -3,8 +3,10 @@ package no.steria.quizzical;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -28,7 +30,7 @@ public class AdminServlet extends SecuredServlet {
 		ObjectMapper mapper = new ObjectMapper();		 
 		JsonNode rootNode = mapper.readTree(req.getReader().readLine());
 		
-		int quizId = -1, userId = 0;
+		int quizId = -1;
 		String quizName = "", quizDesc = "", submitMsg = "";
 		
 		List<Question> questions = new ArrayList<Question>();
@@ -94,12 +96,10 @@ public class AdminServlet extends SecuredServlet {
 				quizDesc = entry.getValue().asText();
 			} else if(entry.getKey().equals("submitMsg")){
 				submitMsg = entry.getValue().asText();
-			} else if(entry.getKey().equals("userId")){
-				userId = entry.getValue().asInt();
 			}
 		}
 		quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, true);
-		mongoQuizDao.insertQuizIntoDB(quiz, userId);
+		mongoQuizDao.insertQuizIntoDB(quiz, mongoUserDao.getUser((String) req.getSession().getAttribute("username")).getUserId());
 	}
 	
 	@Override
@@ -112,7 +112,7 @@ public class AdminServlet extends SecuredServlet {
 		int mode = Integer.parseInt(req.getParameter("mode"));
 		
 		if(mode == 2){
-			retriveQuizzesByUserId(req, resp, mapper, writer);
+			retrieveQuizzesByUserId(req, resp, mapper, writer);
 		}else if(mode == 3){
 			retrieveNumberOfResponsesByQuizId(req, resp, mapper, writer);
 		}else if(mode == 4){
@@ -127,6 +127,8 @@ public class AdminServlet extends SecuredServlet {
 			retrieveSessionUser(req, resp, mapper, writer);
 		}else if(mode == 9){
 			req.getSession().invalidate();
+		}else if(mode == 12){
+			retriveQuizzes(req, resp, mapper, writer);
 		}
 		
 	}
@@ -134,7 +136,11 @@ public class AdminServlet extends SecuredServlet {
 	private void retrieveSessionUser(HttpServletRequest req,
 			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
 			throws IOException, JsonGenerationException, JsonMappingException {
-		mapper.writeValue(writer, req.getSession().getAttribute("username"));
+		Map<String, String> user = new HashMap<String, String>();
+		String username = (String) req.getSession().getAttribute("username");
+		user.put("username", username);
+		user.put("userId", ""+mongoUserDao.getUser(username).getUserId());
+		mapper.writeValue(writer, user);
 		resp.setContentType("text/json");
 	}
 
@@ -148,7 +154,7 @@ public class AdminServlet extends SecuredServlet {
 
 	private void changeActiveStatusOfQuiz(HttpServletRequest req) {
 		int quizId = Integer.parseInt(req.getParameter("quizId"));
-		int userId = Integer.parseInt(req.getParameter("userId"));
+		int userId = mongoUserDao.getUser((String) req.getSession().getAttribute("username")).getUserId();
 		Boolean active = Boolean.parseBoolean(req.getParameter("active"));
 		Quiz quiz = mongoQuizDao.getQuiz(quizId);
 		quiz.setActive(active);
@@ -176,11 +182,26 @@ public class AdminServlet extends SecuredServlet {
 		resp.setContentType("text/json");
 	}
 
-	private void retriveQuizzesByUserId(HttpServletRequest req,
+	private void retrieveQuizzesByUserId(HttpServletRequest req,
 			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
 			throws IOException, JsonGenerationException, JsonMappingException {
 		int userId = Integer.parseInt(req.getParameter("userId"));
 		List<Integer> usersQuizIds = mongoUserDao.getUser(userId).getQuizIds();
+		List<Quiz> requestedQuizzes = new ArrayList<Quiz>();
+		for(Integer quizId : usersQuizIds){
+			Quiz quiz = mongoQuizDao.getQuiz(quizId);
+			quiz.setResponses(mongoResponseDao.countResponsesForQuiz(quizId));
+			requestedQuizzes.add(quiz);
+		}			
+		mapper.writeValue(writer, requestedQuizzes);
+		resp.setContentType("text/json");
+	}
+	
+	private void retriveQuizzes(HttpServletRequest req,
+			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
+			throws IOException, JsonGenerationException, JsonMappingException {
+		String username = (String) req.getSession().getAttribute("username");
+		List<Integer> usersQuizIds = mongoUserDao.getUser(username).getQuizIds();
 		List<Quiz> requestedQuizzes = new ArrayList<Quiz>();
 		for(Integer quizId : usersQuizIds){
 			Quiz quiz = mongoQuizDao.getQuiz(quizId);

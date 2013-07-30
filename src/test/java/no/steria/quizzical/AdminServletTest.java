@@ -1,6 +1,5 @@
 package no.steria.quizzical;
 
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-
 
 public class AdminServletTest {
 	private HttpServletRequest req = mock(HttpServletRequest.class);
