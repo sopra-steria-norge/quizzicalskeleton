@@ -91,7 +91,7 @@ public class LoginServletTest {
 		byte[] salt = passwordUtil.generateSalt();
 		byte[] encryptedPassword = passwordUtil.getEncryptedPassword("password", salt);
 		
-		when(mongoUserDao.getUser("admin")).thenReturn(new User(1, "admin", "password", null, salt,encryptedPassword));
+		when(mongoUserDao.getUser("admin")).thenReturn(new User(1, "admin", null, salt, encryptedPassword));
 
 		servlet.setMongoUserDao(mongoUserDao);
 		DateTimeUtils.setCurrentMillisFixed(currentTime.getMillis());

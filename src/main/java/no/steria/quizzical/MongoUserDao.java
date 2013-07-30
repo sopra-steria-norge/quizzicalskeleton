@@ -31,12 +31,11 @@ public class MongoUserDao{
 			DBObject document = cursor.next();
 			Integer userId = (Integer) document.get("userId");
 			String username = (String) document.get("username");
-			String password = (String) document.get("password");			
 			@SuppressWarnings("unchecked")
 			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
 			byte[] salt = (byte[]) document.get("salt");
 			byte[] encryptetPassword= (byte[]) document.get("encpassword");
-			user = new User(userId, username, password, quizzes,salt,encryptetPassword);
+			user = new User(userId, username, quizzes, salt,encryptetPassword);
 		}
 		return user;
 	}
