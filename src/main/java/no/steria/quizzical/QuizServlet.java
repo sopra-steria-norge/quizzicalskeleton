@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class QuizServlet extends HttpServlet {
@@ -53,28 +55,30 @@ public class QuizServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/json");
-		
+		resp.setContentType("text/json");		
 		ObjectMapper mapper = new ObjectMapper();
-		Quiz quiz = null;
 		PrintWriter writer = resp.getWriter();
 
 		int mode = Integer.parseInt(req.getParameter("mode"));
-		
-		
 		if(mode == 1){
-			// Retrieves a quiz with quizId
-			int quizId = Integer.parseInt(req.getParameter("quizId"));
-			quiz = mongoQuizDao.getQuiz(quizId);
-			Iterator<Question> questions = quiz.getQuestions().iterator();
-			while(questions.hasNext()){
-				 questions.next().setAnswer(-1);
-			}
-			if(!quiz.getActive()){
-				throw new IllegalArgumentException();
-			}
-			mapper.writeValue(writer, quiz);
+			retrieveQuizByQuizId(req, mapper, writer);
 		}
+	}
+
+	private void retrieveQuizByQuizId(HttpServletRequest req,
+			ObjectMapper mapper, PrintWriter writer) throws IOException,
+			JsonGenerationException, JsonMappingException {
+		int quizId = Integer.parseInt(req.getParameter("quizId"));
+		Quiz quiz = null;
+		quiz = mongoQuizDao.getQuiz(quizId);
+		Iterator<Question> questions = quiz.getQuestions().iterator();
+		while(questions.hasNext()){
+			 questions.next().setAnswer(-1);
+		}
+		if(!quiz.getActive()){
+			throw new IllegalArgumentException();
+		}
+		mapper.writeValue(writer, quiz);
 	}
 	
 	public void setQuizDao(MongoQuizDao quizDao) {

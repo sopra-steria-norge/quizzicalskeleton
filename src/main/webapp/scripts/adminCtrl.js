@@ -15,6 +15,8 @@ angular.module('quizControllers')
 		var isSubmitting = false;
 
 		$scope.winner = [];
+	
+		$scope.user = null;
 		
 		$http({method: "GET", url: "adminQuiz?mode=2&userId=1"}).
 		success(function(data) {
@@ -26,6 +28,7 @@ angular.module('quizControllers')
 			console.log("Error: " + status + ": " + data);
 		});
 		
+
 		$scope.$on("$locationChangeStart", function(event){
 			if (!isSubmitting){
 				if ($route.current.templateUrl === "templates/adminAddQuiz.html") {
@@ -183,5 +186,24 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});	
 		};
+		
+		$scope.logout = function(){
+			$http({method: "GET", url: "adminQuiz?mode=9"}).
+			success(function(){
+				window.location.assign("#/");
+				window.location.reload(true);
+			}).
+			error(function(status){
+				console.log("Error:" + status);
+			});
+		};
+		
+		$http({method: "GET", url: "adminQuiz?mode=8"}).
+		success(function(data){
+			$scope.user = data;
+		}).
+		error(function(data,status){
+			console.log("Error:" + status);
+		});	
 
 }]);

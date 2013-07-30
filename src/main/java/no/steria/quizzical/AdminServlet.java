@@ -126,7 +126,19 @@ public class AdminServlet extends SecuredServlet {
 			changeActiveStatusOfQuiz(req);
 		}else if(mode == 7){
 			retrieveListOfRespondents(req, resp, mapper, writer);
+		}else if(mode == 8){
+			retrieveSessionUser(req, resp, mapper, writer);
+		}else if(mode == 9){
+			req.getSession().invalidate();
 		}
+		
+	}
+
+	private void retrieveSessionUser(HttpServletRequest req,
+			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
+			throws IOException, JsonGenerationException, JsonMappingException {
+		mapper.writeValue(writer, req.getSession().getAttribute("username"));
+		resp.setContentType("text/json");
 	}
 
 	private void retrieveListOfRespondents(HttpServletRequest req,
