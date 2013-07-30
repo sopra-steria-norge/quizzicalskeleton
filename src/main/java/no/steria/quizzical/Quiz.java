@@ -15,13 +15,13 @@ public class Quiz {
 		
 	}
 	
-	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions) {
+	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, boolean active) {
 		this.quizId = quizId;
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
 		this.submitMsg = submitMsg;
 		this.questions = questions;
-		this.active = true;
+		this.active = active;
 	}
 
 	public int getQuizId() {
