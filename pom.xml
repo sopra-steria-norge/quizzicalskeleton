@@ -169,7 +169,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<file>target/quizzical-1.0/index.html</file>
+					<file>target/${project.artifactId}-${project.version}/index.html</file>
 					<regexFlags>
 						<regexFlag>CASE_INSENSITIVE</regexFlag>
 						<regexFlag>MULTILINE</regexFlag>
@@ -226,7 +226,7 @@
 								<include>**/answerQuizCtrl.js</include>
 								<include>**/adminCtrl.js</include>
 							</includes>
-							<output>src/main/webapp/scripts/all.js</output>
+							<output>${basedir}/src/main/webapp/scripts/all.js</output>
 						</aggregation>
 						<aggregation>
 							<insertNewLine>false</insertNewLine>
@@ -237,7 +237,7 @@
 								<include>**/admin.css</include>
 								<include>**/quiz.css</include>
 							</includes>
-							<output>src/main/webapp/css/all.css</output>
+							<output>${basedir}/src/main/webapp/css/all.css</output>
 						</aggregation>
 					</aggregations>
 				</configuration>
