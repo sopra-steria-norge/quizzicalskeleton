@@ -22,4 +22,17 @@ public class Alternative {
 		return atext;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		boolean isEqual = false;
+		if (obj instanceof Alternative){
+			Alternative alternative = (Alternative) obj;
+			
+			if (this.aid == alternative.aid && this.atext.equals(alternative.atext)){
+				isEqual = true;
+			}
+		}
+		return isEqual;
+	}
+	
 }

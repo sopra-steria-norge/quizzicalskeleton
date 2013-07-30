@@ -40,4 +40,19 @@ public class Question {
 		this.answer = answer;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		boolean isEqual = false;
+		if (obj instanceof Question){
+			Question question = (Question) obj;
+			
+			if (this.id == question.id && 
+				this.text.equals(question.text) && 
+				this.alternatives.equals(question.alternatives) &&
+				this.answer == question.answer){
+					isEqual = true;
+			}	
+		}
+		return isEqual;
+	}
 }
