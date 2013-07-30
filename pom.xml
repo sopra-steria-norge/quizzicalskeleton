@@ -178,8 +178,12 @@
 
 					<replacements>
 						<replacemmt>
-							<token>&lt;!-- MINIFY --&gt;.*&lt;!-- END MINIFY --&gt;</token>
+							<token>&lt;!-- MINIFYJS --&gt;.*&lt;!-- END MINIFYJS --&gt;</token>
 							<value>&lt;script src="scripts/all-min.js"&gt;&lt;/script&gt;</value>
+						</replacemmt>
+						<replacemmt>
+							<token>&lt;!-- MINIFYCSS --&gt;.*&lt;!-- END MINIFYCSS --&gt;</token>
+							<value>&lt;link href="css/all-min.css" rel="stylesheet"	type="text/css" &gt;</value>
 						</replacemmt>
 					</replacements>
 				</configuration>
@@ -204,6 +208,11 @@
 						<exclude>**/app.js</exclude>
 						<exclude>**/answerQuizCtrl.js</exclude>
 						<exclude>**/adminCtrl.js</exclude>
+						<exclude>**/bootstrap.css</exclude>
+						<exclude>**/bootstrap-responsive.min.css</exclude>
+						<exclude>**/bootstrap-responsive.css</exclude>
+						<exclude>**/admin.css</exclude>
+						<exclude>**/quiz.css</exclude>
 					</excludes>
 					<aggregations>
 						<aggregation>
@@ -218,6 +227,17 @@
 								<include>**/adminCtrl.js</include>
 							</includes>
 							<output>src/main/webapp/scripts/all.js</output>
+						</aggregation>
+						<aggregation>
+							<insertNewLine>false</insertNewLine>
+							<removeIncluded>false</removeIncluded>
+							<includes>
+								<include>**/bootstrap.css</include>
+								<include>**/bootstrap-responsive.min.css</include>
+								<include>**/admin.css</include>
+								<include>**/quiz.css</include>
+							</includes>
+							<output>src/main/webapp/css/all.css</output>
 						</aggregation>
 					</aggregations>
 				</configuration>
