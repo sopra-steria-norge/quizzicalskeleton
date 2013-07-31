@@ -7,8 +7,15 @@
 </div>
 
 <div class="answer-quiz-box">
+	<form action="#/answerQuiz/{{quizId}}" method="POST">
+		<h2 class="quiz-box-heading">Do you have a quizcode?</h2>
+		<input type="text" class="input-block-level" name="quizcode" placeholder="Quizcode" tabindex="1" ng-model="quizId"/>	
+		<button type="submit" class="bt btn-large btn-primary" name="quizButton" tabindex="3">Play quiz</button>
+	</form>
+	<br>
+	<hr>
 	<form class="quizForm" action="login" method="POST">
-		<h2 class="quiz-box-heading">Admin area login</h2>
+		<h3 class="quiz-box-heading">Admin area login</h2>
 		<div class="" ng-show="loginError">
 			<div class="alert alert-error">
 				<i class="icon-warning-sign"></i>
@@ -17,6 +24,6 @@
 		</div>		
 		<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1"/>
 		<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2"/>
-		<button type="submit" class="bt btn-large btn-primary" name="loginButton" tabindex="3">Login</button>
+		<button type="submit" class="bt btn-small btn-primary" name="loginButton" tabindex="3">Login</button>
 	</form>
 </div>
