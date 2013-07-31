@@ -11,6 +11,7 @@ angular.module('quizControllers')
 		$scope.errorMsg = "";
 		
 		var currentQuestion = -1;
+		var isSubmitted = false;
 		
 		$http({method: "GET", url: "retrieveQuiz?mode=1&quizId=" + $routeParams.quizId}).
 		success(function(data) {
@@ -78,15 +79,18 @@ angular.module('quizControllers')
 		};
 		
 		$scope.submitQuiz = function(){
-			var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "answers": $scope.answers};
-			
-			$http({method: "POST", url: "submitQuiz", data: JSON.stringify(submitData) }).
-			success(function(data) {
-				$scope.nextQuestion();
-			}).
-			error(function(data,status) {
-				console.log("Error:" + status);
-			});
+			if (!isSubmitted){
+				isSubmitted = true;
+				var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "answers": $scope.answers};
+				
+				$http({method: "POST", url: "submitQuiz", data: JSON.stringify(submitData) }).
+				success(function(data) {
+					$scope.nextQuestion();
+				}).
+				error(function(data,status) {
+					console.log("Error:" + status);
+				});
+			}
 		};
 		
 }]);

@@ -23,71 +23,106 @@
 			<span class="text-info">The quiz has already received responses, please be careful when editing.</span>
 		</div>
 		<hr>
-		<label class="row">
-			<span class="span3">
-				<input type="text" name="quizName" ng-model="newquiz.quizName" placeholder="Type a name for the quiz" required="required">
-			</span>
-			<span class="span4">
-				Type a name for the quiz here.
-			</span>
-		</label>
-		<br>
-		<label class="row">
-			<span class="span3">
-				<textarea class="ta-no-resize" name="quizDescription" ng-model="newquiz.quizDesc" rows="3" cols="70" placeholder="Describe the quiz here..."></textarea>
-			</span>
-			<span class="span4">
-				Describe the quiz here. This text will be shown to the user when the link is opened, right before the quiz starts.
-			</span>
-		</label>
-		<br>
-		<label class="row">
-			<span class="span3">
-				<textarea class="ta-no-resize" name="quizSubmitMsg" ng-model="newquiz.submitMsg" rows="3" cols="70" placeholder="Type a final message to the user here..."></textarea>
-			</span>
-			<span class="span4">
-				Type a message that the user will receive after the user has answered the quiz. You may for instance inform when the winner is announced and so on.
-			</span>
-		</label>
-		<hr>
-		<div class="add-question-row" ng-repeat="q in newquiz.questions">
-			<div class="row">
-				<div class="row">
-					<div class="span5">
-						<h4>Question {{$index + 1}}</h4>
-					</div>
-					<div class="span2">
-						<a class="btn btn-danger" ng-click="removeQuestion(newquiz.questions, $index)"><i class="icon-trash"></i></a>
-					</div>
-				</div>
-				<div>
-				<label class="add-question-name span3">
-					<textarea class="ta-no-resize" name="questionName" ng-model="q.text" rows="2" cols="70" placeholder="Type question here..."></textarea>
-				</label>
-				</div>
-				<div class="add-question-options span4">
-					<span class="add-question-info">Type in answer options:</span>
-					<br>
-					<div class="add-question-option" ng-repeat="qa in q.alternatives">
-						<div class="span4">
-							<span class="add-question-radio">
-								<input type="radio" name="isCorrect{{q.id}}" value="{{qa.aid}}" ng-model="q.answer">
-							</span>
-							<span>
-								<input type="text" name="qaText{{qa.aid}}" ng-model="qa.atext" placeholder="Type answer alternative here">
-								<a class="btn" ng-click="removeAlternative(q, $index)"><i class="icon-trash"></i></a>
-							</span>
-						</div>
-					</div>
-					<button type="button" class="btn btn-small" ng-click="addAlternative(q)"><i class="icon-plus"></i> Add alternative</button>
-				</div>
-			</div>
-			<hr>
+		
+		<div class="row-fluid quiz-info">
+		
+				<span class="span7 pull-right quiz-info-text">
+					Type a name for the quiz here.
+				</span>
+				<span class="span5 pull-left quiz-info-textbox">
+					<input type="text" name="quizName" ng-model="newquiz.quizName" placeholder="Type a name for the quiz" required="required">
+				</span>
+
 		</div>
 		
+
+		<div class="row-fluid quiz-info">
+			
+				<span class="span7 pull-right quiz-info-text">
+					This text will be shown to the user when the link is opened, right before the quiz starts.
+				</span>
+				<span class="span5 pull-left quiz-info-textbox">
+					<textarea class="ta-no-resize" name="quizDescription" ng-model="newquiz.quizDesc" placeholder="Describe the quiz here..."></textarea>
+				</span>
+			
+		</div>
+		
+		
+		<div class="row-fluid quiz-info">
+		
+				<span class="span7 pull-right quiz-info-text">
+					Type a message that the user will receive after the user has answered the quiz. You may for instance inform when the winner is announced and so on.
+				</span>
+				<span class="span5 pull-left quiz-info-textbox">
+					<textarea class="ta-no-resize" name="quizSubmitMsg" ng-model="newquiz.submitMsg" placeholder="Type a final message to the user here..."></textarea>
+				</span>
+
+		</div>
+		
+		
+		<div class="add-question-row" ng-repeat="q in newquiz.questions">
+			<div class="row-fluid">
+				<div class="span12">
+				
+					<div class="row-fluid">
+						<div class="span12">
+<!-- 							<table class="table question-header-table"> -->
+<!-- 								<tr> -->
+<!-- 									<td> -->
+<!-- 										<h4>Question {{$index + 1}}</h4> -->
+<!-- 									</td> -->
+<!-- 									<td class="text-right"> -->
+<!-- 										<a class="btn btn-danger" ng-click="removeQuestion(newquiz.questions, $index)"><i class="icon-trash"></i></a> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<!-- 							</table> -->
+							<hr class="hr-question-border">
+							<div class="row-fluid">
+								<h4 class="quiz-question-number">Question {{$index + 1}}</h4>
+								<a class="btn btn-small btn-danger pull-right" ng-click="removeQuestion(newquiz.questions, $index)"><i class="icon-trash"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span12">
+							<div class="add-question-text">
+								<textarea class="add-question-text ta-no-resize" name="questionName" ng-model="q.text" placeholder="Type question here..."></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span12 add-question-options">
+							<table class="table">
+								<tr>
+									<th>Type in answer alternatives</th>
+									<th class="add-alternative-center correct-answer-col">Correct answer?</th>
+									<th class="add-alternative-center">Delete</th>
+								</tr>
+								<tr class="add-question-alternatives" ng-repeat="qa in q.alternatives">
+									<td>
+										<input class="add-question-textbox" type="text" name="qaText{{qa.aid}}" ng-model="qa.atext" placeholder="Type answer alternative here" title="Type answer alternative here">
+									</td>
+									<td class="correct-answer-col">
+										<label class="add-question-radio add-alternative-center">
+											<input type="radio" name="isCorrect{{q.id}}" value="{{qa.aid}}" ng-model="q.answer">
+										</label>
+									</td>
+									<td class="add-alternative-center">
+										<a class="btn" ng-click="removeAlternative(q, $index)"><i class="icon-trash"></i></a>
+									</td>
+								</tr>
+							</table>
+							<button type="button" class="btn btn-small" ng-click="addAlternative(q)"><i class="icon-plus"></i> Add alternative</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr class="hr-question-border">
+		
 		<div class="row">
-			<span class="span7 text-center">
-				<button type="button" class="btn btn-medium btn-primary" ng-click="addQuestion()"><i class="icon-plus icon-white"></i> Add question</button>
+			<span class="span9 text-center">
+				<button type="button" class="btn btn-medium" ng-click="addQuestion()"><i class="icon-plus"></i> Add question</button>
 			</span>
 		</div>
 		<hr>
