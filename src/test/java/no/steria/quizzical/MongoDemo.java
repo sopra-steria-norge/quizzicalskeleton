@@ -14,24 +14,10 @@ import com.mongodb.MongoClient;
 public class MongoDemo {
 	
 	private static DB db;
-	private static DBCollection quizzesToDB;
+	private static DBCollection quizzesInDB;
 	private static DBCollection usersInDB;
+	private static PasswordUtil passwordUtil;
 	
-	public static void main(String[] args) {
-		init();
-		if (args != null && args.length > 0 && "delete".equals(args[0])) {
-			System.out.println("TODO not impl yet");
-		} else {
-			insertQuizzesIntoDB(createQuizData());
-			insertTestUsersIntoDB();
-		}
-	}
-	
-	public static void insertTestQuizzes(){
-		init();
-		insertQuizzesIntoDB(createQuizData());
-	}
-		
 	private static void init(){
 		MongoClient client = null;
 		try {
@@ -39,20 +25,29 @@ public class MongoDemo {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		db = client.getDB("quizzical");		
+		db = client.getDB("quizzical");
+		
+		passwordUtil = new PasswordUtil();
 	}
 
-	private static List<Quiz> createQuizData(){
-		List<Quiz> quizzes = new ArrayList<Quiz>();
-		quizzes.add(testQuiz1());
-		quizzes.add(testQuiz2());
-		quizzes.add(testQuiz3());
-		return quizzes;
+	public static void main(String[] args) {
+		init();
+		if (args != null && args.length > 0 && "delete".equals(args[0])) {
+			System.out.println("TODO not impl yet");
+		} else {
+			insertTestQuizzesIntoDB(createQuizData());
+			insertTestUsersIntoDB(createUserData());
+		}
 	}
 	
-	private static void insertQuizzesIntoDB(List<Quiz> quizzes){
-		quizzesToDB = db.getCollection("quizzes");
-		quizzesToDB.drop();		
+	public static void insertTestQuizzes(){
+		init();
+		insertTestQuizzesIntoDB(createQuizData());
+	}	
+	
+	private static void insertTestQuizzesIntoDB(List<Quiz> quizzes){
+		quizzesInDB = db.getCollection("quizzes");
+		quizzesInDB.drop();		
 		for(Quiz quizData : quizzes){
 			BasicDBObject quizToDB = new BasicDBObject();
 			quizToDB.put("quizId", quizData.getQuizId());
@@ -74,77 +69,18 @@ public class MongoDemo {
 			}
 			quizToDB.put("questions", questionsToDB);
 			quizToDB.put("active", quizData.getActive());
-			quizzesToDB.insert(quizToDB);
+			quizzesInDB.insert(quizToDB);
 		}
 	}
 	
-	
-	public static Quiz getQuizHelper(int quizId) {
-		DBObject quizObject = quizzesToDB.findOne(new BasicDBObject("quizId", quizId));
-		
-		String quizName = (String) quizObject.get("name");
-		String quizDesc = (String) quizObject.get("desc");
-		String submitMsg = (String) quizObject.get("submitMsg");
-		@SuppressWarnings("unchecked")
-		List<Question> questions = (List<Question>) quizObject.get("questions");
-		boolean active = (boolean) quizObject.get("active");
-		
-		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, active);
-		return quiz;
+	private static List<Quiz> createQuizData(){
+		List<Quiz> quizzes = new ArrayList<Quiz>();
+		quizzes.add(testQuiz1());
+		quizzes.add(testQuiz2());
+		quizzes.add(testQuiz3());
+		return quizzes;
 	}
 	
-	
-	private static void insertTestUsersIntoDB(){
-		usersInDB = db.getCollection("users");
-		usersInDB.drop();
-		
-		int userId1=1;
-		String username1="martin", password1="eple";
-		ArrayList<Integer> quizzes1 = new ArrayList<Integer>();
-		quizzes1.add(1);
-		quizzes1.add(2);		
-
-		createUser(userId1, username1, password1, quizzes1);
-
-		int userId2=2;
-		String username2="nikolai", password2="sopp";
-		ArrayList<Integer> quizzes2 = new ArrayList<Integer>();
-		quizzes2.add(3);
-		quizzes2.add(1);		
-
-		createUser(userId2, username2, password2, quizzes2);
-		
-		int userId3=3;
-		String username3="andy", password3="sitron";
-		ArrayList<Integer> quizzes3 = new ArrayList<Integer>();
-		quizzes3.add(1);
-		quizzes3.add(5);		
-
-		createUser(userId3, username3, password3, quizzes3);
-		
-	}
-
-	private static void createUser(int userId, String username,
-			String password, List<Integer> quizzes) {
-		try {
-			BasicDBObject user = new BasicDBObject();
-			user.put("userId", userId);
-			user.put("username", username);
-			user.put("password", password);
-			user.put("quizzes", quizzes);
-			PasswordUtil passwordUtil = new PasswordUtil();
-			byte[] salt = passwordUtil.generateSalt();
-			byte[] encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
-			
-			user.put("salt", salt);
-			user.put("encpassword", encryptedPassword);
-			
-			usersInDB.insert(user);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-		
 	public static Quiz testQuiz1(){
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -204,5 +140,99 @@ public class MongoDemo {
 		
 		return new Quiz(3,"Nikkos Superquiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions, true);	
 	}
+	
+	public static Quiz getQuizHelper(int quizId) {
+		DBObject quizObject = quizzesInDB.findOne(new BasicDBObject("quizId", quizId));
+		
+		String quizName = (String) quizObject.get("name");
+		String quizDesc = (String) quizObject.get("desc");
+		String submitMsg = (String) quizObject.get("submitMsg");
+		@SuppressWarnings("unchecked")
+		List<Question> questions = (List<Question>) quizObject.get("questions");
+		boolean active = (boolean) quizObject.get("active");
+		
+		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, active);
+		return quiz;
+	}
+	
+	public static void dropQuizzesInDB(){
+		quizzesInDB = db.getCollection("quizzes");
+		quizzesInDB.drop();
+	}
+
+	private static void insertTestUsersIntoDB(List<User> users){
+		usersInDB = db.getCollection("users");
+		usersInDB.drop();
+
+		for(User user : users){
+			BasicDBObject userToDB = new BasicDBObject();
+			userToDB.put("userId", user.getUserId());
+			userToDB.put("username", user.getUsername());
+			userToDB.put("salt", user.getSalt());
+			userToDB.put("encpassword", user.getEncryptedPassword());			
+			userToDB.put("quizzes", user.getQuizIds());
+			usersInDB.insert(userToDB);			
+		}
+	}
+		
+	private static List<User> createUserData(){
+		List<User> users = new ArrayList<User>();
+		users.add(testUser1());
+		users.add(testUser2());
+		users.add(testUser3());		
+		return users;
+	}
+	
+	public static User testUser1(){
+		int userId=1;
+		String username="martin", password="eple";
+		ArrayList<Integer> quizzes = new ArrayList<Integer>();
+		quizzes.add(1);
+		quizzes.add(2);
+		byte[] salt = null;
+		byte[] encryptedPassword = null;
+		try {
+			salt = passwordUtil.generateSalt();
+			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return new User(userId, username, salt, encryptedPassword, quizzes);
+	}
+	
+	private static User testUser2(){
+		int userId=2;
+		String username="nikolai", password="sopp";
+		ArrayList<Integer> quizzes = new ArrayList<Integer>();
+		quizzes.add(3);
+		quizzes.add(1);
+		byte[] salt = null;
+		byte[] encryptedPassword = null;
+		try {
+			salt = passwordUtil.generateSalt();
+			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return new User(userId, username, salt, encryptedPassword, quizzes);
+	}
+	
+	private static User testUser3(){
+		int userId=3;
+		String username="andy", password="sitron";
+		ArrayList<Integer> quizzes = new ArrayList<Integer>();
+		quizzes.add(1);
+		quizzes.add(5);
+		byte[] salt = null;
+		byte[] encryptedPassword = null;
+		try {
+			salt = passwordUtil.generateSalt();
+			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return new User(userId, username, salt, encryptedPassword, quizzes);
+	}
+	
 	
 }

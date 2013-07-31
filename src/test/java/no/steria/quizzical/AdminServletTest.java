@@ -29,7 +29,7 @@ public class AdminServletTest {
 		when(req.getParameter("mode")).thenReturn("2");
 		when(req.getParameter("userId")).thenReturn("1");
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", null, null,Arrays.asList(new Integer(33)));
+		User dummyUser = new User(1, "testUser", null, null,Arrays.asList(new Integer(33)));
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
@@ -48,7 +48,7 @@ public class AdminServletTest {
 	@Test
 	public void shouldRecieveQuizFromAdminAddPage() throws Exception {
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", null, null, Arrays.asList(new Integer(33)));
+		User dummyUser = new User(1, "testUser", null, null, Arrays.asList(new Integer(33)));
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
 		
 		String s = "{\"quizId\": 9, \"quizName\":\"SteriaQuiz\",\"quizDesc\":\"Quiz om Steria\",\"submitMsg\":\"Takk\",\"questions\":[{\"id\":1,\"text\":\"Spm1\",\"alternatives\":[{\"aid\":1,\"atext\":\"svar1\"},{\"aid\":2,\"atext\":\"svar2\"}],\"answer\":\"2\"}], \"active\": true, \"userId\": 1}";
@@ -70,8 +70,8 @@ public class AdminServletTest {
 		
 		HttpSession mockSession = mock(HttpSession.class);
 		when(req.getSession()).thenReturn(mockSession);
-		when(mockSession.getAttribute("username")).thenReturn("martin");
-		when(mongoUserDao.getUser("martin")).thenReturn(dummyUser);		
+		when(mockSession.getAttribute("username")).thenReturn("testUser");
+		when(mongoUserDao.getUser("testUser")).thenReturn(dummyUser);		
 		
 		servlet.setMongoUserDao(mongoUserDao);
 		servlet.setMongoQuizDao(mongoQuizDao);
@@ -85,7 +85,7 @@ public class AdminServletTest {
 		when(req.getParameter("mode")).thenReturn("3");
 		when(req.getParameter("quizId")).thenReturn("1");
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", null, null, Arrays.asList(new Integer(33)));
+		User dummyUser = new User(1, "testUser", null, null, Arrays.asList(new Integer(33)));
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
