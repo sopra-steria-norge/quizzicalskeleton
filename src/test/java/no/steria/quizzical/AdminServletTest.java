@@ -23,22 +23,46 @@ public class AdminServletTest {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private AdminServlet servlet;
-
+	private MongoUserDao mongoUserDao;
 
 	@Before
 	public void setUp(){
 		req = mock(HttpServletRequest.class);
 		resp = mock(HttpServletResponse.class);
 		servlet = new AdminServlet();
+		mongoUserDao = mock(MongoUserDao.class);
 	}
 	
 	@Test
 	public void shouldRetrieveQuizzesForUser() throws Exception {
 		when(req.getParameter("mode")).thenReturn("2");
 		when(req.getParameter("userId")).thenReturn("1");
-		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
 		User dummyUser = new User(1, "testUser", null, null,Arrays.asList(new Integer(33)));
-		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
+		when(mongoUserDao.getUser(1)).thenReturn(dummyUser);
+		
+		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
+		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
+		
+		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
+		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
+		
+		servlet.setMongoUserDao(mongoUserDao);
+		servlet.setMongoQuizDao(mongoQuizDao);
+		servlet.setMongoResponseDao(mongoResponseDao);
+		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
+		servlet.doGet(req, resp);
+	}
+
+	@Test
+	public void shouldRetrieveQuizzesOfCurrentUserBySession() throws Exception {
+		when(req.getParameter("mode")).thenReturn("12");
+		
+		HttpSession mockSession = mock(HttpSession.class);
+		when(req.getSession()).thenReturn(mockSession);
+		when(mockSession.getAttribute("username")).thenReturn("testUser");
+		
+		User dummyUser = new User(1, "testUser", null, null,Arrays.asList(new Integer(33)));
+		when(mongoUserDao.getUser("testUser")).thenReturn(dummyUser);
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
 		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
@@ -55,7 +79,6 @@ public class AdminServletTest {
 	
 	@Test
 	public void shouldRecieveQuizFromAdminAddPage() throws Exception {
-		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
 		User dummyUser = new User(1, "testUser", null, null, Arrays.asList(new Integer(33)));
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
 		
@@ -92,9 +115,8 @@ public class AdminServletTest {
 	public void shouldRetrieveNumberOfRespondentsOnASpecificQuiz() throws Exception {
 		when(req.getParameter("mode")).thenReturn("3");
 		when(req.getParameter("quizId")).thenReturn("1");
-		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
 		User dummyUser = new User(1, "testUser", null, null, Arrays.asList(new Integer(33)));
-		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
+		when(mongoUserDao.getUser(1)).thenReturn(dummyUser);
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
 		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
@@ -108,7 +130,5 @@ public class AdminServletTest {
 		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
 		servlet.doGet(req, resp);
 	}
-	
-
 	
 }
