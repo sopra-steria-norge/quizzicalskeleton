@@ -13,8 +13,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -45,17 +45,11 @@ public class AdminServletTest {
 		servlet.doGet(req, resp);
 	}
 	
-	@Ignore
+	@Test
 	public void shouldRecieveQuizFromAdminAddPage() throws Exception {
 		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-		User dummyUser = new User(1, "martin", null, null,Arrays.asList(new Integer(33)));
-		when(mongoUserDao.getUser(1)).thenReturn(dummyUser);
-		
+		User dummyUser = new User(1, "martin", null, null, Arrays.asList(new Integer(33)));
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-		
-		//when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
-		//MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
-		//when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
 		
 		String s = "{\"quizId\": 9, \"quizName\":\"SteriaQuiz\",\"quizDesc\":\"Quiz om Steria\",\"submitMsg\":\"Takk\",\"questions\":[{\"id\":1,\"text\":\"Spm1\",\"alternatives\":[{\"aid\":1,\"atext\":\"svar1\"},{\"aid\":2,\"atext\":\"svar2\"}],\"answer\":\"2\"}], \"active\": true, \"userId\": 1}";
 		BufferedReader br = new BufferedReader(new StringReader(s));
@@ -74,35 +68,38 @@ public class AdminServletTest {
 		
 		Quiz quiz = new Quiz(9, "SteriaQuiz", "Quiz om Steria", "Takk", qs, true);
 		
+		HttpSession mockSession = mock(HttpSession.class);
+		when(req.getSession()).thenReturn(mockSession);
+		when(mockSession.getAttribute("username")).thenReturn("martin");
+		when(mongoUserDao.getUser("martin")).thenReturn(dummyUser);		
+		
 		servlet.setMongoUserDao(mongoUserDao);
 		servlet.setMongoQuizDao(mongoQuizDao);
-		//servlet.setMongoResponseDao(mongoResponseDao);
-		
 		servlet.doPost(req, resp);
 		
 		Mockito.verify(mongoQuizDao).insertQuizIntoDB(quiz, 1);
 	}
 	
-//	@Ignore
-//	public void shouldRetrieveNumberOfRespondentsOnASpecificQuiz() throws Exception {
-//		when(req.getParameter("mode")).thenReturn("3");
-//		when(req.getParameter("quizId")).thenReturn("1");
-//		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
-//		User dummyUser = new User(1, "martin", "eple", Arrays.asList(new Integer(33)));
-//		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
-//		
-//		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-//		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
-//		
-//		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
-//		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
-//		
-//		servlet.setMongoUserDao(mongoUserDao);
-//		servlet.setMongoQuizDao(mongoQuizDao);
-//		servlet.setMongoResponseDao(mongoResponseDao);
-//		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
-//		servlet.doGet(req, resp);
-//	}
+	@Test
+	public void shouldRetrieveNumberOfRespondentsOnASpecificQuiz() throws Exception {
+		when(req.getParameter("mode")).thenReturn("3");
+		when(req.getParameter("quizId")).thenReturn("1");
+		MongoUserDao mongoUserDao = mock(MongoUserDao.class);
+		User dummyUser = new User(1, "martin", null, null, Arrays.asList(new Integer(33)));
+		when(mongoUserDao.getUser(1)).thenReturn(dummyUser );
+		
+		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
+		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), true));
+		
+		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
+		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
+		
+		servlet.setMongoUserDao(mongoUserDao);
+		servlet.setMongoQuizDao(mongoQuizDao);
+		servlet.setMongoResponseDao(mongoResponseDao);
+		when(resp.getWriter()).thenReturn(new PrintWriter(new StringWriter()));
+		servlet.doGet(req, resp);
+	}
 	
 	
 }
