@@ -21,7 +21,7 @@ public class QuizServlet extends HttpServlet {
 	private Response quizResponse;
 	private MongoQuizDao mongoQuizDao;
 	private MongoResponseDao mongoResponseDao;
-	private InputCleaner cleaner;
+	private InputCleaner cleaner = new InputCleaner();
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
