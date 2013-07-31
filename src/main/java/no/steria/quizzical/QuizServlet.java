@@ -21,6 +21,7 @@ public class QuizServlet extends HttpServlet {
 	private Response quizResponse;
 	private MongoQuizDao mongoQuizDao;
 	private MongoResponseDao mongoResponseDao;
+	private InputCleaner cleaner;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,9 +44,9 @@ public class QuizServlet extends HttpServlet {
 			}else if(entry.getKey().equals("quizId")){
 				quizId = Integer.parseInt(entry.getValue().asText());
 			}else if(entry.getKey().equals("name")){
-				name = entry.getValue().asText();
+				name = cleaner.clean(entry.getValue().asText());
 			}else if(entry.getKey().equals("email")){
-				email = entry.getValue().asText();
+				email = cleaner.clean(entry.getValue().asText());
 			}
 		}
 		quizResponse = new Response(quizId, name, email, answersToDB);
