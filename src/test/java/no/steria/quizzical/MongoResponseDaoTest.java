@@ -40,8 +40,8 @@ public class MongoResponseDaoTest {
 		mongoResponseDao.setResponse(MongoDatabasePopulation.testResponse1());
 		mongoResponseDao.setResponse(MongoDatabasePopulation.testResponse2());
 		String[] winner = mongoResponseDao.drawRandomWinner(1);
-		assertThat(winner).hasSize(2);
-		assertThat(winner).isNotNull();
+		assertThat(mongoResponseDao.getRespondents(1)).hasSize(2);
+		assertThat(winner[0]).isNotEmpty();
 	}
 	
 }
