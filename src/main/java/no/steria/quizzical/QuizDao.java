@@ -1,10 +1,10 @@
 package no.steria.quizzical;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface QuizDao {
 
-	ArrayList<Quiz> getQuizzes();
+	List<Quiz> getQuizzes();
 	
 	Quiz getQuiz(int quizId);
 	

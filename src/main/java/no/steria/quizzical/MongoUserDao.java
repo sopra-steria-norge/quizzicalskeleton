@@ -1,6 +1,7 @@
 package no.steria.quizzical;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -32,7 +33,7 @@ public class MongoUserDao{
 			Integer userId = (Integer) document.get("userId");
 			String username = (String) document.get("username");
 			@SuppressWarnings("unchecked")
-			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
+			List<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
 			byte[] salt = (byte[]) document.get("salt");
 			byte[] encryptetPassword= (byte[]) document.get("encpassword");
 			user = new User(userId, username, salt, encryptetPassword,quizzes);
@@ -44,7 +45,7 @@ public class MongoUserDao{
 	public void addQuizIdToUser(int quizId, int userId) {
 		DBObject document = collection.findOne(new BasicDBObject("userId",userId));
 		@SuppressWarnings("unchecked")
-		ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
+		List<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
 		if(!quizzes.contains(quizId)){
 			collection.remove(document);
 			quizzes.add(quizId);
@@ -58,7 +59,7 @@ public class MongoUserDao{
 		while(cursor.hasNext()){
 			DBObject document = cursor.next();	
 			@SuppressWarnings("unchecked")
-			ArrayList<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
+			List<Integer> quizzes = (ArrayList<Integer>) document.get("quizzes");
 			if(quizzes.contains(quizId)){
 				collection.remove(document);
 				quizzes.remove((Object)quizId);

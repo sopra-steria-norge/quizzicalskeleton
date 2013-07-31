@@ -2,7 +2,7 @@ package no.steria.quizzical;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class MongoResponseDaoTest {
 		Response inputResponse = MongoDatabasePopulation.testResponse1();
 		mongoResponseDao.setResponse(inputResponse);
 		
-		ArrayList<Response> responses = mongoResponseDao.getRespondents(1);
+		List<Response> responses = mongoResponseDao.getRespondents(1);
 		Response outputResponse = responses.get(0);
 		assertThat(inputResponse.getName()).isEqualTo(outputResponse.getName());
 		assertThat(inputResponse.getEmail()).isEqualTo(outputResponse.getEmail());

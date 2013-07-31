@@ -28,9 +28,9 @@ public class MongoQuizDao implements QuizDao {
 	
 
 	@Override
-	public ArrayList<Quiz> getQuizzes() {
+	public List<Quiz> getQuizzes() {
 		DBCursor cursor = collection.find();
-		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+		List<Quiz> quizzes = new ArrayList<Quiz>();
 		while (cursor.hasNext()) {
 			DBObject next = cursor.next();
 			Integer quizId = (Integer) next.get("quizId");

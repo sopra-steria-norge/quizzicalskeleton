@@ -1,22 +1,15 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="brand" href="#/admin/overview"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
-            <div class="nav-collapse collapse">
-                <p class="navbar-text pull-right">
-                    <button class="btn btn-link navbar-link" ng-click="logout()">Log out ({{user.username}})</button>
-                </p>
-                <ul class="nav">
-                    <li><a href="#/admin/overview">Overview</a></li>
-                    <li class="active"><a href="#/admin/addquiz">Add quiz</a></li>
-                    <li><a href="#/admin/results">Results</a></li>
-                </ul>
-            </div>
+            <p class="navbar-text pull-right">
+                <button class="btn btn-link navbar-link" ng-click="logout()">Log out ({{user.username}})</button>
+            </p>
+            <ul class="nav">
+                <li><a href="#/admin/overview">Overview</a></li>
+                <li class="active"><a href="#/admin/addquiz">Add quiz</a></li>
+                <li><a href="#/admin/results">Results</a></li>
+            </ul>
         </div>
     </div>
 </div>

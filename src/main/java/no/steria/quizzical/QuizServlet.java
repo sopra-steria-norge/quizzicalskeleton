@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class QuizServlet extends HttpServlet {
 		
 		int quizId=0; 
 		String name="", email="";
-		HashMap<String,Integer> answersToDB = new HashMap<String,Integer>();
+		Map<String,Integer> answersToDB = new HashMap<String,Integer>();
 		
 		Iterator<Entry<String,JsonNode>> allEntries = rootNode.getFields();
 		while(allEntries.hasNext()){

@@ -1,21 +1,21 @@
 package no.steria.quizzical;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Response {
 
 	private int quizId;
 	private String name;
 	private String email;
-	private HashMap<String,Integer> quizAnswers;
+	private Map<String,Integer> quizAnswers;
 	private int score;
 	
 	public Response(){
 		
 	}
 	
-	public Response(int quizId, String name, String email, HashMap<String,Integer> quizAnswers){
+	public Response(int quizId, String name, String email, Map<String,Integer> quizAnswers){
 		this.quizId = quizId;
 		this.name = name;
 		this.email = email;
@@ -34,7 +34,7 @@ public class Response {
 		return email;
 	}
 	
-	public HashMap<String,Integer> getQuizAnswers(){
+	public Map<String,Integer> getQuizAnswers(){
 		return quizAnswers;
 	}
 	

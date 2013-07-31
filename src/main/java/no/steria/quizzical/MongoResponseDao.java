@@ -1,6 +1,7 @@
 package no.steria.quizzical;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.mongodb.BasicDBObject;
@@ -50,8 +51,8 @@ public class MongoResponseDao{
 		return winner;
 	}
 	
-	public ArrayList<Response> getRespondents(int quizId){
-		ArrayList<Response> responses = new ArrayList<Response>();
+	public List<Response> getRespondents(int quizId){
+		List<Response> responses = new ArrayList<Response>();
 		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
 		
 		while(cursor.hasNext()){

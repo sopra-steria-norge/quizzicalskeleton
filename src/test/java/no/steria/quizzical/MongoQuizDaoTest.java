@@ -2,7 +2,7 @@ package no.steria.quizzical;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class MongoQuizDaoTest {
 	
 	@Test
 	public void shouldReadQuizzes() throws Exception {
-		ArrayList<Quiz> quizzes = mongoQuizDao.getQuizzes();				
+		List<Quiz> quizzes = mongoQuizDao.getQuizzes();				
 		assertThat(quizzes).hasSize(3);
 	}
 	
