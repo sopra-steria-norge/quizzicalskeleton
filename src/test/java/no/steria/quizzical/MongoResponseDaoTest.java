@@ -42,6 +42,7 @@ public class MongoResponseDaoTest {
 		String[] winner = mongoResponseDao.drawRandomWinner(1);
 		assertThat(mongoResponseDao.getRespondents(1)).hasSize(2);
 		assertThat(winner[0]).isNotEmpty();
+		assertThat(winner[1]).isNotEmpty();
 	}
 	
 }
