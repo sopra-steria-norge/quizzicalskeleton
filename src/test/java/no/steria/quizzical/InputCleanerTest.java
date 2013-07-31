@@ -16,4 +16,14 @@ public class InputCleanerTest {
 	public void shouldWashUnintendedInput() {
 		assertThat(cleaner.clean("Me<script>alert('abc');</script>")).isEqualTo("Me");
 	}
+	
+	@Test
+	public void shouldHandleEmptyText() {
+		assertThat(cleaner.clean("")).isEqualTo("");
+	}
+	
+	@Test
+	public void shouldHandleNull() {
+		assertThat(cleaner.clean(null)).isNull();
+	}
 }
