@@ -25,14 +25,9 @@ public class MongoResponseDao{
 		document.put("name", response.getName());
 		document.put("email", response.getEmail());
 		document.put("score", response.getScore());
-		
 		collection.insert(document);
 	}
 	
-	public void setResponse(DBObject document){
-		collection.insert(document);
-	}
-
 	public int countResponsesForQuiz(int quizId){		
 		DBCursor cursor = collection.find(new BasicDBObject("quizId",quizId));
 		return cursor.count();
@@ -56,7 +51,7 @@ public class MongoResponseDao{
 	}
 	
 	public ArrayList<Response> getRespondents(int quizId){
-		ArrayList<Response> respondents = new ArrayList<Response>();
+		ArrayList<Response> responses = new ArrayList<Response>();
 		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
 		
 		while(cursor.hasNext()){
@@ -66,11 +61,11 @@ public class MongoResponseDao{
 			String email = (String) document.get("email");
 			int score = (Integer) document.get("score");
 			
-			Response respondent = new Response(quizId, name, email, null);
-			respondent.setScore(score);
-			respondents.add(respondent);
+			Response response = new Response(quizId, name, email, null);
+			response.setScore(score);
+			responses.add(response);
 		}
-		return respondents;
+		return responses;
 	}
 	
 }

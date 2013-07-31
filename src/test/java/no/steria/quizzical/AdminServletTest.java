@@ -15,15 +15,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 public class AdminServletTest {
-	private HttpServletRequest req = mock(HttpServletRequest.class);
-	private HttpServletResponse resp = mock(HttpServletResponse.class);
-	private AdminServlet servlet = new AdminServlet();
+	private HttpServletRequest req;
+	private HttpServletResponse resp;
+	private AdminServlet servlet;
 
 
+	@Before
+	public void setUp(){
+		req = mock(HttpServletRequest.class);
+		resp = mock(HttpServletResponse.class);
+		servlet = new AdminServlet();
+	}
+	
 	@Test
 	public void shouldRetrieveQuizzesForUser() throws Exception {
 		when(req.getParameter("mode")).thenReturn("2");
@@ -101,5 +109,6 @@ public class AdminServletTest {
 		servlet.doGet(req, resp);
 	}
 	
+
 	
 }

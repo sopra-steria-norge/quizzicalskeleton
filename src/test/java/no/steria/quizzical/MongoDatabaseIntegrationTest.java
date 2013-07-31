@@ -9,11 +9,11 @@ public class MongoDatabaseIntegrationTest {
 	@Test
 	public void insertToAndRetrieveFromDatabase(){
 		
-		MongoDemo.insertTestQuizzes();
-		Quiz retrievedQuiz = MongoDemo.getQuizHelper(1);
+		MongoDatabasePopulation.insertTestQuizzes();
+		Quiz retrievedQuiz = MongoDatabasePopulation.getQuizHelper(1);
 		
-		assertThat(MongoDemo.testQuiz1().getQuizId()).isEqualTo(retrievedQuiz.getQuizId());
-		assertThat(MongoDemo.testQuiz1().getQuizName()).isEqualTo(retrievedQuiz.getQuizName());
+		assertThat(MongoDatabasePopulation.testQuiz1().getQuizId()).isEqualTo(retrievedQuiz.getQuizId());
+		assertThat(MongoDatabasePopulation.testQuiz1().getQuizName()).isEqualTo(retrievedQuiz.getQuizName());
 	}
 	
 }

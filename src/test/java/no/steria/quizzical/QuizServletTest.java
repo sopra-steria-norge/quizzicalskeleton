@@ -33,7 +33,7 @@ public class QuizServletTest {
         when(resp.getWriter()).thenReturn(new PrintWriter(htmlDoc));
         
         MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-        Quiz quiz = MongoDemo.testQuiz1();
+        Quiz quiz = MongoDatabasePopulation.testQuiz1();
         when(mongoQuizDao.getQuiz(1)).thenReturn(quiz);
 
         servlet.setQuizDao(mongoQuizDao);

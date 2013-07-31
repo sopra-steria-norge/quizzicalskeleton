@@ -2,6 +2,7 @@ package no.steria.quizzical;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.mongodb.BasicDBList;
@@ -11,11 +12,12 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
-public class MongoDemo {
+public class MongoDatabasePopulation {
 	
 	private static DB db;
 	private static DBCollection quizzesInDB;
 	private static DBCollection usersInDB;
+	private static DBCollection responsesInDB;
 	private static PasswordUtil passwordUtil;
 	
 	private static void init(){
@@ -26,6 +28,9 @@ public class MongoDemo {
 			e.printStackTrace();
 		}
 		db = client.getDB("quizzical");
+		quizzesInDB = db.getCollection("quizzes");
+		usersInDB = db.getCollection("users");
+		responsesInDB = db.getCollection("responses");
 		
 		passwordUtil = new PasswordUtil();
 	}
@@ -41,12 +46,11 @@ public class MongoDemo {
 	}
 	
 	public static void insertTestQuizzes(){
-		init();
 		insertTestQuizzesIntoDB(createQuizData());
 	}	
 	
 	private static void insertTestQuizzesIntoDB(List<Quiz> quizzes){
-		quizzesInDB = db.getCollection("quizzes");
+		init();
 		quizzesInDB.drop();		
 		for(Quiz quizData : quizzes){
 			BasicDBObject quizToDB = new BasicDBObject();
@@ -156,12 +160,12 @@ public class MongoDemo {
 	}
 	
 	public static void dropQuizzesInDB(){
-		quizzesInDB = db.getCollection("quizzes");
+		init();
 		quizzesInDB.drop();
 	}
 
 	private static void insertTestUsersIntoDB(List<User> users){
-		usersInDB = db.getCollection("users");
+		init();
 		usersInDB.drop();
 
 		for(User user : users){
@@ -234,5 +238,25 @@ public class MongoDemo {
 		return new User(userId, username, salt, encryptedPassword, quizzes);
 	}
 	
+	public static void dropResponsesInDB(){
+		init();
+		responsesInDB.drop();
+	}
+	
+	public static Response testResponse1(){
+		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
+		quizAnswers.put("q1", 2);
+		quizAnswers.put("q2", 1);
+		Response response = new Response(1, "TestVisitor", "test@user.com", quizAnswers);
+		return response;
+	}
+	
+	public static Response testResponse2(){
+		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
+		quizAnswers.put("q1", 1);
+		quizAnswers.put("q2", 1);
+		Response response = new Response(1, "Lars", "lars@tester.com", quizAnswers);
+		return response;
+	}
 	
 }

@@ -13,7 +13,7 @@ public class MongoQuizDaoTest {
 	
 	@Before
 	public void setUp(){
-		MongoDemo.insertTestQuizzes();
+		MongoDatabasePopulation.insertTestQuizzes();
 		mongoQuizDao = new MongoQuizDao();
 	}
 	
@@ -25,7 +25,7 @@ public class MongoQuizDaoTest {
 	
 	@Test
 	public void shouldGetQuiz() throws Exception {		
-		Quiz quiz = MongoDemo.testQuiz1();		
+		Quiz quiz = MongoDatabasePopulation.testQuiz1();		
 		assertThat(mongoQuizDao.getQuiz(1)).isEqualTo(quiz);
 	}
 	
@@ -36,11 +36,11 @@ public class MongoQuizDaoTest {
 	
 	@Test
 	public void shouldInsertQuizIntoDB(){		
-		MongoDemo.main(null);
-		Quiz quiz = MongoDemo.testQuiz1();
-		User user = MongoDemo.testUser1();
+		MongoDatabasePopulation.main(null);
+		Quiz quiz = MongoDatabasePopulation.testQuiz1();
+		User user = MongoDatabasePopulation.testUser1();
 		
-		MongoDemo.dropQuizzesInDB();
+		MongoDatabasePopulation.dropQuizzesInDB();
 		mongoQuizDao.insertQuizIntoDB(quiz, user.getUserId());
 		assertThat(mongoQuizDao.getQuiz(quiz.getQuizId())).isEqualTo(quiz);
 	}
