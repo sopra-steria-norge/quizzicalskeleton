@@ -50,3 +50,9 @@ body {
 	box-shadow: none;
 }
 
+@media (max-width: 800px) {
+	.quiz-input-choice-box:hover {
+		background-color: #f57921;
+	}
+}
+
