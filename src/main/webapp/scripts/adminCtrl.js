@@ -13,7 +13,8 @@ angular.module('quizControllers')
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
 		var isSubmitting = false;
-
+		var updateRespondentsInterval;
+		
 		$scope.winner = [];
 		
 		$scope.user = null;
@@ -50,6 +51,9 @@ angular.module('quizControllers')
 						event.preventDefault();
 					}
 				}
+			} 
+			if ($route.current.templateUrl === "templates/adminResults.html"){
+				updateRespondentsInterval = clearInterval(updateRespondentsInterval);
 			}
 		});
 		
@@ -173,6 +177,31 @@ angular.module('quizControllers')
 				console.log("Error:" + status);
 			});
 		}
+		
+//		$scope.autoUpdateRespondents = function(){
+//			var updateRespondentsInterval;
+//			if ($route.current.templateUrl === "templates/adminResults.html"){
+//				updateRespondentsInterval = window.setInterval(updateAllRespondentsFromDB(), 100);
+//			}
+//		};
+		
+//		$scope.autoUpdateRespondents = function(){
+//			$defer(function up(){
+//				alert("a");
+//				$defer(up, 1000);
+//			},1000);
+//		};
+		
+		$scope.$on('$viewContentLoaded', function() {
+			if ($route.current.templateUrl === "templates/adminResults.html"){
+				updateRespondentsInterval = window.setInterval(function updateAllRespondentsFromDB(){
+					var i;
+					for (i = 0; i < $scope.quizzes.length; i++){
+						updateRespondentsFromDB($scope.quizzes[i].quizId);
+					}
+				}, 1000);
+			}
+		});
 		
 		$scope.showRespondentState = {};
 		
