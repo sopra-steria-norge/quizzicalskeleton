@@ -1,29 +1,31 @@
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="brand" href="#"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
-        </div>
-    </div>
-</div>
-
-<div class="answer-quiz-box">
-	<form action="#/answerQuiz/{{quizId}}" method="POST">
-		<h2 class="quiz-box-heading">Do you have a quizcode?</h2>
-		<input type="text" class="input-block-level" name="quizcode" placeholder="Quizcode" tabindex="1" ng-model="quizId"/>	
-		<button type="submit" class="bt btn-large btn-primary" name="quizButton" tabindex="3">Play quiz</button>
-	</form>
-	<br>
-	<hr>
-	<form class="quizForm" action="login" method="POST">
-		<h3 class="quiz-box-heading">Admin area login</h2>
-		<div class="" ng-show="loginError">
-			<div class="alert alert-error">
-				<i class="icon-warning-sign"></i>
-				{{errorMsg}}
-			</div>
-		</div>		
-		<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1"/>
-		<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2"/>
-		<button type="submit" class="bt btn-small btn-primary" name="loginButton" tabindex="3">Login</button>
-	</form>
+<div ng-controller="FrontCtrl">
+	<div class="navbar navbar-fixed-top">
+	    <div class="navbar-inner">
+	        <div class="container-fluid">
+	            <a class="brand" href="#"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
+	           <p class="navbar-text pull-right">
+					<button class="btn btn-link navbar-link" ng-show="!adminView" ng-click="setAdminView(true)">Go to admin area</button>
+					<button class="btn btn-link navbar-link" ng-show="adminView" ng-click="setAdminView(false)">Go to visitor area</button>
+	           </p>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="answer-quiz-box">
+		<div ng-show="!adminView">
+			<form action="#/answerQuiz/{{quizId}}" method="POST">
+				<h2 class="quiz-box-heading">Do you have a quizcode?</h2>
+				<input type="text" class="input-block-level" name="quizcode" placeholder="Quizcode" tabindex="1" ng-model="quizId" required="required"/>	
+				<button type="submit" class="bt btn-large btn-primary" name="quizButton" tabindex="3">Play quiz</button>
+			</form>
+		</div>
+		<div ng-show="adminView">
+			<form class="quizForm" action="login" method="POST">
+				<h2 class="quiz-box-heading">Admin area login</h2>
+				<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1"/>
+				<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2"/>
+				<button type="submit" class="bt btn-large btn-primary" name="loginButton" tabindex="3">Login</button>
+			</form>
+		</div>
+	</div>
 </div>

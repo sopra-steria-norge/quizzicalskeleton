@@ -8,7 +8,7 @@
                 $routeProvider.
                     when('/', {
                         templateUrl: 'templates/loginpage.html', 
-                        controller: ''
+                        controller: 'FrontCtrl'
                     }).
                     when('/answerQuiz/:quizId', {
                         templateUrl: 'templates/answerQuizView.html', 
