@@ -1,0 +1,39 @@
+package no.steria.quizzical;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class StatusServlet extends HttpServlet {
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.setContentType("text/html");
+    PrintWriter writer = resp.getWriter();
+    writer.append("<html><title>Quizzical status debug</title><body>");
+    writer.append("<h1>Enviroment</h1>");
+    Properties properties = System.getProperties();
+    writer.append("<ul>");
+    for (Entry<Object, Object> entry : properties.entrySet()) {
+      writer.append("<li>" + entry.getKey() + " = '" + entry.getValue() + "'</li>");
+    }
+    
+    writer.append("</ul>");
+    writer.append("<hr/><ul>");
+
+    Map<String, String> getenv = System.getenv();
+    for (Entry<String, String> entry : getenv.entrySet()) {
+      writer.append("<li>" + entry.getKey() + " = '" + entry.getValue() + "'</li>");      
+    }
+
+    
+    writer.append("</ul></body></html>");
+  }
+}
