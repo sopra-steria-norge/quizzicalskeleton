@@ -178,20 +178,6 @@ angular.module('quizControllers')
 			});
 		}
 		
-//		$scope.autoUpdateRespondents = function(){
-//			var updateRespondentsInterval;
-//			if ($route.current.templateUrl === "templates/adminResults.html"){
-//				updateRespondentsInterval = window.setInterval(updateAllRespondentsFromDB(), 100);
-//			}
-//		};
-		
-//		$scope.autoUpdateRespondents = function(){
-//			$defer(function up(){
-//				alert("a");
-//				$defer(up, 1000);
-//			},1000);
-//		};
-		
 		$scope.$on('$viewContentLoaded', function() {
 			if ($route.current.templateUrl === "templates/adminResults.html"){
 				updateRespondentsInterval = window.setInterval(function updateAllRespondentsFromDB(){
