@@ -26,4 +26,9 @@ public class InputCleanerTest {
 	public void shouldHandleNull() {
 		assertThat(cleaner.clean(null)).isNull();
 	}
+	
+	@Test
+	public void shouldHandleNorwegianCharacters() {
+		assertThat(cleaner.clean("blåbærsyltetøy")).isEqualTo("blåbærsyltetøy");
+	}
 }

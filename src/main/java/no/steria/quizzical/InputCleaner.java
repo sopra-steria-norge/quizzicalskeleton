@@ -1,7 +1,11 @@
 package no.steria.quizzical;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Entities.EscapeMode;
+import org.jsoup.safety.Cleaner;
 import org.jsoup.safety.Whitelist;
+
 
 
 public class InputCleaner {
@@ -10,7 +14,10 @@ public class InputCleaner {
 		if (unsafe == null) {
 			return null;
 		}
-		return Jsoup.clean(unsafe, Whitelist.none());
+		Document doc = Jsoup.parse(unsafe);
+		doc = new Cleaner(Whitelist.none()).clean(doc);
+		doc.outputSettings().escapeMode(EscapeMode.xhtml);
+		return doc.body().html();
 	}
 
 }
