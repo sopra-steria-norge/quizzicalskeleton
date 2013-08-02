@@ -37,7 +37,7 @@
 			<h4 class="quiz-box-question">{{q.text}}</h4>
 			<div ng-repeat="qa in q.alternatives">
 				<label class="radio quiz-input-choice-box {{isRadioBtnSelected(q, qa)}} ql{{q.id}}">
-					<input type="radio" class="quiz-input-choice" ng-model="q.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="updateAnswers(q.id, qa.aid)">
+					<input type="radio" ng-model="q.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="updateAnswers(q.id, qa.aid)">
 					{{qa.atext}}
 				</label>
 			</div>
