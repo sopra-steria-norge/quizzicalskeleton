@@ -42,23 +42,11 @@ angular.module('quizControllers')
 			$scope.answers[key] = aid;
 		};
 		
-		$scope.highlightChoosenOption = function(qid){
-			var radioButtons = document.getElementsByName("q" + qid);
-			var labels = document.getElementsByClassName("radio quiz-input-choice-box ql" + qid);
-			var i = 0;
-			
-			for (i = 0; i < radioButtons.length; i++) {
-				labels[i].className = labels[i].className.replace( /(?:^|\s)quiz-input-choice-box-selected(?!\S)/g , "" );
-				
-				if (radioButtons[i].checked) {
-					labels[i].className += " quiz-input-choice-box-selected";
-				}
+		$scope.isRadioBtnSelected = function(q, qa){
+			if (parseInt(q.isChecked, 10) === qa.aid){
+				return "quiz-input-choice-box-selected";
 			}
-		};
-		
-		$scope.radioButtonChanged = function(qid, aid){
-			$scope.updateAnswers(qid, aid);
-			$scope.highlightChoosenOption(qid);
+			return "";
 		};
 		
 		$scope.checkRadioButtons = function(qid){
