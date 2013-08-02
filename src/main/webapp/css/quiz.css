@@ -35,12 +35,9 @@ body {
 	padding: 0.5em 2.0em 0.5em 2.0em;
 	/*margin:*/
 }
-.quiz-input-choice-box:hover {
-	background-color: #f9b49b; /*F57921*/
-	color: #000000;
-}
+
 .quiz-input-choice-box-selected {
-	background-color: #f57921;/*F15A23*/
+	background-color: #f57921;
 	color: #ffffff;	
 }
 .quiz-input-choice-box:ACTIVE {
@@ -50,9 +47,13 @@ body {
 	box-shadow: none;
 }
 
-@media (max-width: 800px) {
+@media (min-width: 800px) {
 	.quiz-input-choice-box:hover {
+		background-color: #f9b49b;
+		color: #000000;
+	}
+	
+	.quiz-input-choice-box:ACTIVE {
 		background-color: #f57921;
 	}
 }
-
