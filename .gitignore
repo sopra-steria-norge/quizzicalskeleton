@@ -3,5 +3,7 @@ target/*
 .settings/*
 .project
 .idea/
+*.iml
+*.ipr
 /src/main/webapp/scripts/all.js
 /src/main/webapp/css/all.css
