@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+
 public abstract class SecuredServlet extends HttpServlet {
 	@Override
 	protected final void service(HttpServletRequest req, HttpServletResponse resp)
@@ -17,7 +19,7 @@ public abstract class SecuredServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		DateTime validUntil = (DateTime) session.getAttribute("valid");
 		if (validUntil == null || validUntil.isBeforeNow()) {
-			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+			resp.sendError(SC_UNAUTHORIZED);
 			return;
 		}
 		

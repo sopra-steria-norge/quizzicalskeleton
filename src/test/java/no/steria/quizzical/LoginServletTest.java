@@ -50,8 +50,8 @@ public class LoginServletTest {
 		when(req.getSession()).thenReturn(mockSession);
 		
 		servlet.service(req, resp);
-		
-		verify(resp).sendError(401);
+
+		verify(resp).sendRedirect("#/?loginFailed=true");
 		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
 	}
 	
@@ -64,8 +64,8 @@ public class LoginServletTest {
 		when(req.getSession()).thenReturn(mockSession);
 		
 		servlet.service(req, resp);
-		
-		verify(resp).sendError(401);
+
+		verify(resp).sendRedirect("#/?loginFailed=true");
 		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
 		
 	}
@@ -80,7 +80,7 @@ public class LoginServletTest {
 		
 		servlet.service(req, resp);
 		
-		verify(resp).sendError(401);
+		verify(resp).sendRedirect("#/?loginFailed=true");
 		verify(mockSession,never()).setAttribute(anyString(), any(Object.class));
 	}
 
