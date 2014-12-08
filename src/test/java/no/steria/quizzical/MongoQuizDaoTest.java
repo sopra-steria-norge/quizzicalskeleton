@@ -34,15 +34,5 @@ public class MongoQuizDaoTest {
 		assertThat(mongoQuizDao.getQuiz(10));
 	}
 	
-	@Test
-	public void shouldInsertQuizIntoDB(){		
-		MongoDatabasePopulation.main(null);
-		Quiz quiz = MongoDatabasePopulation.testQuiz1();
-		User user = MongoDatabasePopulation.testUser1();
-		
-		MongoDatabasePopulation.dropQuizzesInDB();
-		mongoQuizDao.insertQuizIntoDB(quiz, user.getUserId());
-		assertThat(mongoQuizDao.getQuiz(quiz.getQuizId())).isEqualTo(quiz);
-	}
 
 }
