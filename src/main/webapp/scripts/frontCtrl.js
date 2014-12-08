@@ -7,5 +7,12 @@ angular.module('quizControllers')
 		$scope.setAdminView = function(show){
 			$scope.adminView = show;
 		};
+
+		$scope.init = function() {
+			if($routeParams.loginFailed) {
+				$scope.setAdminView(true);
+				$scope.loginFailed = true;
+			}
+		};
 		
 }]);

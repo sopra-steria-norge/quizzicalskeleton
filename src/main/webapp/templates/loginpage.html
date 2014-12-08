@@ -1,4 +1,4 @@
-<div ng-controller="FrontCtrl">
+<div ng-controller="FrontCtrl" ng-init="init()">
 	<div class="navbar navbar-fixed-top">
 	    <div class="navbar-inner">
 	        <div class="container-fluid">
@@ -22,10 +22,13 @@
 		<div ng-show="adminView">
 			<form class="quizForm" action="login" method="POST">
 				<h2 class="quiz-box-heading">Admin area login</h2>
-				<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1"/>
-				<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2"/>
+				<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1" required="required"/>
+				<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2" required="required"/>
 				<button type="submit" class="bt btn-large btn-primary" name="loginButton" tabindex="3">Login</button>
 			</form>
+
+			<div ng-show="loginFailed">Wrong username or password. Please try again.</div>
+
 		</div>
 	</div>
 </div>

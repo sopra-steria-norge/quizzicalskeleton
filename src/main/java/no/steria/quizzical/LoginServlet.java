@@ -1,16 +1,15 @@
 package no.steria.quizzical;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import org.joda.time.DateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.joda.time.DateTime;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class LoginServlet extends HttpServlet {
 
@@ -22,8 +21,8 @@ public class LoginServlet extends HttpServlet {
 		DateTime validUntil = new DateTime().plusMinutes(30);
 		HttpSession session = req.getSession();
 		String username = req.getParameter("user");
-		if (username == null || username.trim().isEmpty() || !validatePassword(req)) {
-			resp.sendError(401);
+		if (!validatePassword(req)) {
+			resp.sendRedirect("#/?loginFailed=true");
 		}else{
 			session.setAttribute("username", username);
 			session.setAttribute("valid", validUntil);
