@@ -82,4 +82,20 @@ public class Quiz {
 		}
 		return isEqual;
 	}
+
+	public void setQuizName(String quizName) {
+		this.quizName = quizName;
+	}
+
+	public void setQuizDesc(String quizDesc) {
+		this.quizDesc = quizDesc;
+	}
+
+	public void setSubmitMsg(String submitMsg) {
+		this.submitMsg = submitMsg;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
 }
