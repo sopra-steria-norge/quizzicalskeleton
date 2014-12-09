@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import java.util.List;
 

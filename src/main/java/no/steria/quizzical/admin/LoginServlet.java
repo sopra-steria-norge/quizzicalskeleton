@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import org.joda.time.DateTime;
 
@@ -21,28 +21,15 @@ public class LoginServlet extends HttpServlet {
 		DateTime validUntil = new DateTime().plusMinutes(30);
 		HttpSession session = req.getSession();
 		String username = req.getParameter("user");
-		if (!validatePassword(req)) {
+		String password = req.getParameter("password");
+
+		if (!mongoUserDao.validatePassword(username, password)) {
 			resp.sendRedirect("#/?loginFailed=true");
 		}else{
 			session.setAttribute("username", username);
 			session.setAttribute("valid", validUntil);
 			resp.sendRedirect("#/admin");			
 		}
-	}
-
-	private boolean validatePassword(HttpServletRequest req) {
-		User user = null;
-		Boolean validated = false;
-		user = mongoUserDao.getUser(req.getParameter("user"));
-//		validated = user != null && user.getPassword().equals(req.getParameter("password"));
-		try {
-			validated = user != null && user.getSalt() != null && new PasswordUtil().authenticate(
-					req.getParameter("password"), user.getEncryptedPassword(), user.getSalt());
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			validated = false;
-		}
-		return validated;
-
 	}
 	
 	@Override

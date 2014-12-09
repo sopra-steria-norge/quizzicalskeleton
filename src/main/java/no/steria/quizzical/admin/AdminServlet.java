@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import no.steria.quizzical.*;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.JsonMappingException;

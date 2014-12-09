@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import no.steria.quizzical.admin.LoginServlet;
+import no.steria.quizzical.admin.MongoUserDao;
+import no.steria.quizzical.admin.PasswordUtil;
+import no.steria.quizzical.admin.User;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.junit.After;

@@ -10,6 +10,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import no.steria.quizzical.admin.MongoUserDao;
 
 public class MongoQuizDao implements QuizDao {
 

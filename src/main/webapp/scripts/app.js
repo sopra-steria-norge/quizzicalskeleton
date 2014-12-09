@@ -30,6 +30,10 @@
 						templateUrl: 'templates/adminAddQuiz.html',
 						controller: 'AdminCtrl'
 					}).
+					when('/admin/changepw', {
+						templateUrl: 'templates/adminChangePassword.html',
+						controller: 'AdminCtrl'
+					}).
 					when('/admin/results', {
 						templateUrl: 'templates/adminResults.html',
 						controller: 'AdminCtrl'

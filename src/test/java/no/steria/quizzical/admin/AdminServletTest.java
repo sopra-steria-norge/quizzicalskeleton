@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import no.steria.quizzical.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

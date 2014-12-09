@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -24,7 +24,7 @@ public class PasswordUtil {
 		return Arrays.equals(encryptedPassword, encryptedAttemptedPassword);
 	}
 
-	public byte[] getEncryptedPassword(String password, byte[] salt)
+	public static byte[] getEncryptedPassword(String password, byte[] salt)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		// PBKDF2 with SHA-1 as the hashing algorithm. Note that the NIST
 		// specifically names SHA-1 as an acceptable hashing algorithm for
@@ -47,7 +47,7 @@ public class PasswordUtil {
 		return f.generateSecret(spec).getEncoded();
 	}
 
-	public byte[] generateSalt() throws NoSuchAlgorithmException {
+	public static byte[] generateSalt() throws NoSuchAlgorithmException {
 		// VERY important to use SecureRandom instead of just Random
 		SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
 

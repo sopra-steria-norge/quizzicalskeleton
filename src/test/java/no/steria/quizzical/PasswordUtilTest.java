@@ -3,6 +3,7 @@ package no.steria.quizzical;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import no.steria.quizzical.admin.PasswordUtil;
 import org.junit.Test;
 
 public class PasswordUtilTest {

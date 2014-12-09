@@ -1,4 +1,4 @@
-package no.steria.quizzical;
+package no.steria.quizzical.admin;
 
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.fest.assertions.Assertions.assertThat;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import no.steria.quizzical.admin.SecuredServlet;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.junit.After;

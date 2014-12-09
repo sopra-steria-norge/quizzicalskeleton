@@ -22,17 +22,26 @@
 	
 	<servlet>
 		<servlet-name>adminServlet</servlet-name>
-		<servlet-class>no.steria.quizzical.AdminServlet</servlet-class>
+		<servlet-class>no.steria.quizzical.admin.AdminServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>adminServlet</servlet-name>
 		<url-pattern>/adminQuiz/*</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>adminPasswordServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.admin.AdminPasswordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminPasswordServlet</servlet-name>
+		<url-pattern>/adminPassword/*</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>loginServlet</servlet-name>
-		<servlet-class>no.steria.quizzical.LoginServlet</servlet-class>
+		<servlet-class>no.steria.quizzical.admin.LoginServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

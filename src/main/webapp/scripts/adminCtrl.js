@@ -9,6 +9,12 @@ angular.module('quizControllers')
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}],
 				userId: ""
 		};
+
+		$scope.changepw = {
+			oldPassword: "",
+			newPassword1: "",
+			newPassword2: ""
+		};
 		
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
@@ -115,10 +121,10 @@ angular.module('quizControllers')
 				questions[i].id = 1 + i;
 			}
 		};
-		
+
 		$scope.submitQuiz = function(){
 			var submitData = $scope.newquiz;
-			
+
 			$http({method: "POST", url: "adminQuiz", data: JSON.stringify(submitData)}).
 			success(function(data) {
 				isSubmitting = true;
@@ -127,9 +133,30 @@ angular.module('quizControllers')
 			}).
 			error(function(data,status) {
 				console.log("Error:" + status);
-			});			
+			});
 		};
-		
+
+		$scope.submitChangePassword = function(){
+			var submitData = $scope.changepw;
+
+			$http({method: "POST", url: "adminPassword", data: JSON.stringify(submitData)}).
+				success(function(data) {
+					if(data.errorMsg) {
+						alert(data.errorMsg);
+					}
+					else {
+						alert('Password changed.');
+						isSubmitting = true;
+						$location.path("/admin/overview/");
+						window.onbeforeunload = null;
+					}
+				}).
+				error(function(data,status) {
+					console.log("Error:" + status);
+				});
+		};
+
+
 		$scope.drawRandomWinner = function(quizId){
 			$http({method: "GET", url: "adminQuiz?mode=4&quizId=" + quizId}).
 			success(function(data) {
