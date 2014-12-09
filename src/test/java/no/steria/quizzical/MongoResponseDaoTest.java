@@ -14,12 +14,12 @@ public class MongoResponseDaoTest {
 	@Before
 	public void setUp(){
 		mongoResponseDao = new MongoResponseDao();
-		MongoDatabasePopulation.dropResponsesInDB();
+		MongoDatabasePopulation.getInstance().dropResponsesInDB();
 	}
 
 	@Test
 	public void shouldSetResponseAndRetrieveFromDB() throws Exception {	
-		Response inputResponse = MongoDatabasePopulation.testResponse1();
+		Response inputResponse = MongoDatabasePopulation.getInstance().testResponse1();
 		mongoResponseDao.setResponse(inputResponse);
 		
 		List<Response> responses = mongoResponseDao.getRespondents(1);
@@ -30,15 +30,15 @@ public class MongoResponseDaoTest {
 	
 	@Test
 	public void shouldCountResponsesForQuiz(){
-		mongoResponseDao.setResponse(MongoDatabasePopulation.testResponse1());
-		mongoResponseDao.setResponse(MongoDatabasePopulation.testResponse2());
+		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse1());
+		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse2());
 		assertThat(mongoResponseDao.getRespondents(1)).hasSize(2);
 	}
 	
 	@Test
 	public void shouldDrawRandomWinnerFromAvailableResponses(){
-		mongoResponseDao.setResponse(MongoDatabasePopulation.testResponse1());
-		mongoResponseDao.setResponse(MongoDatabasePopulation.testResponse2());
+		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse1());
+		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse2());
 		String[] winner = mongoResponseDao.drawRandomWinner(1);
 		assertThat(mongoResponseDao.getRespondents(1)).hasSize(2);
 		assertThat(winner[0]).isNotEmpty();

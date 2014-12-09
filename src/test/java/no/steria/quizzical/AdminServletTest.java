@@ -82,7 +82,7 @@ public class AdminServletTest {
 		User dummyUser = new User(1, "testUser", null, null, Arrays.asList(new Integer(33)));
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
 		
-		String s = "{\"quizId\": 9, \"quizName\":\"SteriaQuiz\",\"quizDesc\":\"Quiz om Steria\",\"submitMsg\":\"Takk\",\"questions\":[{\"id\":1,\"text\":\"Spm1\",\"alternatives\":[{\"aid\":1,\"atext\":\"svar1\"},{\"aid\":2,\"atext\":\"svar2\"}],\"answer\":\"2\"}], \"active\": true, \"userId\": 1}";
+		String s = "{\"quizId\": -1, \"quizName\":\"SteriaQuiz\",\"quizDesc\":\"Quiz om Steria\",\"submitMsg\":\"Takk\",\"questions\":[{\"id\":1,\"text\":\"Spm1\",\"alternatives\":[{\"aid\":1,\"atext\":\"svar1\"},{\"aid\":2,\"atext\":\"svar2\"}],\"answer\":\"2\"}], \"active\": true, \"userId\": 1}";
 		BufferedReader br = new BufferedReader(new StringReader(s));
 		when(req.getReader()).thenReturn(br);
 		
@@ -97,7 +97,7 @@ public class AdminServletTest {
 		ArrayList<Question> qs = new ArrayList<Question>();
 		qs.add(q);
 		
-		Quiz quiz = new Quiz(9, "SteriaQuiz", "Quiz om Steria", "Takk", qs, true);
+		Quiz quiz = new Quiz(-1, "SteriaQuiz", "Quiz om Steria", "Takk", qs, true);
 		
 		HttpSession mockSession = mock(HttpSession.class);
 		when(req.getSession()).thenReturn(mockSession);

@@ -13,7 +13,7 @@ public class MongoQuizDaoTest {
 	
 	@Before
 	public void setUp(){
-		MongoDatabasePopulation.insertTestQuizzes();
+		MongoDatabasePopulation.getInstance().insertTestQuizzesIntoDB();
 		mongoQuizDao = new MongoQuizDao();
 	}
 	
@@ -25,7 +25,7 @@ public class MongoQuizDaoTest {
 	
 	@Test
 	public void shouldGetQuiz() throws Exception {		
-		Quiz quiz = MongoDatabasePopulation.testQuiz1();		
+		Quiz quiz = MongoDatabasePopulation.getInstance().testQuiz1();
 		assertThat(mongoQuizDao.getQuiz(1)).isEqualTo(quiz);
 	}
 	

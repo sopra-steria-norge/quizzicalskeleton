@@ -1,26 +1,40 @@
 package no.steria.quizzical;
 
+import com.mongodb.*;
+
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-
+/**
+ * Adds two sample users. These are "martin" with password "eple", and "nikolai" with password "sopp",
+ * and some sample quizzes.
+ */
 public class MongoDatabasePopulation {
 	
-	private static DB db;
-	private static DBCollection quizzesInDB;
-	private static DBCollection usersInDB;
-	private static DBCollection responsesInDB;
-	private static PasswordUtil passwordUtil;
-	
-	private static void init(){
+	private DB db;
+	private DBCollection quizzesInDB;
+	private DBCollection usersInDB;
+	private DBCollection responsesInDB;
+	private PasswordUtil passwordUtil;
+	private final static String CREATE_USER = "CREATE_USER";
+	private final static String SET_TEST_QUIZZES = "SET_TEST_QUIZZES";
+
+	//Singleton pattern ------
+	private static MongoDatabasePopulation instance;
+	private MongoDatabasePopulation() {
+		init();
+	}
+	public static synchronized MongoDatabasePopulation getInstance() {
+		if(instance == null) {
+			instance = new MongoDatabasePopulation();
+		}
+		return instance;
+	}
+	//------------------------
+
+	private void init() {
 		MongoClient client = null;
 		try {
 			client = new MongoClient();
@@ -36,22 +50,70 @@ public class MongoDatabasePopulation {
 	}
 
 	public static void main(String[] args) {
-		init();
-		if (args != null && args.length > 0 && "delete".equals(args[0])) {
-			System.out.println("TODO not impl yet");
-		} else {
-			insertTestQuizzesIntoDB(createQuizData());
-			insertTestUsersIntoDB(createUserData());
+		if (args != null && args.length > 0) {
+			String action = args[0];
+
+			if(CREATE_USER.equals(action)) {
+				String user = args[1];
+				String pass = args[2];
+				MongoDatabasePopulation.getInstance().createUser(user, pass);
+				return;
+			}
+			else if(SET_TEST_QUIZZES.equals(action)) {
+				MongoDatabasePopulation.getInstance().insertTestQuizzesIntoDB();
+				return;
+			}
+
+			throw new IllegalArgumentException("Invalid action '" + action + "'");
 		}
+
+		System.out.println("Usage:\n" +
+				"To create a user: CREATE_USER <username> <password>\n" +
+				"To clear quizzes and set test quiz data: SET_TEST_QUIZZES");
 	}
-	
-	public static void insertTestQuizzes(){
-		insertTestQuizzesIntoDB(createQuizData());
-	}	
-	
-	private static void insertTestQuizzesIntoDB(List<Quiz> quizzes){
-		init();
-		quizzesInDB.drop();		
+
+	private void createUser(String username, String pass) {
+		User user = getUser(username, pass);
+		insertUser(user);
+	}
+
+	private User getUser(String username, String password){
+		int userId=1;
+		ArrayList<Integer> quizzes = new ArrayList<Integer>();
+		quizzes.add(1);
+		quizzes.add(2);
+		byte[] salt = null;
+		byte[] encryptedPassword = null;
+		try {
+			salt = passwordUtil.generateSalt();
+			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return new User(userId, username, salt, encryptedPassword, quizzes);
+	}
+
+	private void insertUser(User user){
+		BasicDBObject userToDB = new BasicDBObject();
+		userToDB.put("userId", user.getUserId());
+		userToDB.put("username", user.getUsername());
+		userToDB.put("salt", user.getSalt());
+		userToDB.put("encpassword", user.getEncryptedPassword());
+		userToDB.put("quizzes", user.getQuizIds());
+		usersInDB.insert(userToDB);
+	}
+
+	public void dropResponsesInDB(){
+		responsesInDB.drop();
+	}
+
+	/**
+	 * This will drop all quizzes and insert test quizzes.
+	 */
+	void insertTestQuizzesIntoDB(){
+		List<Quiz> quizzes = createQuizData();
+
+		quizzesInDB.drop();
 		for(Quiz quizData : quizzes){
 			BasicDBObject quizToDB = new BasicDBObject();
 			quizToDB.put("quizId", quizData.getQuizId());
@@ -77,7 +139,7 @@ public class MongoDatabasePopulation {
 		}
 	}
 	
-	private static List<Quiz> createQuizData(){
+	private List<Quiz> createQuizData(){
 		List<Quiz> quizzes = new ArrayList<Quiz>();
 		quizzes.add(testQuiz1());
 		quizzes.add(testQuiz2());
@@ -85,7 +147,7 @@ public class MongoDatabasePopulation {
 		return quizzes;
 	}
 	
-	public static Quiz testQuiz1(){
+	public Quiz testQuiz1(){
 		List<Question> questions = new ArrayList<Question>();
 		
 		List<Alternative> alternatives1 = new ArrayList<Alternative>();
@@ -105,7 +167,7 @@ public class MongoDatabasePopulation {
 		return new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions, true);	
 	}
 	
-	private static Quiz testQuiz2(){
+	private Quiz testQuiz2(){
 		List<Question> questions = new ArrayList<Question>();
 		
 		List<Alternative> alternatives1 = new ArrayList<Alternative>();
@@ -125,7 +187,7 @@ public class MongoDatabasePopulation {
 		return new Quiz(2,"Science Quiz For Kids","This quiz contains question relevant for children with interest in science. Use this quiz vicely as kids can be extremely interested in science, and possibly learn too much.","Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM year 2017", questions, true);	
 	}
 	
-	private static Quiz testQuiz3(){
+	private Quiz testQuiz3(){
 		List<Question> questions = new ArrayList<Question>();
 		
 		List<Alternative> alternatives1 = new ArrayList<Alternative>();
@@ -145,7 +207,7 @@ public class MongoDatabasePopulation {
 		return new Quiz(3,"Nikkos Superquiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions, true);	
 	}
 	
-	public static Quiz getQuizHelper(int quizId) {
+	public Quiz getQuizHelper(int quizId) {
 		DBObject quizObject = quizzesInDB.findOne(new BasicDBObject("quizId", quizId));
 		
 		String quizName = (String) quizObject.get("name");
@@ -158,92 +220,8 @@ public class MongoDatabasePopulation {
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, active);
 		return quiz;
 	}
-	
-	public static void dropQuizzesInDB(){
-		init();
-		quizzesInDB.drop();
-	}
 
-	private static void insertTestUsersIntoDB(List<User> users){
-		init();
-		usersInDB.drop();
-
-		for(User user : users){
-			BasicDBObject userToDB = new BasicDBObject();
-			userToDB.put("userId", user.getUserId());
-			userToDB.put("username", user.getUsername());
-			userToDB.put("salt", user.getSalt());
-			userToDB.put("encpassword", user.getEncryptedPassword());			
-			userToDB.put("quizzes", user.getQuizIds());
-			usersInDB.insert(userToDB);			
-		}
-	}
-		
-	private static List<User> createUserData(){
-		List<User> users = new ArrayList<User>();
-		users.add(testUser1());
-		users.add(testUser2());
-		users.add(testUser3());		
-		return users;
-	}
-	
-	public static User testUser1(){
-		int userId=1;
-		String username="martin", password="eple";
-		ArrayList<Integer> quizzes = new ArrayList<Integer>();
-		quizzes.add(1);
-		quizzes.add(2);
-		byte[] salt = null;
-		byte[] encryptedPassword = null;
-		try {
-			salt = passwordUtil.generateSalt();
-			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return new User(userId, username, salt, encryptedPassword, quizzes);
-	}
-	
-	private static User testUser2(){
-		int userId=2;
-		String username="nikolai", password="sopp";
-		ArrayList<Integer> quizzes = new ArrayList<Integer>();
-		quizzes.add(3);
-		quizzes.add(1);
-		byte[] salt = null;
-		byte[] encryptedPassword = null;
-		try {
-			salt = passwordUtil.generateSalt();
-			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return new User(userId, username, salt, encryptedPassword, quizzes);
-	}
-	
-	private static User testUser3(){
-		int userId=3;
-		String username="andy", password="sitron";
-		ArrayList<Integer> quizzes = new ArrayList<Integer>();
-		quizzes.add(1);
-		quizzes.add(5);
-		byte[] salt = null;
-		byte[] encryptedPassword = null;
-		try {
-			salt = passwordUtil.generateSalt();
-			encryptedPassword = passwordUtil.getEncryptedPassword(password, salt);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return new User(userId, username, salt, encryptedPassword, quizzes);
-	}
-	
-	public static void dropResponsesInDB(){
-		init();
-		responsesInDB.drop();
-	}
-	
-	public static Response testResponse1(){
+	public Response testResponse1(){
 		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
 		quizAnswers.put("q1", 2);
 		quizAnswers.put("q2", 1);
@@ -251,7 +229,7 @@ public class MongoDatabasePopulation {
 		return response;
 	}
 	
-	public static Response testResponse2(){
+	public Response testResponse2(){
 		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
 		quizAnswers.put("q1", 1);
 		quizAnswers.put("q2", 1);
