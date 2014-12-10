@@ -35,20 +35,22 @@ public class MongoResponseDao{
 		DBCursor cursor = collection.find(new BasicDBObject("quizId",quizId));
 		return cursor.count();
 	}
-	
+
+	//TODO: Return a map here instead
 	public String[] drawRandomWinner(int quizId){
 		DBCursor cursor = collection.find(new BasicDBObject("quizId",quizId));
 		Random rand = new Random();
 		int length = cursor.count();
-		String[] winner = new String[2];
+		String[] winner = new String[4];
 		if(length>0){
 			cursor.skip(rand.nextInt(length));
 			DBObject next = cursor.next();
 			winner[0] = (String) next.get("name");
 			winner[1] = (String) next.get("email");
+			winner[2] = (String) next.get("company");
+			winner[3] = (String) next.get("phoneNumber");
 		}else{
 			winner[0] = "No responses yet!";
-			winner[1] = "";
 		}
 		return winner;
 	}

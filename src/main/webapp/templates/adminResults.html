@@ -22,8 +22,23 @@
 	    <div class="row">
 	        <div class="span3">
 	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
-	            <strong>Picked winner (randomly):</strong><br>
-	            {{quiz.winner[0]}} {{quiz.winner[1]}}
+
+				<span ng-show="quiz.winner[0]">
+	            	<strong>Picked winner (randomly):</strong><br>
+
+					<span ng-show="quiz.winner[1]">
+						Name: {{quiz.winner[0]}}<br/>
+						Email: {{quiz.winner[1]}}<br/>
+						Company: {{quiz.winner[2]}}<br/>
+						Phone number: {{quiz.winner[3]}}
+					</span>
+
+					<span ng-show="!quiz.winner[1]">
+					{{quiz.winner[0]}}
+					</span>
+
+					<br/>
+				</span>
 	        </div>
 	        <div class="span4">
 	            <p class="lead text-success">
@@ -41,12 +56,16 @@
 	    			<th>#</th>
 	    			<th>Name</th>
 	    			<th>Email</th>
+	    			<th>Company</th>
+	    			<th>Phone number</th>
 	    			<th>Score</th>
 	    		</tr>
 	    		<tr ng-repeat="respondent in quiz.respondentsList | orderBy:'-score'">
 	    			<td>{{$index + 1}}</td>
 	    			<td>{{respondent.name}}</td>
 	    			<td>{{respondent.email}}</td>
+	    			<td>{{respondent.company}}</td>
+	    			<td>{{respondent.phoneNumber}}</td>
 	    			<td>{{respondent.score}}</td>
 	    		</tr>
 	    	</table>
