@@ -12,8 +12,9 @@ angular.module('quizControllers')
 		
 		var currentQuestion = -1;
 		var isSubmitted = false;
-		
-		$http({method: "GET", url: "retrieveQuiz?mode=1&quizId=" + $routeParams.quizId}).
+
+		var testMode = $routeParams.testMode ? "&testMode=" + $routeParams.testMode : "";
+		$http({method: "GET", url: "retrieveQuiz?mode=1&quizId=" + $routeParams.quizId + testMode}).
 		success(function(data) {
 			$scope.quiz = data;
 			$scope.questions = data.questions;

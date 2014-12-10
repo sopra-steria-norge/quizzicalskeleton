@@ -77,7 +77,7 @@ public class QuizServlet extends HttpServlet {
 		while(questions.hasNext()){
 			 questions.next().setAnswer(-1);
 		}
-		if(!quiz.getActive()){
+		if(!quiz.getActive() && req.getParameter("testMode") == null){
 			throw new IllegalArgumentException();
 		}
 		mapper.writeValue(writer, quiz);
