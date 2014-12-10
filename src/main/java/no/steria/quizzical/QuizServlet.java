@@ -16,6 +16,9 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.joda.time.DateTime;
+
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 public class QuizServlet extends HttpServlet {
 
@@ -67,11 +70,11 @@ public class QuizServlet extends HttpServlet {
 
 		int mode = Integer.parseInt(req.getParameter("mode"));
 		if(mode == 1){
-			retrieveQuizByQuizId(req, mapper, writer);
+			retrieveQuizByQuizId(req, resp, mapper, writer);
 		}
 	}
 
-	private void retrieveQuizByQuizId(HttpServletRequest req,
+	private void retrieveQuizByQuizId(HttpServletRequest req, HttpServletResponse resp,
 			ObjectMapper mapper, PrintWriter writer) throws IOException,
 			JsonGenerationException, JsonMappingException {
 		int quizId = Integer.parseInt(req.getParameter("quizId"));
@@ -81,10 +84,24 @@ public class QuizServlet extends HttpServlet {
 		while(questions.hasNext()){
 			 questions.next().setAnswer(-1);
 		}
-		if(!quiz.getActive() && req.getParameter("testMode") == null){
+
+		String testMode = req.getParameter("testMode");
+
+		if(testMode != null && !isLoggedIn(req)) {
+			resp.sendError(SC_UNAUTHORIZED);
+			return;
+		}
+
+		if(!quiz.getActive() && testMode == null){
 			throw new IllegalArgumentException();
 		}
+
 		mapper.writeValue(writer, quiz);
+	}
+
+	private boolean isLoggedIn(HttpServletRequest req) {
+		DateTime validUntil = (DateTime) req.getSession().getAttribute("valid");
+		return validUntil != null && validUntil.isAfterNow();
 	}
 	
 	public void setQuizDao(MongoQuizDao quizDao) {
