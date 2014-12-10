@@ -100,6 +100,8 @@ public class AdminServlet extends SecuredServlet {
 			}
 		}
 
+		String language = rootNode.get("language") != null && rootNode.get("language").get("name") != null ? rootNode.get("language").get("name").asText() : "English";
+
 		//Existing quiz
 		if(quizId != -1) {
 			quiz = mongoQuizDao.getQuiz(quizId);
@@ -107,10 +109,11 @@ public class AdminServlet extends SecuredServlet {
 			quiz.setQuizDesc(quizDesc);
 			quiz.setSubmitMsg(submitMsg);
 			quiz.setQuestions(questions);
+			quiz.setLanguage(language);
 		}
 		//New quiz
 		else {
-			quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, true);
+			quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, language, true);
 		}
 
 		String username = (String) req.getSession().getAttribute("username");

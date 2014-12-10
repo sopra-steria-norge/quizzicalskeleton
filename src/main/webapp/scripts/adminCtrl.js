@@ -2,12 +2,19 @@ angular.module('quizControllers')
 .controller('AdminCtrl', ['$scope', '$http', '$route', '$routeParams', '$location',
     function($scope, $http, $route, $routeParams, $location) {
 		$scope.quizzes = [];
+
+		$scope.languages = [
+			{name:'English'},
+			{name:'Swedish'}
+		];
+
 		$scope.newquiz = {
 				quizName: "",
 				quizDesc: "",
 				submitMsg: "",
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}],
-				userId: ""
+				userId: "",
+				language: ""
 		};
 
 		$scope.changepw = {
@@ -15,7 +22,7 @@ angular.module('quizControllers')
 			newPassword1: "",
 			newPassword2: ""
 		};
-		
+
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
 		var isSubmitting = false;

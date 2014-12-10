@@ -39,10 +39,11 @@ public class MongoQuizDao implements QuizDao {
 			String quizDesc = (String) next.get("desc");
 			String submitMsg = (String) next.get("submitMsg");
 			BasicDBList questions = (BasicDBList) next.get("questions");
+			String language = (String) next.get("language");
 			boolean active = (boolean) next.get("active");
 
 			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
-					createQuestionObject(questions), active);
+					createQuestionObject(questions), language, active);
 			quizzes.add(quiz);
 		}
 
@@ -63,10 +64,11 @@ public class MongoQuizDao implements QuizDao {
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
+		String language = (String) quizObject.get("language");
 		boolean active = (boolean) quizObject.get("active");
 
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
-				createQuestionObject(questions), active);
+				createQuestionObject(questions), language, active);
 		return quiz;
 	}
 
@@ -126,6 +128,7 @@ public class MongoQuizDao implements QuizDao {
 			questionsToDB.add(questionToDB);
 		}
 		quizToDB.put("questions", questionsToDB);
+		quizToDB.put("language", quiz.getLanguage());
 		quizToDB.put("active", quiz.getActive());
 		collection.insert(quizToDB);
 		mongoUserDao.addQuizIdToUser(quiz.getQuizId(), userId);

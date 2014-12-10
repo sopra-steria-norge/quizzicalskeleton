@@ -10,17 +10,19 @@ public class Quiz {
 	private List<Question> questions;
 	private int responses;
 	private boolean active;
-	
+	private String language;
+
 	public Quiz(){
 		
 	}
 	
-	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, boolean active) {
+	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, String language, boolean active) {
 		this.quizId = quizId;
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
 		this.submitMsg = submitMsg;
 		this.questions = questions;
+		this.language = language;
 		this.active = active;
 	}
 
@@ -55,7 +57,11 @@ public class Quiz {
 	public int getResponses(){
 		return responses;
 	}
-	
+
+	public String getLanguage() {
+		return language;
+	}
+
 	public boolean getActive(){
 		return active;
 	}
@@ -97,5 +103,9 @@ public class Quiz {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }
