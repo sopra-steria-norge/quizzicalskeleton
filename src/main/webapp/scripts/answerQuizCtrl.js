@@ -80,5 +80,11 @@ angular.module('quizControllers')
 				});
 			}
 		};
+
+		$scope.init = function(){
+			if($routeParams.testMode) {
+				$scope.testMode = true;
+			}
+		};
 		
 }]);

@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="answer-quiz-box" ng-controller="AnswerQuizCtrl">
+<div class="answer-quiz-box" ng-controller="AnswerQuizCtrl" ng-init="init()">
 
 	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
@@ -61,10 +61,14 @@
 			<button class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="quizForm.$invalid">Submit answers</button>
 		</div>
 	</form>
-	
+
 	<div ng-show="isCurrent(questions.length+2)">
 		<h4>The quiz is now submitted! Thank you for taking the quiz!</h4>
 		<p>{{quiz.submitMsg}}
 	</div>
-	
+
+	<div ng-show="testMode">
+		<a href="#/admin/">You are in test mode. Click here to return to the admin overview.</a>
+	</div>
+
 </div>

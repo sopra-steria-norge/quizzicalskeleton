@@ -24,7 +24,7 @@
 	            <h4 class="quiz-box-question">{{quiz.quizName}} <div ng-show="!quiz.active">(not active)</div></h4>
 				{{quiz.quizDesc}}
 				<br><br>
-	            <a href="#/answerQuiz/{{quiz.quizId}}" ng-show="quiz.active"><button class="btn"><i class="icon-play"></i> Test</button></a>
+	            <a href="#/answerQuiz/{{quiz.quizId}}?testMode=true" ng-show="quiz.active"><button class="btn"><i class="icon-play"></i> Test</button></a>
 	            <a href="#/admin/addquiz/{{quiz.quizId}}"><button class="btn"><i class="icon-pencil"></i> Edit</button></a>
 	            <button ng-show="quiz.active" class="btn" ng-click="changeActiveStatusTo(false, quiz.quizId)"><i class="icon-ban-circle"></i> Deactivate</button>
 	            <button ng-show="!quiz.active" class="btn" ng-click="changeActiveStatusTo(true, quiz.quizId)"><i class="icon-ok"></i> Activate</button>
