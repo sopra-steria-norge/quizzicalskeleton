@@ -8,17 +8,20 @@ public class Response {
 	private int quizId;
 	private String name;
 	private String email;
+	private String company;
+	private String phoneNumber;
 	private Map<String,Integer> quizAnswers;
 	private int score;
 	
 	public Response(){
-		
 	}
 	
-	public Response(int quizId, String name, String email, Map<String,Integer> quizAnswers){
+	public Response(int quizId, String name, String email, String company, String phoneNumber, Map<String,Integer> quizAnswers){
 		this.quizId = quizId;
 		this.name = name;
 		this.email = email;
+		this.company = company;
+		this.phoneNumber = phoneNumber;
 		this.quizAnswers = quizAnswers;
 	}
 
@@ -33,7 +36,15 @@ public class Response {
 	public String getEmail(){
 		return email;
 	}
-	
+
+	public String getCompany() {
+		return company;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
 	public Map<String,Integer> getQuizAnswers(){
 		return quizAnswers;
 	}

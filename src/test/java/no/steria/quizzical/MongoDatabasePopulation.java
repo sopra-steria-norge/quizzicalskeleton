@@ -117,7 +117,7 @@ public class MongoDatabasePopulation {
 		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
 		quizAnswers.put("q1", 2);
 		quizAnswers.put("q2", 1);
-		Response response = new Response(1, "TestVisitor", "test@user.com", quizAnswers);
+		Response response = new Response(1, "TestVisitor", "test@user.com",  "Sopra", "113", quizAnswers);
 		return response;
 	}
 	
@@ -125,7 +125,7 @@ public class MongoDatabasePopulation {
 		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
 		quizAnswers.put("q1", 1);
 		quizAnswers.put("q2", 1);
-		Response response = new Response(1, "Lars", "lars@tester.com", quizAnswers);
+		Response response = new Response(1, "Lars", "lars@tester.com",  "Sopra", "113", quizAnswers);
 		return response;
 	}
 	

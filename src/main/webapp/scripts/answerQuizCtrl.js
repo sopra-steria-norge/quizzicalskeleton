@@ -6,6 +6,8 @@ angular.module('quizControllers')
 		
 		$scope.userName = "";
 		$scope.userEmail = "";
+		$scope.userCompany = "";
+		$scope.userPhoneNumber = "";
 		$scope.answers = {};
 		
 		$scope.errorMsg = "";
@@ -70,7 +72,7 @@ angular.module('quizControllers')
 		$scope.submitQuiz = function(){
 			if (!isSubmitted){
 				isSubmitted = true;
-				var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "answers": $scope.answers};
+				var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "company": $scope.userCompany, "phoneNumber": $scope.userPhoneNumber, "answers": $scope.answers};
 				
 				$http({method: "POST", url: "submitQuiz", data: JSON.stringify(submitData) }).
 				success(function(data) {

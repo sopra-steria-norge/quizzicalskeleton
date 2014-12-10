@@ -25,6 +25,8 @@ public class MongoResponseDao{
 		document.put("quizId", response.getQuizId());
 		document.put("name", response.getName());
 		document.put("email", response.getEmail());
+		document.put("company", response.getCompany());
+		document.put("phoneNumber", response.getPhoneNumber());
 		document.put("score", response.getScore());
 		collection.insert(document);
 	}
@@ -60,9 +62,11 @@ public class MongoResponseDao{
 			
 			String name = (String) document.get("name");
 			String email = (String) document.get("email");
+			String company = (String) document.get("company");
+			String phoneNumber = (String) document.get("phoneNumber");
 			int score = (Integer) document.get("score");
 			
-			Response response = new Response(quizId, name, email, null);
+			Response response = new Response(quizId, name, email, company, phoneNumber, null);
 			response.setScore(score);
 			responses.add(response);
 		}
