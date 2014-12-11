@@ -82,7 +82,7 @@
 					<div class="row-fluid">
 						<div class="span12">
 							<div class="add-question-text">
-								<textarea class="add-question-text ta-no-resize" name="questionName" ng-model="q.text" placeholder="Type question here..."></textarea>
+								<textarea class="add-question-text ta-no-resize" name="questionName" ng-model="q.text" placeholder="Type question here..." required="required"></textarea>
 							</div>
 						</div>
 					</div>
@@ -100,7 +100,7 @@
 									</td>
 									<td class="correct-answer-col">
 										<label class="add-question-radio add-alternative-center">
-											<input type="radio" name="isCorrect{{q.id}}" value="{{qa.aid}}" ng-model="q.answer">
+											<input type="radio" name="isCorrect{{q.id}}" value="{{qa.aid}}" ng-model="q.answer" required="required">
 										</label>
 									</td>
 									<td class="add-alternative-center">
