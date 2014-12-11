@@ -12,7 +12,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import no.steria.quizzical.MongoConnection;
 
-public class MongoUserDao{
+public class MongoUserDao {
 
 	public static final String USERNAME = "username";
 	private DB db;
@@ -30,9 +30,13 @@ public class MongoUserDao{
 		return this.getUser(USERNAME, username);
 	}
 
-	//TODO: No while here, ok?
 	private User getUser(String key, Object value){
 		DBObject document = collection.findOne(new BasicDBObject(key, value));
+
+		if(document == null) {
+			return null;
+		}
+
 		Integer userId = (Integer) document.get("userId");
 		String username = (String) document.get(USERNAME);
 		@SuppressWarnings("unchecked")

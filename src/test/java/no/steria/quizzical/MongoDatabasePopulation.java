@@ -1,6 +1,7 @@
 package no.steria.quizzical;
 
 import com.mongodb.*;
+import no.steria.quizzical.admin.MongoUserDao;
 import no.steria.quizzical.admin.PasswordUtil;
 import no.steria.quizzical.admin.User;
 
@@ -19,6 +20,7 @@ public class MongoDatabasePopulation {
 	private DBCollection usersInDB;
 	private DBCollection responsesInDB;
 	private final static String CREATE_USER = "CREATE_USER";
+	private MongoUserDao mongoUserDao = new MongoUserDao();
 
 	//Singleton pattern ------
 	private static MongoDatabasePopulation instance;
@@ -64,6 +66,11 @@ public class MongoDatabasePopulation {
 	}
 
 	private void createUser(String username, String pass) {
+
+		if(mongoUserDao.getUser(username) != null) {
+			throw new RuntimeException("User " + username + " already exists");
+		}
+
 		User user = getNewUser(username, pass);
 		insertUser(user);
 	}
