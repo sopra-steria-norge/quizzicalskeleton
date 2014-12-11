@@ -17,6 +17,7 @@ public class MongoQuizDao implements QuizDao {
 	private DB db;
 	private DBCollection collection;
 	private MongoUserDao mongoUserDao;
+	private final String DEFAULT_LANG = "English";
 
 	public MongoQuizDao() {
 		mongoUserDao = new MongoUserDao();
@@ -64,7 +65,7 @@ public class MongoQuizDao implements QuizDao {
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
-		String language = (String) quizObject.get("language");
+		String language = quizObject.get("language") != null ? (String)quizObject.get("language") : DEFAULT_LANG;
 		boolean active = (boolean) quizObject.get("active");
 
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,

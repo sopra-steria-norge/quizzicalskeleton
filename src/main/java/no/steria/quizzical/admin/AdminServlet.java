@@ -100,7 +100,7 @@ public class AdminServlet extends SecuredServlet {
 			}
 		}
 
-		String language = rootNode.get("language") != null && rootNode.get("language").get("name") != null ? rootNode.get("language").get("name").asText() : "English";
+		String language = rootNode.get("language") != null && rootNode.get("language").get("name") != null ? rootNode.get("language").get("name").asText() : null;
 
 		//Existing quiz
 		if(quizId != -1) {
