@@ -32,6 +32,7 @@ public class AdminServlet extends SecuredServlet {
 		JsonNode rootNode = mapper.readTree(req.getReader().readLine());
 		
 		int quizId = -1;
+		int questionNum = 0;
 		String quizName = "", quizDesc = "", submitMsg = "";
 		
 		List<Question> questions = new ArrayList<Question>();
@@ -49,6 +50,7 @@ public class AdminServlet extends SecuredServlet {
 					
 					int questionId = 0, correctAnswer = 0;
 					String questionText = "";
+					questionNum++;
 					
 					List<Alternative> alternatives = new ArrayList<Alternative>();
 					
@@ -85,6 +87,12 @@ public class AdminServlet extends SecuredServlet {
 							correctAnswer = questionField.getValue().asInt();
 						}
 					}
+
+					if(correctAnswer == 0) {
+						sendErrorMsg(resp, "Please set a correct answer to question #" + questionNum);
+						return;
+					}
+
 					Question question = new Question(questionId, questionText, alternatives, correctAnswer);
 					questions.add(question);
 				}
@@ -119,7 +127,18 @@ public class AdminServlet extends SecuredServlet {
 		String username = (String) req.getSession().getAttribute("username");
 		mongoQuizDao.insertQuizIntoDB(quiz, mongoUserDao.getUser(username).getUserId());
 	}
-	
+
+	private void sendErrorMsg(HttpServletResponse resp, String msg) throws IOException {
+		resp.setContentType("text/json");
+		ObjectMapper mapper = new ObjectMapper();
+		PrintWriter writer = resp.getWriter();
+
+		Map<String, String> msgMap = new HashMap<>();
+		msgMap.put("errorMsg", msg);
+
+		mapper.writeValue(writer, msgMap);
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8");

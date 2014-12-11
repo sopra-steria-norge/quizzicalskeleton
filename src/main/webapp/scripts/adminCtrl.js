@@ -134,9 +134,16 @@ angular.module('quizControllers')
 
 			$http({method: "POST", url: "adminQuiz", data: JSON.stringify(submitData)}).
 			success(function(data) {
-				isSubmitting = true;
-				$location.path("/admin/overview/");
-				window.onbeforeunload = null;
+
+				if(data.errorMsg) {
+					alert(data.errorMsg);
+				}
+				else {
+					isSubmitting = true;
+					$location.path("/admin/overview/");
+					window.onbeforeunload = null;
+				}
+
 			}).
 			error(function(data,status) {
 				console.log("Error:" + status);
