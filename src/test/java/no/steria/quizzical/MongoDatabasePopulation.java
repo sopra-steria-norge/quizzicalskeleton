@@ -113,20 +113,4 @@ public class MongoDatabasePopulation {
 		return new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions,  "English", true);
 	}
 
-	public Response testResponse1(){
-		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
-		quizAnswers.put("q1", 2);
-		quizAnswers.put("q2", 1);
-		Response response = new Response(1, "TestVisitor", "test@user.com",  "Sopra", "113", quizAnswers);
-		return response;
-	}
-	
-	public Response testResponse2(){
-		HashMap<String, Integer> quizAnswers = new HashMap<String, Integer>();
-		quizAnswers.put("q1", 1);
-		quizAnswers.put("q2", 1);
-		Response response = new Response(1, "Lars", "lars@tester.com",  "Sopra", "113", quizAnswers);
-		return response;
-	}
-	
 }

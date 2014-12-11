@@ -23,20 +23,12 @@
 	        <div class="span3">
 	            <h4 class="quiz-box-question">{{quiz.quizName}}</h4>
 
-				<span ng-show="quiz.winner[0]">
+				<span ng-show="quiz.winner">
 	            	<strong>Picked winner (randomly):</strong><br>
-
-					<span ng-show="quiz.winner[1]">
-						Name: {{quiz.winner[0]}}<br/>
-						Email: {{quiz.winner[1]}}<br/>
-						Company: {{quiz.winner[2]}}<br/>
-						Phone number: {{quiz.winner[3]}}
-					</span>
-
-					<span ng-show="!quiz.winner[1]">
-					{{quiz.winner[0]}}
-					</span>
-
+					Name: {{quiz.winner.name}}<br/>
+					Email: {{quiz.winner.email}}<br/>
+					Company: {{quiz.winner.company}}<br/>
+					Phone number: {{quiz.winner.phoneNumber}}
 					<br/>
 				</span>
 	        </div>
@@ -45,7 +37,7 @@
 	                {{quiz.responses}} respondents
 					<br>
 					<button type="button" class="btn" ng-click="drawRandomWinner(quiz.quizId)" ng-disabled="quiz.responses < 1">Pick a random winner</button>
-					<button type="button" class="btn" ng-click="showRespondents(quiz.quizId)" ng-hide="showRespondentState['q' + quiz.quizId]">Show respondents</button>
+					<button type="button" class="btn" ng-click="showRespondents(quiz.quizId)" ng-hide="showRespondentState['q' + quiz.quizId]" ng-disabled="quiz.responses < 1">Show respondents</button>
 					<button type="button" class="btn" ng-click="hideRespondents(quiz.quizId)" ng-show="showRespondentState['q' + quiz.quizId]">Hide respondents</button>
 	            </p>
 	        </div>

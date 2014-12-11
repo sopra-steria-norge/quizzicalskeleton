@@ -1,7 +1,9 @@
 package no.steria.quizzical;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Before;
@@ -10,7 +12,8 @@ import org.junit.Test;
 public class MongoResponseDaoTest {
 
 	private MongoResponseDao mongoResponseDao;
-	
+	private int QUIZ_ID = -1;
+
 	@Before
 	public void setUp(){
 		mongoResponseDao = new MongoResponseDao();
@@ -19,10 +22,10 @@ public class MongoResponseDaoTest {
 
 	@Test
 	public void shouldSetResponseAndRetrieveFromDB() throws Exception {	
-		Response inputResponse = MongoDatabasePopulation.getInstance().testResponse1();
+		Response inputResponse = getResponse("test1", 1);
 		mongoResponseDao.setResponse(inputResponse);
 		
-		List<Response> responses = mongoResponseDao.getRespondents(1);
+		List<Response> responses = mongoResponseDao.getRespondents(QUIZ_ID);
 		Response outputResponse = responses.get(0);
 		assertThat(inputResponse.getName()).isEqualTo(outputResponse.getName());
 		assertThat(inputResponse.getEmail()).isEqualTo(outputResponse.getEmail());
@@ -30,19 +33,25 @@ public class MongoResponseDaoTest {
 	
 	@Test
 	public void shouldCountResponsesForQuiz(){
-		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse1());
-		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse2());
-		assertThat(mongoResponseDao.getRespondents(1)).hasSize(2);
+		mongoResponseDao.setResponse(getResponse("test1", 1));
+		mongoResponseDao.setResponse(getResponse("test2", 1));
+		assertThat(mongoResponseDao.getRespondents(QUIZ_ID)).hasSize(2);
 	}
 	
 	@Test
-	public void shouldDrawRandomWinnerFromAvailableResponses(){
-		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse1());
-		mongoResponseDao.setResponse(MongoDatabasePopulation.getInstance().testResponse2());
-		String[] winner = mongoResponseDao.drawRandomWinner(1);
-		assertThat(mongoResponseDao.getRespondents(1)).hasSize(2);
-		assertThat(winner[0]).isNotEmpty();
-		assertThat(winner[1]).isNotEmpty();
+	public void shouldDrawRandomWinnerFromBestResponses(){
+		mongoResponseDao.setResponse(getResponse("test1", 1));
+		mongoResponseDao.setResponse(getResponse("test2", 1));
+		mongoResponseDao.setResponse(getResponse("test3", 2));
+		Response winner = mongoResponseDao.drawRandomWinner(QUIZ_ID);
+
+		assertEquals("test3", winner.getName());
+	}
+
+	private Response getResponse(String username, int score){
+		Response response = new Response(QUIZ_ID, username, username + "@domain.com",  "Sopra", "113", new HashMap<String, Integer>());
+		response.setScore(score);
+		return response;
 	}
 	
 }
