@@ -11,6 +11,39 @@ angular.module('quizControllers')
 		$scope.answers = {};
 		
 		$scope.errorMsg = "";
+
+		$scope.i18nMap = {
+			English : {
+				startQuiz : "Start quiz",
+				loading : "Loading...",
+				previousQuestion : "Previous question",
+				nextQuestion : "Next question",
+				fillUserInfo : "Please fill out the following fields in order to enter to win",
+				required : "Required",
+				invalidEmail : "Not a valid email address",
+				submitAnswers : "Submit answers",
+				submitted : "The quiz is now submitted! Thank you for taking the quiz!",
+				name : "Name",
+				email : "Email address",
+				company : "Company name",
+				phone : "Phone number"
+			},
+			Swedish : {
+				startQuiz : "Starta quizzen",
+				loading : "Laddar...",
+				previousQuestion : "Föregående fråga",
+				nextQuestion : "Nästa fråga",
+				fillUserInfo : "Vänligen fyll ut följande information om dig själv",
+				required : "Obligatoriskt fält",
+				invalidEmail : "Ogiltig emailadress",
+				submitAnswers : "Skicka in svar",
+				submitted : "Tack för ditt deltagande!",
+				name : "Namn",
+				email : "Emailadress",
+				company : "Företagsnamn",
+				phone : "Telefonnummer"
+			}
+		};
 		
 		var currentQuestion = -1;
 		var isSubmitted = false;
@@ -82,6 +115,11 @@ angular.module('quizControllers')
 					console.log("Error:" + status);
 				});
 			}
+		};
+
+		$scope.i18n = function(key){
+			var lang = $scope.quiz.language;
+			return $scope.i18nMap[lang][key];
 		};
 
 		$scope.init = function(){

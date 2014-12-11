@@ -30,7 +30,7 @@
 		<div class="" ng-show="isCurrent(0)">
 			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
 			<br><br>
-			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">Start quiz</button>
+			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">{{i18n('startQuiz')}}</button>
 		</div>
 		
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
@@ -42,32 +42,32 @@
 				</label>
 			</div>
 			<br>
-			<a class="hide" ng-click="prevQuestion()">Previous question</a>
-			<button class="btn btn-large btn-primary" ng-click="checkRadioButtons(q.id)">Next question</button>
+			<a class="hide" ng-click="prevQuestion()">{{i18n('previousQuestion')}}</a>
+			<button class="btn btn-large btn-primary" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
 		</div>
 		
 		<div ng-show="isCurrent(questions.length+1)">
-			<p class="quiz-box-description">Please fill out the following fields in order to enter to win</p>
+			<p class="quiz-box-description">{{i18n('fillUserInfo')}}</p>
 			
-			<span ng-show="quizForm.name.$error.required" class="text-error">Required</span>
-			<input type="text" class="input-block-level" name="name" placeholder="Name" ng-model="userName" required="required">
+			<span ng-show="quizForm.name.$error.required" class="text-error">{{i18n('required')}}</span>
+			<input type="text" class="input-block-level" name="name" placeholder="{{i18n('name')}}" ng-model="userName" required="required">
 			
-			<span ng-show="quizForm.email.$error.required" class="text-error">Required</span>
-			<span ng-show="quizForm.email.$error.email" class="text-error">Not a valid email address</span>
-			<input type="email" class="input-block-level" name="email" placeholder="Email address" ng-model="userEmail" required="required">
+			<span ng-show="quizForm.email.$error.required" class="text-error">{{i18n('required')}}</span>
+			<span ng-show="quizForm.email.$error.email" class="text-error">{{i18n('invalidEmail')}}</span>
+			<input type="email" class="input-block-level" name="email" placeholder="{{i18n('email')}}" ng-model="userEmail" required="required">
 
-			<input type="text" class="input-block-level" name="company" placeholder="Company name" ng-model="userCompany">
+			<input type="text" class="input-block-level" name="company" placeholder="{{i18n('company')}}" ng-model="userCompany">
 
-			<input type="text" class="input-block-level" name="phoneNumber" placeholder="Phone number" ng-model="userPhoneNumber">
+			<input type="text" class="input-block-level" name="phoneNumber" placeholder="{{i18n('phone')}}" ng-model="userPhoneNumber">
 
 			<br><br>
 			<input type="hidden" name="quizId" value="{{quiz.quizId}}">
-			<button class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="quizForm.$invalid">Submit answers</button>
+			<button class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="quizForm.$invalid">{{i18n('submitAnswers')}}</button>
 		</div>
 	</form>
 
 	<div ng-show="isCurrent(questions.length+2)">
-		<h4>The quiz is now submitted! Thank you for taking the quiz!</h4>
+		<h4>{{i18n('submitted')}}</h4>
 		<p>{{quiz.submitMsg}}
 	</div>
 
