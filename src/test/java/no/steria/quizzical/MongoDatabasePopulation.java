@@ -69,7 +69,7 @@ public class MongoDatabasePopulation {
 	}
 
 	private User getNewUser(String username, String password){
-		int userId=1; //TODO: Do not use hardcoded id
+		int userId = getNewUserId();
 		try {
 			byte[] salt = PasswordUtil.generateSalt();
 			byte[] encryptedPassword = PasswordUtil.getEncryptedPassword(password, salt);
@@ -77,6 +77,22 @@ public class MongoDatabasePopulation {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	//TODO: This would re-use an old id of a deleted user. (Users are not deleted now though.)
+	private int getNewUserId() {
+		int newUserId = 1;
+		DBCursor cursor = usersInDB.find();
+		while (cursor.hasNext()) {
+			DBObject dbo = cursor.next();
+			if (dbo.containsField("userId")) {
+				int userIdDB = (Integer)dbo.get("userId");
+				if (userIdDB >= newUserId) {
+					newUserId = userIdDB + 1;
+				}
+			}
+		}
+		return newUserId;
 	}
 
 	private void insertUser(User user){
