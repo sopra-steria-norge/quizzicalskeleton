@@ -96,7 +96,7 @@
 								</tr>
 								<tr class="add-question-alternatives" ng-repeat="qa in q.alternatives">
 									<td>
-										<input class="add-question-textbox" type="text" name="qaText{{qa.aid}}" ng-model="qa.atext" placeholder="Type answer alternative here" title="Type answer alternative here">
+										<input class="add-question-textbox" type="text" name="qaText{{qa.aid}}" ng-model="qa.atext" placeholder="Type answer alternative here" title="Type answer alternative here" required="required">
 									</td>
 									<td class="correct-answer-col">
 										<label class="add-question-radio add-alternative-center">

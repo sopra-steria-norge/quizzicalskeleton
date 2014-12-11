@@ -1,23 +1,19 @@
 package no.steria.quizzical.admin;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import no.steria.quizzical.*;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class AdminServlet extends SecuredServlet {
 
@@ -63,14 +59,18 @@ public class AdminServlet extends SecuredServlet {
 							questionText = questionField.getValue().asText();
 						} else if (questionField.getKey().equals("alternatives")){
 							Iterator<JsonNode> jsonAlternatives = questionField.getValue().getElements();
-							
+
+							int alt = 0;
+
 							while(jsonAlternatives.hasNext()){
+								alt++;
+
 								JsonNode jsonAlternative = jsonAlternatives.next();
 								Iterator<Entry<String, JsonNode>> alternativeField = jsonAlternative.getFields();
 								
 								int alternativeId = 0;
 								String alternativeText = "";
-								
+
 								while(alternativeField.hasNext()){
 									Entry<String, JsonNode> alternativeKeys = alternativeField.next();
 									
@@ -80,6 +80,15 @@ public class AdminServlet extends SecuredServlet {
 										alternativeText = alternativeKeys.getValue().asText();
 									}	
 								}
+
+								for(int i = 0; i < alternatives.size(); i++) {
+									Alternative alternative = alternatives.get(i);
+									if(StringUtils.equals(alternativeText, alternative.getAtext())) {
+										sendErrorMsg(resp, "Alternative #" + alt + " and #" + (i + 1) + " of question #" + questionNum + " is the same.");
+										return;
+									}
+								}
+
 								Alternative alternative = new Alternative(alternativeId, alternativeText);
 								alternatives.add(alternative);
 							}
