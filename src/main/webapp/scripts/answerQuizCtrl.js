@@ -26,7 +26,9 @@ angular.module('quizControllers')
 				name : "Name",
 				email : "Email address",
 				company : "Company name",
-				phone : "Phone number"
+				phone : "Phone number",
+				questionCap : "Question",
+				questionOf : "of"
 			},
 			Swedish : {
 				startQuiz : "Starta quizzen",
@@ -41,11 +43,13 @@ angular.module('quizControllers')
 				name : "Namn",
 				email : "Emailadress",
 				company : "Företagsnamn",
-				phone : "Telefonnummer"
+				phone : "Telefonnummer",
+				questionCap : "Fråga",
+				questionOf : "av"
 			}
 		};
 		
-		var currentQuestion = -1;
+		$scope.currentQuestion = -1;
 		var isSubmitted = false;
 
 		var testMode = $routeParams.testMode ? "&testMode=" + $routeParams.testMode : "";
@@ -53,24 +57,24 @@ angular.module('quizControllers')
 		success(function(data) {
 			$scope.quiz = data;
 			$scope.questions = data.questions;
-			currentQuestion = 0;
+			$scope.currentQuestion = 0;
 		}).
 		error(function(data,status) {
 			console.log("Error: " + status + ": " + data);
-			currentQuestion = -2;
+			$scope.currentQuestion = -2;
 			$scope.errorMsg = "Error: The Quiz is not available.";
 		});
 		
 		$scope.nextQuestion = function(){
-			currentQuestion++;
+			$scope.currentQuestion++;
 		};
 		
 		$scope.prevQuestion = function(){
-			currentQuestion--;
+			$scope.currentQuestion--;
 		};
 		
 		$scope.isCurrent = function(q){
-			return q === currentQuestion;
+			return q === $scope.currentQuestion;
 		};
 		
 		$scope.updateAnswers = function(qid, aid){

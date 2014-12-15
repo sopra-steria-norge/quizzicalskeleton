@@ -44,8 +44,10 @@
 			<br>
 			<a class="hide" ng-click="prevQuestion()">{{i18n('previousQuestion')}}</a>
 			<button class="btn btn-large btn-primary" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
+			<br><br>
+			{{i18n('questionCap')}} {{currentQuestion}} {{i18n('questionOf')}} {{questions.length}}
 		</div>
-		
+
 		<div ng-show="isCurrent(questions.length+1)">
 			<p class="quiz-box-description">{{i18n('fillUserInfo')}}</p>
 			
