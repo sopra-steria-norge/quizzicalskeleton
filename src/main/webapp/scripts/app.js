@@ -34,6 +34,10 @@
 						templateUrl: 'templates/adminChangePassword.html',
 						controller: 'AdminCtrl'
 					}).
+					when('/admin/createUser', {
+						templateUrl: 'templates/adminCreateUser.html',
+						controller: 'AdminCtrl'
+					}).
 					when('/admin/results', {
 						templateUrl: 'templates/adminResults.html',
 						controller: 'AdminCtrl'

@@ -20,7 +20,7 @@ public class MongoDatabasePopulation {
 	private DBCollection usersInDB;
 	private DBCollection responsesInDB;
 	private final static String CREATE_USER = "CREATE_USER";
-	private MongoUserDao mongoUserDao = new MongoUserDao();
+	private static MongoUserDao mongoUserDao = new MongoUserDao();
 
 	//Singleton pattern ------
 	private static MongoDatabasePopulation instance;
@@ -54,7 +54,7 @@ public class MongoDatabasePopulation {
 			if(CREATE_USER.equals(action)) {
 				String user = args[1];
 				String pass = args[2];
-				MongoDatabasePopulation.getInstance().createUser(user, pass);
+				mongoUserDao.createUser(user, pass);
 				return;
 			}
 
@@ -63,53 +63,6 @@ public class MongoDatabasePopulation {
 
 		System.out.println("Usage:\n" +
 				"To create a user: CREATE_USER <username> <password>\n");
-	}
-
-	private void createUser(String username, String pass) {
-
-		if(mongoUserDao.getUser(username) != null) {
-			throw new RuntimeException("User " + username + " already exists");
-		}
-
-		User user = getNewUser(username, pass);
-		insertUser(user);
-	}
-
-	private User getNewUser(String username, String password){
-		int userId = getNewUserId();
-		try {
-			byte[] salt = PasswordUtil.generateSalt();
-			byte[] encryptedPassword = PasswordUtil.getEncryptedPassword(password, salt);
-			return new User(userId, username, salt, encryptedPassword, new ArrayList<Integer>());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	//TODO: This would re-use an old id of a deleted user. (Users are not deleted now though.)
-	private int getNewUserId() {
-		int newUserId = 1;
-		DBCursor cursor = usersInDB.find();
-		while (cursor.hasNext()) {
-			DBObject dbo = cursor.next();
-			if (dbo.containsField("userId")) {
-				int userIdDB = (Integer)dbo.get("userId");
-				if (userIdDB >= newUserId) {
-					newUserId = userIdDB + 1;
-				}
-			}
-		}
-		return newUserId;
-	}
-
-	private void insertUser(User user){
-		BasicDBObject userToDB = new BasicDBObject();
-		userToDB.put("userId", user.getUserId());
-		userToDB.put("username", user.getUsername());
-		userToDB.put("salt", user.getSalt());
-		userToDB.put("encpassword", user.getEncryptedPassword());
-		userToDB.put("quizzes", user.getQuizIds());
-		usersInDB.insert(userToDB);
 	}
 
 	public void dropResponsesInDB(){

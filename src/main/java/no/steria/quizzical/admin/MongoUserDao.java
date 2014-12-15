@@ -74,6 +74,53 @@ public class MongoUserDao {
 		}
 	}
 
+	public void createUser(String username, String pass) {
+		if(getUser(username) != null) {
+			throw new CreateUserException("User " + username + " already exists");
+		}
+
+		User user = getNewUser(username, pass);
+		insertUser(user);
+	}
+
+	private User getNewUser(String username, String password){
+		int userId = getNewUserId();
+		try {
+			byte[] salt = PasswordUtil.generateSalt();
+			byte[] encryptedPassword = PasswordUtil.getEncryptedPassword(password, salt);
+			return new User(userId, username, salt, encryptedPassword, new ArrayList<Integer>());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	//TODO: This would re-use an old id of a deleted user. (Users are not deleted now though.)
+	private int getNewUserId() {
+		int newUserId = 1;
+		DBCursor cursor = collection.find();
+		while (cursor.hasNext()) {
+			DBObject dbo = cursor.next();
+			if (dbo.containsField("userId")) {
+				int userIdDB = (Integer)dbo.get("userId");
+				if (userIdDB >= newUserId) {
+					newUserId = userIdDB + 1;
+				}
+			}
+		}
+		return newUserId;
+	}
+
+	private void insertUser(User user){
+		BasicDBObject userToDB = new BasicDBObject();
+		userToDB.put("userId", user.getUserId());
+		userToDB.put("username", user.getUsername());
+		userToDB.put("salt", user.getSalt());
+		userToDB.put("encpassword", user.getEncryptedPassword());
+		userToDB.put("quizzes", user.getQuizIds());
+		collection.insert(userToDB);
+	}
+
+
 	//TODO: Move to user service
 	boolean validatePassword(String username, String password) {
 		User user = getUser(username);

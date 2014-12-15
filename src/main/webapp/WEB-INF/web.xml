@@ -38,6 +38,15 @@
 		<servlet-name>adminPasswordServlet</servlet-name>
 		<url-pattern>/adminPassword/*</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>createUserServlet</servlet-name>
+		<servlet-class>no.steria.quizzical.admin.AdminCreateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>createUserServlet</servlet-name>
+		<url-pattern>/createUser/*</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>loginServlet</servlet-name>

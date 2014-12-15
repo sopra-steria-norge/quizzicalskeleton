@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 
 import static no.steria.quizzical.admin.Constants.MIN_PASS_LENGTH;
 
-public class AdminPasswordServlet extends SecuredServlet {
+public class AdminCreateUserServlet extends SecuredServlet {
 
 	private MongoUserDao mongoUserDao;
 
@@ -33,17 +33,8 @@ public class AdminPasswordServlet extends SecuredServlet {
 
 		Iterator<Entry<String,JsonNode>> allEntries = rootNode.getFields();
 
-		//Get username of logged in user
-		String username = (String) req.getSession().getAttribute("username");
-
-		//Check that old password is correct
-		String oldPass = rootNode.get("oldPassword").asText();
-		if(!mongoUserDao.validatePassword(username, oldPass)) {
-			sendErrorMsg(resp, "Old password is incorrect.");
-			return;
-		}
-
 		//Check that new password is longer than limit and that they match
+		String username = rootNode.get("username").asText();
 		String newPass = rootNode.get("newPassword1").asText();
 		String newPass2 = rootNode.get("newPassword2").asText();
 
@@ -57,8 +48,12 @@ public class AdminPasswordServlet extends SecuredServlet {
 			return;
 		}
 
-		//Update password
-		mongoUserDao.setPassword(username, newPass);
+		try {
+			mongoUserDao.createUser(username, newPass);
+		}
+		catch (CreateUserException e) {
+			sendErrorMsg(resp, e.getMessage());
+		}
 	}
 
 	private void sendErrorMsg(HttpServletResponse resp, String msg) throws IOException {

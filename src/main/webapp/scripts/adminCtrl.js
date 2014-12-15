@@ -23,6 +23,12 @@ angular.module('quizControllers')
 			newPassword2: ""
 		};
 
+		$scope.createUser = {
+			username: "",
+			newPassword1: "",
+			newPassword2: ""
+		};
+
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
 		var isSubmitting = false;
@@ -160,6 +166,26 @@ angular.module('quizControllers')
 					}
 					else {
 						alert('Password changed.');
+						isSubmitting = true;
+						$location.path("/admin/overview/");
+						window.onbeforeunload = null;
+					}
+				}).
+				error(function(data,status) {
+					console.log("Error:" + status);
+				});
+		};
+
+		$scope.submitCreateUser = function(){
+			var submitData = $scope.createUser;
+
+			$http({method: "POST", url: "createUser", data: JSON.stringify(submitData)}).
+				success(function(data) {
+					if(data.errorMsg) {
+						alert(data.errorMsg);
+					}
+					else {
+						alert('User added.');
 						isSubmitting = true;
 						$location.path("/admin/overview/");
 						window.onbeforeunload = null;

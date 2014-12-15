@@ -9,8 +9,8 @@
 				<li><a href="#/admin/overview">Overview</a></li>
 				<li><a href="#/admin/addquiz">Add quiz</a></li>
 				<li><a href="#/admin/results">Results</a></li>
-				<li class="active"><a href="#/admin/changepw">Change password</a></li>
-				<li><a href="#/admin/createUser">Create admin user</a></li>
+				<li><a href="#/admin/changepw">Change password</a></li>
+				<li class="active"><a href="#/admin/createUser">Create admin user</a></li>
 			</ul>
 		</div>
 	</div>
@@ -18,28 +18,28 @@
 
 <div class="admin-quiz-box">
 	<form name="changePasswordForm">
-		<h2 class="quiz-box-heading">Change password</h2>
+		<h2 class="quiz-box-heading">Create admin user</h2>
 		<hr>
 
 		<div class="row-fluid">
 			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="oldPassword" ng-model="changepw.oldPassword" placeholder="Old password" required="required">
+				<input name="username" ng-model="createUser.username" placeholder="Username" required="required">
 			</span>
 		</div>
 
 		<div class="row-fluid">
 			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="newPassword1" ng-model="changepw.newPassword1" placeholder="New password" required="required">
+				<input type="password" name="newPassword1" ng-model="createUser.newPassword1" placeholder="Password" required="required">
 			</span>
 		</div>
 
 		<div class="row-fluid">
 			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="newPassword2" ng-model="changepw.newPassword2" placeholder="Repeat new password" required="required">
+				<input type="password" name="newPassword2" ng-model="createUser.newPassword2" placeholder="Repeat password" required="required">
 			</span>
 		</div>
 
 		<hr>
-		<button type="button" class="btn btn-large btn-primary" ng-click="submitChangePassword()" ng-disabled="changePasswordForm.$invalid">Submit</button>
+		<button type="button" class="btn btn-large btn-primary" ng-click="submitCreateUser()" ng-disabled="changePasswordForm.$invalid">Submit</button>
 	</form>
 </div>
