@@ -35,20 +35,15 @@ body {
 	background-color: #f57921;
 	color: #ffffff;	
 }
-.quiz-input-choice-box:ACTIVE {
-	background-color: #f57921;
-}
+
 .quiz-input-choice:required {
 	box-shadow: none;
 }
 
-@media (min-width: 800px) {
-	.quiz-input-choice-box:hover {
-		background-color: #f9b49b;
-		color: #000000;
-	}
-	
-	.quiz-input-choice-box:ACTIVE {
-		background-color: #f57921;
-	}
+.quiz-input-choice-box:hover {
+    background-color: #f9b49b;
+    color: #000000;
 }
+
+
+
