@@ -112,4 +112,8 @@ public class Quiz {
 	public Response getWinner() {
 		return winner;
 	}
+
+	public void setWinner(Response winner) {
+		this.winner = winner;
+	}
 }

@@ -31,6 +31,8 @@ angular.module('quizControllers')
 
 		$scope.newquizInitialCopy = {};
 		$scope.isEditing = false;
+		$scope.duplicate = false;
+
 		var isSubmitting = false;
 		var updateRespondentsInterval;
 		
@@ -79,11 +81,15 @@ angular.module('quizControllers')
 		function initAddQuiz(){
 			if ($route.current.templateUrl === "templates/adminAddQuiz.html"){
 				if ($routeParams.quizId !== undefined){
+
+					var quizId = parseInt($routeParams.quizId, 10);
+
 					var i;
 					for (i = 0; i < $scope.quizzes.length; i++){
 						var quiz = $scope.quizzes[i];
-						if (quiz.quizId === parseInt($routeParams.quizId, 10)){
+						if (quiz.quizId === quizId){
 							$scope.newquiz = quiz;
+							$scope.newquiz.duplicate = $routeParams.duplicate !== undefined;
 							$scope.newquiz.userId = $scope.user.userId;
 						}
 					}
@@ -205,7 +211,7 @@ angular.module('quizControllers')
 						$scope.quizzes[i].winner = data;
 					}
 				}
-		
+
 			}).
 			error(function(data,status){
 				console.log("Error:" + status);

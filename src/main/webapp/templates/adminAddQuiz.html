@@ -19,8 +19,8 @@
 <div class="admin-quiz-box">
 	<form name="createQuizForm">
 		<h2 class="quiz-box-heading">Add quiz</h2>
-		<h4 class="" ng-show="isEditing">(editing quiz "{{newquiz.quizName}}")</h4>
-		<div class="alert alert-info" ng-show="isEditing && newquiz.responses > 0">
+		<h4 class="" ng-show="isEditing && !newquiz.duplicate">(editing quiz "{{newquiz.quizName}}")</h4>
+		<div class="alert alert-info" ng-show="isEditing && newquiz.responses > 0 && !newquiz.duplicate">
 			<button type="button" class="close" data-dismiss="alert">x</button>
 			<span class="text-info">The quiz has already received responses, please be careful when editing.</span>
 		</div>

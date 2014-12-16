@@ -118,9 +118,20 @@ public class AdminServlet extends SecuredServlet {
 		}
 
 		String language = rootNode.get("language") != null && rootNode.get("language").get("name") != null ? rootNode.get("language").get("name").asText() : null;
+		boolean duplicate = rootNode.get("duplicate") != null && rootNode.get("duplicate").asBoolean();
 
 		//Existing quiz
-		if(quizId != -1) {
+		if(duplicate) {
+			quiz = mongoQuizDao.getQuiz(quizId);
+			quiz.setQuizId(-1);
+			quiz.setQuizName(quizName);
+			quiz.setQuizDesc(quizDesc);
+			quiz.setSubmitMsg(submitMsg);
+			quiz.setQuestions(questions);
+			quiz.setLanguage(language);
+			quiz.setWinner(null);
+		}
+		else if(quizId != -1) {
 			quiz = mongoQuizDao.getQuiz(quizId);
 			quiz.setQuizName(quizName);
 			quiz.setQuizDesc(quizDesc);
