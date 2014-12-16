@@ -70,7 +70,9 @@
 
 	<div ng-show="isCurrent(questions.length+2)">
 		<h4>{{i18n('submitted')}}</h4>
-		<p>{{quiz.submitMsg}}
+		<p>{{quiz.submitMsg}}<br/>
+		<br/>
+		<a onclick="window.location.reload()" style="cursor: pointer;">{{i18n('restartQuiz')}}</a>
 	</div>
 
 	<div ng-show="testMode">

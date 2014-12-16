@@ -28,7 +28,8 @@ angular.module('quizControllers')
 				company : "Company name",
 				phone : "Phone number",
 				questionCap : "Question",
-				questionOf : "of"
+				questionOf : "of",
+				restartQuiz : "Restart quiz"
 			},
 			Swedish : {
 				startQuiz : "Starta quizzen",
@@ -45,7 +46,8 @@ angular.module('quizControllers')
 				company : "Företagsnamn",
 				phone : "Telefonnummer",
 				questionCap : "Fråga",
-				questionOf : "av"
+				questionOf : "av",
+				restartQuiz : "Ta quizzen igen"
 			}
 		};
 		
