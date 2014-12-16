@@ -1,6 +1,7 @@
 package no.steria.quizzical;
 
 import com.mongodb.*;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,15 +42,10 @@ public class MongoResponseDao{
 		while(cursor.hasNext()){
 			DBObject document = cursor.next();
 
-			String name = (String) document.get("name");
-			String email = (String) document.get("email");
-			String company = (String) document.get("company");
-			String phoneNumber = (String) document.get("phoneNumber");
 			int score = (Integer) document.get("score");
 
 			if(maxScore == null || score == maxScore) {
-				Response response = new Response(quizId, name, email, company, phoneNumber, null);
-				response.setScore(score);
+				Response response = getResponse(document);
 				bestResponses.add(response);
 				maxScore = score;
 			}
@@ -71,18 +67,37 @@ public class MongoResponseDao{
 		
 		while(cursor.hasNext()){
 			DBObject document = cursor.next();
-			
-			String name = (String) document.get("name");
-			String email = (String) document.get("email");
-			String company = (String) document.get("company");
-			String phoneNumber = (String) document.get("phoneNumber");
-			int score = (Integer) document.get("score");
-			
-			Response response = new Response(quizId, name, email, company, phoneNumber, null);
-			response.setScore(score);
+			Response response = getResponse(document);
 			responses.add(response);
 		}
 		return responses;
 	}
-	
+
+	private Response getResponse(DBObject document) {
+		int quizId = (Integer) document.get("quizId");
+		String name = (String) document.get("name");
+		String email = (String) document.get("email");
+		String company = (String) document.get("company");
+		String phoneNumber = (String) document.get("phoneNumber");
+		int score = (Integer) document.get("score");
+		String id = document.get("_id").toString();
+
+		Response response = new Response(quizId, name, email, company, phoneNumber, null, id);
+		response.setScore(score);
+		return response;
+	}
+
+	public Response getById(String id) {
+		if(id == null) {
+			return null;
+		}
+
+		DBObject document = collection.findOne(new BasicDBObject("_id", new ObjectId(id)));
+
+		if(document == null) {
+			return null;
+		}
+
+		return getResponse(document);
+	}
 }

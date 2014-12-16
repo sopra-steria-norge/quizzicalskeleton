@@ -11,7 +11,7 @@ public class ResponseTest {
 	
 	private HashMap<String, Integer> quizUserAnswers;
 	private Quiz quiz;
-	private Response response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers);
+	private Response response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers, null);
 	
 	public ResponseTest() {
 		quiz = MongoDatabasePopulation.getInstance().testQuiz1();
@@ -22,7 +22,7 @@ public class ResponseTest {
 	public void noCorrectAnswers(){
 		quizUserAnswers.put("q1", 2);
 		quizUserAnswers.put("q2", 4);
-		response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers);
+		response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers, null);
 		response.calculateScore(quiz);
 		assertThat(response.getScore()).isEqualTo(0);
 	}
@@ -31,7 +31,7 @@ public class ResponseTest {
 	public void oneCorrectAnswer(){
 		quizUserAnswers.put("q1", 2);
 		quizUserAnswers.put("q2", 3);
-		response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers);
+		response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers, null);
 		response.calculateScore(quiz);
 		assertThat(response.getScore()).isEqualTo(1);
 	}
@@ -40,7 +40,7 @@ public class ResponseTest {
 	public void twoCorrectAnswers(){
 		quizUserAnswers.put("q1", 1);
 		quizUserAnswers.put("q2", 3);
-		response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers);
+		response = new Response(1, "Ola", "o@example.com", "Sopra", "113", quizUserAnswers, null);
 		response.calculateScore(quiz);
 		assertThat(response.getScore()).isEqualTo(2);
 	}

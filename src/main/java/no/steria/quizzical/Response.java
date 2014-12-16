@@ -12,17 +12,19 @@ public class Response {
 	private String phoneNumber;
 	private Map<String,Integer> quizAnswers;
 	private int score;
-	
+	private String id;
+
 	public Response(){
 	}
 	
-	public Response(int quizId, String name, String email, String company, String phoneNumber, Map<String,Integer> quizAnswers){
+	public Response(int quizId, String name, String email, String company, String phoneNumber, Map<String,Integer> quizAnswers, String id) {
 		this.quizId = quizId;
 		this.name = name;
 		this.email = email;
 		this.company = company;
 		this.phoneNumber = phoneNumber;
 		this.quizAnswers = quizAnswers;
+		this.id = id;
 	}
 
 	public int getQuizId(){
@@ -55,6 +57,10 @@ public class Response {
 	
 	public void setScore(int score){
 		this.score = score;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public void calculateScore(Quiz quiz){

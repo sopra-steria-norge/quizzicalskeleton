@@ -49,7 +49,7 @@ public class MongoResponseDaoTest {
 	}
 
 	private Response getResponse(String username, int score){
-		Response response = new Response(QUIZ_ID, username, username + "@domain.com",  "Sopra", "113", new HashMap<String, Integer>());
+		Response response = new Response(QUIZ_ID, username, username + "@domain.com",  "Sopra", "113", new HashMap<String, Integer>(), null);
 		response.setScore(score);
 		return response;
 	}

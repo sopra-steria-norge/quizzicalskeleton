@@ -130,7 +130,7 @@ public class AdminServlet extends SecuredServlet {
 		}
 		//New quiz
 		else {
-			quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, language, true);
+			quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, language, true, null);
 		}
 
 		String username = (String) req.getSession().getAttribute("username");
@@ -216,8 +216,12 @@ public class AdminServlet extends SecuredServlet {
 			HttpServletResponse resp, ObjectMapper mapper, PrintWriter writer)
 			throws IOException, JsonGenerationException, JsonMappingException {
 		int quizId = Integer.parseInt(req.getParameter("quizId"));
-		mapper.writeValue(writer, mongoResponseDao.drawRandomWinner(quizId));
+
+		Response response = mongoResponseDao.drawRandomWinner(quizId);
+		mapper.writeValue(writer, response);
 		resp.setContentType("text/json");
+
+		mongoQuizDao.setWinner(quizId, response.getId());
 	}
 
 	private void retrieveNumberOfResponsesByQuizId(HttpServletRequest req,

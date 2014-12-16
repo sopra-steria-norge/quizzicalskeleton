@@ -11,12 +11,11 @@ public class Quiz {
 	private int responses;
 	private boolean active;
 	private String language;
+	private Response winner;
 
-	public Quiz(){
-		
-	}
+	public Quiz(){}
 	
-	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, String language, boolean active) {
+	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, String language, boolean active, Response winner) {
 		this.quizId = quizId;
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
@@ -24,6 +23,7 @@ public class Quiz {
 		this.questions = questions;
 		this.language = language;
 		this.active = active;
+		this.winner = winner;
 	}
 
 	public int getQuizId() {
@@ -107,5 +107,9 @@ public class Quiz {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public Response getWinner() {
+		return winner;
 	}
 }

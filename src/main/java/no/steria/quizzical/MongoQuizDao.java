@@ -12,49 +12,27 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import no.steria.quizzical.admin.MongoUserDao;
 
-public class MongoQuizDao implements QuizDao {
+public class MongoQuizDao {
 
 	private DB db;
 	private DBCollection collection;
 	private MongoUserDao mongoUserDao;
-	private final String DEFAULT_LANG = "English";
+	private MongoResponseDao mongoResponseDao;
+	private static final String DEFAULT_LANG = "English";
+	private static final String QUIZ_ID = "quizId";
+	private static final String WINNER_ID = "winnerId";
 
 	public MongoQuizDao() {
 		mongoUserDao = new MongoUserDao();
+		mongoResponseDao = new MongoResponseDao();
 
 		db = MongoConnection.getConnection();
 
 		collection = db.getCollection("quizzes");
 	}
 
-	
-
-	@Override
-	public List<Quiz> getQuizzes() {
-		DBCursor cursor = collection.find();
-		List<Quiz> quizzes = new ArrayList<Quiz>();
-		while (cursor.hasNext()) {
-			DBObject next = cursor.next();
-			Integer quizId = (Integer) next.get("quizId");
-			String quizName = (String) next.get("name");
-			String quizDesc = (String) next.get("desc");
-			String submitMsg = (String) next.get("submitMsg");
-			BasicDBList questions = (BasicDBList) next.get("questions");
-			String language = (String) next.get("language");
-			boolean active = (boolean) next.get("active");
-
-			Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
-					createQuestionObject(questions), language, active);
-			quizzes.add(quiz);
-		}
-
-		return quizzes;
-	}
-
-	@Override
 	public Quiz getQuiz(int quizId) {
-		DBObject quizObject = collection.findOne(new BasicDBObject("quizId",
-				quizId));
+		DBObject quizObject = collection.findOne(new BasicDBObject(QUIZ_ID, quizId));
 
 		if (quizObject == null) {
 			throw new IllegalArgumentException("The requested quiz (quizId="
@@ -68,8 +46,11 @@ public class MongoQuizDao implements QuizDao {
 		String language = quizObject.get("language") != null ? (String)quizObject.get("language") : DEFAULT_LANG;
 		boolean active = (boolean) quizObject.get("active");
 
+		String winnerId = (String) quizObject.get(WINNER_ID);
+		Response winner = mongoResponseDao.getById(winnerId);
+
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
-				createQuestionObject(questions), language, active);
+				createQuestionObject(questions), language, active, winner);
 		return quiz;
 	}
 
@@ -109,7 +90,7 @@ public class MongoQuizDao implements QuizDao {
 			remove(quiz.getQuizId());
 		}
 		BasicDBObject quizToDB = new BasicDBObject();
-		quizToDB.put("quizId", quiz.getQuizId());
+		quizToDB.put(QUIZ_ID, quiz.getQuizId());
 		quizToDB.put("name", quiz.getQuizName());
 		quizToDB.put("desc", quiz.getQuizDesc());
 		quizToDB.put("submitMsg", quiz.getSubmitMsg());
@@ -140,8 +121,8 @@ public class MongoQuizDao implements QuizDao {
 		DBCursor cursor = collection.find();
 		while (cursor.hasNext()) {
 			DBObject dbo = cursor.next();
-			if (dbo.containsField("quizId")) {
-				int currentIndex = ((Integer) dbo.get("quizId")).intValue();
+			if (dbo.containsField(QUIZ_ID)) {
+				int currentIndex = ((Integer) dbo.get(QUIZ_ID)).intValue();
 				if (currentIndex >= index) {
 					index = currentIndex + 1;
 				}
@@ -151,7 +132,7 @@ public class MongoQuizDao implements QuizDao {
 	}
 
 	public void remove(int quizId) {
-		DBCursor cursor = collection.find(new BasicDBObject("quizId", quizId));
+		DBCursor cursor = collection.find(new BasicDBObject(QUIZ_ID, quizId));
 		if (cursor.hasNext()) {
 			collection.remove(cursor.next());
 		}
@@ -159,4 +140,14 @@ public class MongoQuizDao implements QuizDao {
 
 	}
 
+	public void setWinner(int quizId, String winnerId) {
+		try {
+			DBObject quizIdObj = new BasicDBObject(QUIZ_ID, quizId);
+			DBObject userObj = collection.findOne(quizIdObj);
+			userObj.put(WINNER_ID, winnerId);
+			collection.update(quizIdObj, userObj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
