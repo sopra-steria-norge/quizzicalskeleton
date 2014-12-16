@@ -7,7 +7,19 @@
 	
 	 <!-- MINIFYCSS -->
 	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="css/quiz.css" rel="stylesheet" type="text/css">
+
+
+    <script type="text/javascript">
+        var is_touch_device = 'ontouchstart' in document.documentElement;
+        if(is_touch_device)  {
+			document.write('<link href="/css/quiz-touch.css" rel="stylesheet" type="text/css">');
+		}
+		else {
+			document.write('<link href="/css/quiz.css" rel="stylesheet" type="text/css">');
+		}
+    </script>
+
+
     <link href="css/admin.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
    <!-- END MINIFYCSS -->
