@@ -100,4 +100,8 @@ public class MongoResponseDao{
 
 		return getResponse(document);
 	}
+
+	public void removeQuizResponses(int quizId) {
+		collection.remove(new BasicDBObject("quizId", quizId));
+	}
 }

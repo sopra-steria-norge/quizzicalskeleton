@@ -221,6 +221,7 @@ public class AdminServlet extends SecuredServlet {
 	private void deleteQuiz(HttpServletRequest req) {
 		int quizId = Integer.parseInt(req.getParameter("quizId"));
 		mongoQuizDao.remove(quizId);
+		mongoResponseDao.removeQuizResponses(quizId);
 	}
 
 	private void retrieveRandomWinnerOfQuiz(HttpServletRequest req,
