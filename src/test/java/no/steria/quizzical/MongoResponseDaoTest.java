@@ -17,7 +17,7 @@ public class MongoResponseDaoTest {
 	@Before
 	public void setUp(){
 		mongoResponseDao = new MongoResponseDao();
-		MongoDatabasePopulation.getInstance().dropResponsesInDB();
+		MongoDatabasePopulation.getInstance().removeResponsesInDB(QUIZ_ID);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class MongoResponseDaoTest {
 		mongoResponseDao.setResponse(getResponse("test2", 1));
 		assertThat(mongoResponseDao.getRespondents(QUIZ_ID)).hasSize(2);
 	}
-	
+
 	@Test
 	public void shouldDrawRandomWinnerFromBestResponses(){
 		mongoResponseDao.setResponse(getResponse("test1", 1));

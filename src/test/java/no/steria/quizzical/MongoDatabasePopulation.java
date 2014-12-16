@@ -65,8 +65,8 @@ public class MongoDatabasePopulation {
 				"To create a user: CREATE_USER <username> <password>\n");
 	}
 
-	public void dropResponsesInDB(){
-		responsesInDB.drop();
+	public void removeResponsesInDB(int quizId) {
+		responsesInDB.remove(new BasicDBObject("quizId", quizId));
 	}
 
 	public Quiz testQuiz1(){
