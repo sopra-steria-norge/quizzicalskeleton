@@ -4,8 +4,8 @@ angular.module('quizControllers')
 		$scope.quizzes = [];
 
 		$scope.languages = [
-			{name:'English'},
-			{name:'Swedish'}
+			{id: 0, name:'English'},
+			{id: 1, name:'Swedish'}
 		];
 
 		$scope.newquiz = {
@@ -91,6 +91,16 @@ angular.module('quizControllers')
 							$scope.newquiz = quiz;
 							$scope.newquiz.duplicate = $routeParams.duplicate !== undefined;
 							$scope.newquiz.userId = $scope.user.userId;
+
+							//Fy helvete..
+							var i2;
+							for (i2 = 0; i2 < $scope.languages.length; i2++) {
+								var lang = $scope.languages[i2];
+								if (lang.id === $scope.newquiz.language) {
+									$scope.newquiz.language = lang;
+								}
+
+							}
 						}
 					}
 					$scope.isEditing = true;

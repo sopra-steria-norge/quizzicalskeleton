@@ -117,7 +117,7 @@ public class AdminServlet extends SecuredServlet {
 			}
 		}
 
-		String language = rootNode.get("language") != null && rootNode.get("language").get("name") != null ? rootNode.get("language").get("name").asText() : null;
+		Integer language = rootNode.get("language") != null && rootNode.get("language").get("id") != null ? rootNode.get("language").get("id").asInt() : null;
 		boolean duplicate = rootNode.get("duplicate") != null && rootNode.get("duplicate").asBoolean();
 
 		//Existing quiz
