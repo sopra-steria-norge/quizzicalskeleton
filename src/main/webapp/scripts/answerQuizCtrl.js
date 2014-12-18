@@ -13,7 +13,7 @@ angular.module('quizControllers')
 		$scope.errorMsg = "";
 
 		$scope.i18nMap = {
-			English : {
+			0 : {
 				startQuiz : "Start quiz",
 				loading : "Loading...",
 				previousQuestion : "Previous question",
@@ -31,7 +31,7 @@ angular.module('quizControllers')
 				questionOf : "of",
 				restartQuiz : "Restart quiz"
 			},
-			Swedish : {
+			1 : {
 				startQuiz : "Starta quizzen",
 				loading : "Laddar...",
 				previousQuestion : "Föregående fråga",

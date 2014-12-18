@@ -42,7 +42,7 @@ public class AdminServletTest {
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser);
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), "English", true, null));
+		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), 0, true, null));
 		
 		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
 		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
@@ -66,7 +66,7 @@ public class AdminServletTest {
 		when(mongoUserDao.getUser("testUser")).thenReturn(dummyUser);
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), "English", true, null));
+		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), 0, true, null));
 		
 		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
 		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);
@@ -98,7 +98,7 @@ public class AdminServletTest {
 		ArrayList<Question> qs = new ArrayList<Question>();
 		qs.add(q);
 		
-		Quiz quiz = new Quiz(-1, "SteriaQuiz", "Quiz om Steria", "Takk", qs, "English", true, null);
+		Quiz quiz = new Quiz(-1, "SteriaQuiz", "Quiz om Steria", "Takk", qs, 0, true, null);
 		
 		HttpSession mockSession = mock(HttpSession.class);
 		when(req.getSession()).thenReturn(mockSession);
@@ -120,7 +120,7 @@ public class AdminServletTest {
 		when(mongoUserDao.getUser(1)).thenReturn(dummyUser);
 		
 		MongoQuizDao mongoQuizDao = mock(MongoQuizDao.class);
-		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), "English", true, null));
+		when(mongoQuizDao.getQuiz(33)).thenReturn(new Quiz(33,"DummyQuiz","description","sub", new ArrayList<Question>(), 0, true, null));
 		
 		MongoResponseDao mongoResponseDao = mock(MongoResponseDao.class);
 		when(mongoResponseDao.countResponsesForQuiz(33)).thenReturn(43);

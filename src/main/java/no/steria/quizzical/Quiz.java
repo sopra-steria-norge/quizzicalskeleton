@@ -10,12 +10,12 @@ public class Quiz {
 	private List<Question> questions;
 	private int responses;
 	private boolean active;
-	private String language;
+	private Integer language;
 	private Response winner;
 
 	public Quiz(){}
 	
-	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, String language, boolean active, Response winner) {
+	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, Integer language, boolean active, Response winner) {
 		this.quizId = quizId;
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
@@ -58,7 +58,7 @@ public class Quiz {
 		return responses;
 	}
 
-	public String getLanguage() {
+	public Integer getLanguage() {
 		return language;
 	}
 
@@ -105,7 +105,7 @@ public class Quiz {
 		this.questions = questions;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(Integer language) {
 		this.language = language;
 	}
 

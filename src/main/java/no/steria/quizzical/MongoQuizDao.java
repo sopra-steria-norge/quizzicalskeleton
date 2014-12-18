@@ -18,7 +18,7 @@ public class MongoQuizDao {
 	private DBCollection collection;
 	private MongoUserDao mongoUserDao;
 	private MongoResponseDao mongoResponseDao;
-	private static final String DEFAULT_LANG = "English";
+	private static final Integer DEFAULT_LANG = 0;
 	private static final String QUIZ_ID = "quizId";
 	private static final String WINNER_ID = "winnerId";
 
@@ -43,7 +43,14 @@ public class MongoQuizDao {
 		String quizDesc = (String) quizObject.get("desc");
 		String submitMsg = (String) quizObject.get("submitMsg");
 		BasicDBList questions = (BasicDBList) quizObject.get("questions");
-		String language = quizObject.get("language") != null ? (String)quizObject.get("language") : DEFAULT_LANG;
+
+		Integer language;
+		try {
+			language = quizObject.get("language") != null ? (Integer) quizObject.get("language") : DEFAULT_LANG;
+		}
+		catch (Exception e) {
+			language = DEFAULT_LANG;
+		}
 		boolean active = (boolean) quizObject.get("active");
 
 		String winnerId = (String) quizObject.get(WINNER_ID);
