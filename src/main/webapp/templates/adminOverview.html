@@ -31,16 +31,21 @@
 	<div ng-repeat="quiz in quizzes | orderBy:'quizId'">
 		<hr>		
 	    <div class="row quiz-active-{{quiz.active}}">
-	        <div class="span5">
+	        <div class="col-md-12">
 	            <h4 class="quiz-box-question">{{quiz.quizName}} <div ng-show="!quiz.active">(not active)</div></h4>
 				{{quiz.quizDesc}}
 				<br><br>
-	            <a href="#/answerQuiz/{{quiz.quizId}}?testMode=true"><button class="btn"><i class="icon-play"></i> Test</button></a>
-	            <a href="#/admin/addquiz/{{quiz.quizId}}"><button class="btn"><i class="icon-pencil"></i> Edit</button></a>
-                <a href="#/admin/addquiz/{{quiz.quizId}}?duplicate=true"><button class="btn"><i class="icon-pencil"></i> Duplicate</button></a>
-	            <button ng-show="quiz.active" class="btn" ng-click="changeActiveStatusTo(false, quiz.quizId)"><i class="icon-ban-circle"></i> Deactivate</button>
-	            <button ng-show="!quiz.active" class="btn" ng-click="changeActiveStatusTo(true, quiz.quizId)"><i class="icon-ok"></i> Activate</button>
-	            <button class="btn" ng-click="removeQuiz(quiz)"><i class="icon-trash"></i> Delete</button>
+	       <a href="#/answerQuiz/{{quiz.quizId}}?testMode=true"><button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-play"></span> Test</button></a>
+
+	       <a href="#/admin/addquiz/{{quiz.quizId}}"><button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</button></a>
+        
+        <a href="#/admin/addquiz/{{quiz.quizId}}?duplicate=true"><button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span> Duplicate</button></a>
+
+	      <button ng-show="quiz.active" class="btn btn-default btn-sm" ng-click="changeActiveStatusTo(false, quiz.quizId)"><span class="glyphicon glyphicon-ban-circle"></span> Deactivate</button>
+
+	      <button ng-show="!quiz.active" class="btn btn-default btn-sm" ng-click="changeActiveStatusTo(true, quiz.quizId)"><span class="glyphicon glyphicon-ok"></span> Activate</button>
+
+	      <button class="btn btn-default btn-sm" ng-click="removeQuiz(quiz)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 	        </div>
 	    </div>
     </div>

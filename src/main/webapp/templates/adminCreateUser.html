@@ -31,26 +31,24 @@
 		<h2 class="quiz-box-heading">Create admin user</h2>
 		<hr>
 
-		<div class="row-fluid">
-			<span class="span5 pull-left quiz-info-textbox">
-				<input type="text" name="username" ng-model="createUser.username" placeholder="Username" required="required">
-			</span>
+		<div class="form-group">
+			<label for="username" class="sr-only">Username</label>
+			<input class="form-control" type="text" name="username" ng-model="createUser.username" placeholder="Username" required="required">
 		</div>
 
-		<div class="row-fluid">
-			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="newPassword1" ng-model="createUser.newPassword1" placeholder="Password" required="required">
-			</span>
+		<div class="form-group">
+			<label for="newPassword1" class="sr-only">Password</label>
+			<input class="form-control" type="password" name="newPassword1" ng-model="createUser.newPassword1" placeholder="Password" required="required">
 		</div>
 
-		<div class="row-fluid">
-			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="newPassword2" ng-model="createUser.newPassword2" placeholder="Repeat password" required="required">
-			</span>
+		<div class="form-group">
+			<label for="newPassword2" class="sr-only">Repeat password</label>
+			<input class="form-control" type="password" name="newPassword2" ng-model="createUser.newPassword2" placeholder="Repeat password" required="required">
 		</div>
 
 		<hr>
-		<button type="button" class="btn btn-lg btn-primary" ng-click="submitCreateUser()" ng-disabled="changePasswordForm.$invalid">Submit</button>
+
+		<button type="button" class="btn btn-lg btn-primary" ng-click="submitCreateUser()">Submit</button>
 	</form>
 </div>
 </div>
