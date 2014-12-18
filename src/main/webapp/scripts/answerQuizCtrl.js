@@ -124,6 +124,11 @@ angular.module('quizControllers')
 		};
 
 		$scope.i18n = function(key){
+
+			if(!$scope.quiz) {
+				return "";
+			}
+
 			var lang = $scope.quiz.language;
 			return $scope.i18nMap[lang][key];
 		};
