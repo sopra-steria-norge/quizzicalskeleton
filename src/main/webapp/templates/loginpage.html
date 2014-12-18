@@ -3,32 +3,17 @@
 	    <div class="navbar-inner">
 	        <div class="container-fluid">
 	            <a class="brand" href="#"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
-	           <p class="navbar-text pull-right">
-					<button class="btn btn-link navbar-link" ng-show="!adminView" ng-click="setAdminView(true)">Go to admin area</button>
-					<button class="btn btn-link navbar-link" ng-show="adminView" ng-click="setAdminView(false)">Go to visitor area</button>
-	           </p>
 	        </div>
 	    </div>
 	</div>
 	
 	<div class="answer-quiz-box">
-		<div ng-show="!adminView">
-			<form action="#/answerQuiz/{{quizId}}" method="POST">
-				<h2 class="quiz-box-heading">Do you have a quizcode?</h2>
-				<input type="text" class="input-block-level" name="quizcode" placeholder="Quizcode" tabindex="1" ng-model="quizId" required="required"/>	
-				<button type="submit" class="bt btn-large btn-primary" name="quizButton" tabindex="3">Play quiz</button>
-			</form>
-		</div>
-		<div ng-show="adminView">
-			<form class="quizForm" action="login" method="POST">
-				<h2 class="quiz-box-heading">Admin area login</h2>
-				<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1" required="required"/>
-				<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2" required="required"/>
-				<button type="submit" class="bt btn-large btn-primary" name="loginButton" tabindex="3">Login</button>
-			</form>
-
-			<div ng-show="loginFailed">Wrong username or password. Please try again.</div>
-
-		</div>
+		<form class="quizForm" action="login" method="POST">
+			<h2 class="quiz-box-heading">Admin area login</h2>
+			<input type="text" class="input-block-level" name="user" placeholder="Username" tabindex="1" required="required"/>
+			<input type="password" class="input-block-level" name="password" placeholder="Password" tabindex="2" required="required"/>
+			<button type="submit" class="bt btn-large btn-primary" name="loginButton" tabindex="3">Login</button>
+		</form>
+		<div ng-show="loginFailed">Wrong username or password. Please try again.</div>
 	</div>
 </div>
