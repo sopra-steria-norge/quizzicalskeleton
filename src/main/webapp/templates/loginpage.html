@@ -12,44 +12,25 @@
 	      </button>
 	      <a class="brand" href="#/admin/overview"><img alt="Sopra steria logo" src="img/soprasteria_small.png"></a>
 	    </div>
-	    <div id="navbar" class="navbar-collapse collapse">
-	      <ul class="nav navbar-nav navbar-right">
-	        <li ng-show="!adminView"><button class="btn btn-link navbar-link" ng-click="setAdminView(true)">Go to admin area</button></li>
-	        <li ng-show="adminView"><button class="btn btn-link navbar-link"ng-click="setAdminView(false)">Go to visitor area</button></li>
-	      </ul>
-	    </div><!--/.nav-collapse -->
 	  </div>
 	</nav>
 	
 	<div class="container">
 	<div class="answer-quiz-box">
-		<div ng-show="!adminView">
-			<form action="#/answerQuiz/{{quizId}}" method="POST">
-				<h2 class="quiz-box-heading">Do you have a quizcode?</h2>
-				<div class="form-group">
-					<label for="quizcode" class="sr-only">Quizcode</label>
-					<input type="text" class="form-control" name="quizcode" placeholder="Quizcode" tabindex="1" ng-model="quizId" required="required"/>	
-				</div>
-				<button type="submit" class="btn btn-lg btn-primary" name="quizButton" tabindex="3">Play quiz</button>
-			</form>
-		</div>
-		<div ng-show="adminView">
-			<form class="quizForm" action="login" method="POST">
-				<h2 class="quiz-box-heading">Admin area login</h2>
-				<div class="form-group">
-					<label for="user">Username</label>
-					<input type="text" class="form-control" name="user" placeholder="Username" tabindex="1" required="required"/>
-				</div>
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" class="form-control" name="password" placeholder="Password" tabindex="2" required="required"/>
-				</div>
-				<button type="submit" class="btn btn-lg btn-primary" name="loginButton" tabindex="3">Login</button>
-			</form>
+		<form class="quizForm" action="login" method="POST">
+			<h2 class="quiz-box-heading">Admin area login</h2>
+			<div class="form-group">
+				<label for="user">Username</label>
+				<input type="text" class="form-control" name="user" placeholder="Username" tabindex="1" required="required"/>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" name="password" placeholder="Password" tabindex="2" required="required"/>
+			</div>
+			<button type="submit" class="btn btn-lg btn-primary" name="loginButton" tabindex="3">Login</button>
+		</form>
 
-			<div ng-show="loginFailed">Wrong username or password. Please try again.</div>
-
-		</div>
+		<div ng-show="loginFailed">Wrong username or password. Please try again.</div>
 	</div>
 </div>
 </div>
