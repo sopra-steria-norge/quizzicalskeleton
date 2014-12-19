@@ -219,9 +219,8 @@
 						<exclude>**/app.js</exclude>
 						<exclude>**/answerQuizCtrl.js</exclude>
 						<exclude>**/adminCtrl.js</exclude>
-						<exclude>**/bootstrap.css</exclude>
-						<exclude>**/bootstrap-responsive.min.css</exclude>
-						<exclude>**/bootstrap-responsive.css</exclude>
+						<exclude>**/bootstrap.min.css</exclude>
+						<exclude>**/bootstrap-theme.min.css</exclude>
 						<exclude>**/admin.css</exclude>
 						<exclude>**/quiz.css</exclude>
 					</excludes>
@@ -243,8 +242,8 @@
 							<insertNewLine>false</insertNewLine>
 							<removeIncluded>false</removeIncluded>
 							<includes>
-								<include>**/bootstrap.css</include>
-								<include>**/bootstrap-responsive.min.css</include>
+								<include>**/bootstrap.min.css</include>
+								<include>**/bootstrap-theme.min.css</include>
 								<include>**/admin.css</include>
 								<include>**/quiz.css</include>
 							</includes>
