@@ -1,13 +1,6 @@
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="brand" href="#"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
-        </div>
-    </div>
-</div>
-
+<div class="container">
 <div class="answer-quiz-box" ng-controller="AnswerQuizCtrl" ng-init="init()">
-
+	<img alt="Sopra steria logo" src="img/soprasteria.png" class="img-responsive">
 	<h2 class="quiz-box-heading">{{quiz.quizName}}</h2>
 	
 	<div class="" ng-show="isCurrent(-2)">
@@ -20,17 +13,19 @@
 	<div class="" ng-show="isCurrent(-1)">
 		<br>
 		<div class="text-center">Loading...</div>
-		<div class="progress progress-striped active">
-			<div class="bar" style="width: 100%;"></div>
+		<div class="progress">
+		  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" style="width: 100%">
+		  </div>
 		</div>
 		<br><br>
 	</div>
+
 	<form name="quizForm">
 	
 		<div class="" ng-show="isCurrent(0)">
 			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
 			<br><br>
-			<button class="btn btn-large btn-primary" ng-click="nextQuestion()">{{i18n('startQuiz')}}</button>
+			<button class="btn btn-lg btn-primary" ng-click="nextQuestion()">{{i18n('startQuiz')}}</button>
 		</div>
 		
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
@@ -43,7 +38,7 @@
 			</div>
 			<br>
 			<a class="hide" ng-click="prevQuestion()">{{i18n('previousQuestion')}}</a>
-			<button class="btn btn-large btn-primary" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
+			<button class="btn btn-lg btn-primary" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
 			<br><br>
 			{{i18n('questionCap')}} {{currentQuestion}} {{i18n('questionOf')}} {{questions.length}}
 		</div>
@@ -52,19 +47,33 @@
 			<p class="quiz-box-description">{{i18n('fillUserInfo')}}</p>
 			
 			<span ng-show="quizForm.name.$error.required" class="text-error">{{i18n('required')}}</span>
-			<input type="text" class="input-block-level" name="name" placeholder="{{i18n('name')}}" ng-model="userName" required="required">
+			
+			<div class="form-group" ng-class="{'has-error': 'quizForm.name.$dirty' && 'quizForm.name.$error.required'}">
+				<label for="name" class="sr-only">{{i18n('name')}}</label>
+				<input type="text" class="form-control" name="name" placeholder="{{i18n('name')}}" ng-model="userName" required="required">
+			</div>
 			
 			<span ng-show="quizForm.email.$error.required" class="text-error">{{i18n('required')}}</span>
 			<span ng-show="quizForm.email.$error.email" class="text-error">{{i18n('invalidEmail')}}</span>
-			<input type="email" class="input-block-level" name="email" placeholder="{{i18n('email')}}" ng-model="userEmail" required="required">
 
-			<input type="text" class="input-block-level" name="company" placeholder="{{i18n('company')}}" ng-model="userCompany">
+			<div class="form-group" ng-class="{'has-error': 'quizForm.name.$dirty' && ('quizForm.email.$error.email' || 'quizForm.name.$error.required') }">
+				<label for="email" class="sr-only">{{i18n('email')}}</label>
+				<input type="email" class="form-control" name="email" placeholder="{{i18n('email')}}" ng-model="userEmail" required="required">
+			</div>
 
-			<input type="text" class="input-block-level" name="phoneNumber" placeholder="{{i18n('phone')}}" ng-model="userPhoneNumber">
+			<div class="form-group">
+				<label for="company" class="sr-only">{{i18n('company')}}</label>
+				<input type="text" class="form-control" name="company" placeholder="{{i18n('company')}}" ng-model="userCompany">
+			</div>
+
+			<div class="form-group">
+				<label for="phoneNumber">{{i18n('phone')}}</label>
+				<input type="text" class="form-control" name="phoneNumber" placeholder="{{i18n('phone')}}" ng-model="userPhoneNumber">
+			</div>
 
 			<br><br>
 			<input type="hidden" name="quizId" value="{{quiz.quizId}}">
-			<button class="btn btn-large btn-primary" ng-click="submitQuiz()" ng-disabled="quizForm.$invalid">{{i18n('submitAnswers')}}</button>
+			<button class="btn btn-lg btn-primary" ng-click="submitQuiz()" ng-disabled="quizForm.$invalid">{{i18n('submitAnswers')}}</button>
 		</div>
 	</form>
 
@@ -79,4 +88,5 @@
 		<a href="#/admin/">You are in quiz mode. Click here to return to the admin overview.</a>
 	</div>
 
+</div>
 </div>

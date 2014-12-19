@@ -52,3 +52,9 @@ body {
 		background-color: #f57921;
 	}
 }
+
+@media (max-width: 980px) {
+	.answer-quiz-box {
+		margin-top: 60px;
+	}
+}

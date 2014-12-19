@@ -1,45 +1,75 @@
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container-fluid">
-			<a class="brand" href="#/admin/overview"><img alt="Steria" src="img/steria_logo2.png"> Quizzical</a>
-			<p class="navbar-text pull-right">
-				<button class="btn btn-link navbar-link" ng-click="logout()">Log out ({{user.username}})</button>
-			</p>
-			<ul class="nav">
-				<li><a href="#/admin/overview">Overview</a></li>
-				<li><a href="#/admin/addquiz">Add quiz</a></li>
-				<li><a href="#/admin/results">Results</a></li>
-				<li><a href="#/admin/changepw">Change password</a></li>
-				<li class="active"><a href="#/admin/createUser">Create admin user</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="#/admin/overview"><img alt="Sopra steria logo" src="img/soprasteria_small.png"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#/admin/overview">Overview</a></li>
+        <li><a href="#/admin/addquiz">Add quiz</a></li>
+        <li><a href="#/admin/results">Results</a></li>
+        <li><a href="#/admin/changepw">Change password</a></li>
+        <li class="active"><a href="#/admin/createUser">Create admin user</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      	<li><button class="btn btn-link navbar-link" ng-click="logout()">Log out ({{user.username}})</button></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
 
+<div class="container">
 <div class="admin-quiz-box">
-	<form name="changePasswordForm">
+	<form name="createUserForm" ng-submit="submitCreateUser()">
 		<h2 class="quiz-box-heading">Create admin user</h2>
 		<hr>
 
-		<div class="row-fluid">
-			<span class="span5 pull-left quiz-info-textbox">
-				<input name="username" ng-model="createUser.username" placeholder="Username" required="required">
-			</span>
+    <p class="text-warning" ng-show="createUserForm.username.$dirty && createUserForm.username.$invalid">
+      This is a required field
+    </p>
+		<div class="form-group" ng-class="{'has-error': changePasswordForm.username.$dirty && changePasswordForm.username.$invalid}">
+			<label for="username" class="sr-only">Username</label>
+			<input class="form-control" type="text" name="username" ng-model="createUser.username" placeholder="Username" required="required">
 		</div>
 
-		<div class="row-fluid">
-			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="newPassword1" ng-model="createUser.newPassword1" placeholder="Password" required="required">
-			</span>
+    <div class="error-container" ng-show="createUserForm.newPassword1.$dirty && createUserForm.newPassword1.$invalid">
+      <p class="text-warning" ng-show="createUserForm.newPassword1.$error.required">
+        This is a required field
+      </p>
+      <p class="text-warning" ng-show="createUserForm.newPassword1.$error.minlength">
+        Password must be minimum 8 characters
+      </p>
+    </div>
+
+		<div class="form-group" ng-class="{'has-error': changePasswordForm.newPassword1.$dirty && changePasswordForm.newPassword1.$invalid}">
+			<label for="newPassword1" class="sr-only">Password</label>
+			<input class="form-control" type="password" name="newPassword1" ng-model="createUser.newPassword1" placeholder="Password" required="required" ng-minlength=8>
 		</div>
 
-		<div class="row-fluid">
-			<span class="span5 pull-left quiz-info-textbox">
-				<input type="password" name="newPassword2" ng-model="createUser.newPassword2" placeholder="Repeat password" required="required">
-			</span>
+    <div class="error-container" ng-show="createUserForm.newPassword2.$dirty && createUserForm.newPassword2.$invalid || createUser.newPassword1 != createUser.newPassword2">
+      <p class="text-warning" ng-show="createUserForm.newPassword2.$error.required">
+        This is a required field
+      </p>
+      <p class="text-warning" ng-show="createUserForm.newPassword2.$dirty && createUser.newPassword1 != createUser.newPassword2">
+        Passwords do not match
+      </p>
+    </div>
+
+		<div class="form-group" ng-class="{'has-error': changePasswordForm.newPassword2.$dirty && (changePasswordForm.newPassword2.$invalid || createUser.newPassword1 != createUser.newPassword2)}">
+			<label for="newPassword2" class="sr-only">Repeat password</label>
+			<input class="form-control" type="password" name="newPassword2" ng-model="createUser.newPassword2" placeholder="Repeat password" required="required" ng-minlength=8>
 		</div>
 
 		<hr>
-		<button type="button" class="btn btn-large btn-primary" ng-click="submitCreateUser()" ng-disabled="changePasswordForm.$invalid">Submit</button>
+
+		<button type="submit" class="btn btn-lg btn-primary" ng-disabled="!createUserForm.$valid">Submit</button>
 	</form>
+</div>
 </div>
