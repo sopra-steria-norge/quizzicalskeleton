@@ -31,14 +31,15 @@
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
 			<h4 class="quiz-box-question">{{q.text}}</h4>
 			<div ng-repeat="qa in q.alternatives">
-				<label class="radio quiz-input-choice-box {{isRadioBtnSelected(q, qa)}} ql{{q.id}}">
-					<input type="radio" ng-model="q.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="updateAnswers(q.id, qa.aid)">
+				<label class="radio quiz-input-choice-box {{isRadioBtnSelected(q, qa)}} ql{{q.id}} {{getAlternativeClass(q.id, qa.aid)}}">
+					<input type="radio" ng-disabled="shownAnswer" ng-model="q.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="updateAnswers(q.id, qa.aid)">
 					{{qa.atext}}
 				</label>
 			</div>
 			<br>
 			<a class="hide" ng-click="prevQuestion()">{{i18n('previousQuestion')}}</a>
-			<button class="btn btn-lg btn-primary" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
+			<button class="btn btn-lg btn-primary" ng-show="quiz.showAnswer && !shownAnswer" ng-click="checkAnswer(q.id)">{{i18n('checkAnswer')}}</button>
+			<button class="btn btn-lg btn-primary" ng-show="!quiz.showAnswer || shownAnswer" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
 			<br><br>
 			{{i18n('questionCap')}} {{currentQuestion}} {{i18n('questionOf')}} {{questions.length}}
 		</div>

@@ -41,3 +41,13 @@ body {
 .quiz-input-choice:required {
 	box-shadow: none;
 }
+
+.correct-answer {
+	background-color: green;
+	color: #ffffff;
+}
+
+.incorrect-selected-answer {
+	background-color: red;
+	color: #ffffff;
+}

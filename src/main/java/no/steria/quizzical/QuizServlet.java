@@ -81,7 +81,7 @@ public class QuizServlet extends HttpServlet {
 		Quiz quiz = null;
 		quiz = mongoQuizDao.getQuiz(quizId);
 		Iterator<Question> questions = quiz.getQuestions().iterator();
-		while(questions.hasNext()){
+		while(!quiz.isShowAnswer() && questions.hasNext()){
 			 questions.next().setAnswer(-1);
 		}
 

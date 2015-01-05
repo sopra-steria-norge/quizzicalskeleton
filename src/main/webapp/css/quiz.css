@@ -58,3 +58,13 @@ body {
 		margin-top: 60px;
 	}
 }
+
+.correct-answer {
+	background-color: green;
+	color: #ffffff;
+}
+
+.incorrect-selected-answer {
+	background-color: red;
+	color: #ffffff;
+}

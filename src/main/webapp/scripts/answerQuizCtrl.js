@@ -29,7 +29,8 @@ angular.module('quizControllers')
 				phone : "Phone number",
 				questionCap : "Question",
 				questionOf : "of",
-				restartQuiz : "Restart quiz"
+				restartQuiz : "Restart quiz",
+				checkAnswer : "Check answer"
 			},
 			1 : {
 				startQuiz : "Starta quizzen",
@@ -47,11 +48,14 @@ angular.module('quizControllers')
 				phone : "Telefonnummer",
 				questionCap : "Fråga",
 				questionOf : "av",
-				restartQuiz : "Ta quizzen igen"
+				restartQuiz : "Ta quizzen igen",
+				checkAnswer : "Kontrollera svar"
 			}
 		};
 		
 		$scope.currentQuestion = -1;
+		$scope.shownAnswer = false;
+		$scope.correctAnswer = false;
 		var isSubmitted = false;
 
 		var testMode = $routeParams.testMode ? "&testMode=" + $routeParams.testMode : "";
@@ -69,6 +73,8 @@ angular.module('quizControllers')
 		
 		$scope.nextQuestion = function(){
 			$scope.currentQuestion++;
+			$scope.shownAnswer = false;
+			$scope.correctAnswer = false;
 		};
 		
 		$scope.prevQuestion = function(){
@@ -106,6 +112,58 @@ angular.module('quizControllers')
 			if (!radioButtonIsChecked){
 				buttons[0].required = "required";
 			}
+		};
+
+		$scope.checkAnswer = function(qid){
+			var radioButtonIsChecked = false;
+			var buttons = document.getElementsByName("q" + qid);
+			var i;
+
+			for (i = 0; i < buttons.length; i++){
+				if (buttons[i].checked){
+					radioButtonIsChecked = true;
+
+					//Show correct/wrong question msg
+					$scope.correctAnswer = ($scope.questions[$scope.currentQuestion - 1].answer === (i + 1));
+					$scope.correctAnswerNumber = $scope.questions[$scope.currentQuestion - 1].answer;
+
+					//Show "next question" button, hide the show question button
+					$scope.shownAnswer = true;
+				}
+			}
+
+			if (!radioButtonIsChecked){
+				buttons[0].required = "required";
+			}
+		};
+
+		$scope.getAlternativeClass = function(qid, aid) {
+
+			if($scope.shownAnswer && $scope.isCorrectAnswer(aid)) {
+				return "correct-answer";
+			}
+
+			if($scope.shownAnswer && !$scope.correctAnswer && $scope.isSelected(qid, aid)) {
+				return "incorrect-selected-answer";
+			}
+
+			return "";
+		};
+
+		$scope.isSelected = function(qid, aid){
+			var buttons = document.getElementsByName("q" + qid);
+
+			var i;
+			for (i = 0; i < buttons.length; i++){
+				if (buttons[i].checked){
+					return aid === (i + 1);
+				}
+			}
+			return false;
+		};
+
+		$scope.isCorrectAnswer = function(aid){
+			return ($scope.questions[$scope.currentQuestion - 1].answer === aid);
 		};
 		
 		$scope.submitQuiz = function(){
