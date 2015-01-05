@@ -12,16 +12,18 @@ public class Quiz {
 	private boolean active;
 	private Integer language;
 	private Response winner;
+	private boolean showAnswer;
 
 	public Quiz(){}
 	
-	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, Integer language, boolean active, Response winner) {
+	public Quiz(int quizId, String quizName, String quizDesc, String submitMsg, List<Question> questions, Integer language, boolean showAnswer, boolean active, Response winner) {
 		this.quizId = quizId;
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
 		this.submitMsg = submitMsg;
 		this.questions = questions;
 		this.language = language;
+		this.showAnswer = showAnswer;
 		this.active = active;
 		this.winner = winner;
 	}
@@ -115,5 +117,13 @@ public class Quiz {
 
 	public void setWinner(Response winner) {
 		this.winner = winner;
+	}
+
+	public void setShowAnswer(boolean showAnswer) {
+		this.showAnswer = showAnswer;
+	}
+
+	public boolean isShowAnswer() {
+		return showAnswer;
 	}
 }

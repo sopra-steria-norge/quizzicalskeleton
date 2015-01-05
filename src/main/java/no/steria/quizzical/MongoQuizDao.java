@@ -49,45 +49,18 @@ public class MongoQuizDao {
 			language = quizObject.get("language") != null ? (Integer) quizObject.get("language") : DEFAULT_LANG;
 		}
 		catch (Exception e) {
-			language = DEFAULT_LANG;
+			language = DEFAULT_LANG; //:X
 		}
+
+		boolean showAnswer = quizObject.get("showAnswer") != null && (boolean)quizObject.get("showAnswer");
 		boolean active = (boolean) quizObject.get("active");
 
 		String winnerId = (String) quizObject.get(WINNER_ID);
 		Response winner = mongoResponseDao.getById(winnerId);
 
 		Quiz quiz = new Quiz(quizId, quizName, quizDesc, submitMsg,
-				createQuestionObject(questions), language, active, winner);
+				createQuestionObject(questions), language, showAnswer, active, winner);
 		return quiz;
-	}
-
-	public List<Question> createQuestionObject(BasicDBList questionsBasicDBList) {
-		List<Question> questionsList = new ArrayList<Question>();
-		Iterator<Object> questionsIterator = questionsBasicDBList.iterator();
-		while (questionsIterator.hasNext()) {
-			BasicDBObject questionBasicDBObject = (BasicDBObject) questionsIterator
-					.next();
-			int id = (int) questionBasicDBObject.get("id");
-			String text = (String) questionBasicDBObject.get("text");
-			BasicDBList alternativesBasicDBList = (BasicDBList) questionBasicDBObject
-					.get("alternatives");
-			int answer = (int) questionBasicDBObject.get("answer");
-
-			List<Alternative> alternativesList = new ArrayList<Alternative>();
-			Iterator<Object> alternativesIterator = alternativesBasicDBList
-					.iterator();
-			while (alternativesIterator.hasNext()) {
-				BasicDBObject alternativeBasicDBObject = (BasicDBObject) alternativesIterator
-						.next();
-				int aid = (int) alternativeBasicDBObject.get("aid");
-				String atext = (String) alternativeBasicDBObject.get("atext");
-				Alternative alternative = new Alternative(aid, atext);
-				alternativesList.add(alternative);
-			}
-			Question question = new Question(id, text, alternativesList, answer);
-			questionsList.add(question);
-		}
-		return questionsList;
 	}
 
 	public void insertQuizIntoDB(Quiz quiz, int userId) {
@@ -118,24 +91,10 @@ public class MongoQuizDao {
 		}
 		quizToDB.put("questions", questionsToDB);
 		quizToDB.put("language", quiz.getLanguage());
+		quizToDB.put("showAnswer", quiz.isShowAnswer());
 		quizToDB.put("active", quiz.getActive());
 		collection.insert(quizToDB);
 		mongoUserDao.addQuizIdToUser(quiz.getQuizId(), userId);
-	}
-
-	private int getAvailableQuizId() {
-		int index = 1;
-		DBCursor cursor = collection.find();
-		while (cursor.hasNext()) {
-			DBObject dbo = cursor.next();
-			if (dbo.containsField(QUIZ_ID)) {
-				int currentIndex = ((Integer) dbo.get(QUIZ_ID)).intValue();
-				if (currentIndex >= index) {
-					index = currentIndex + 1;
-				}
-			}
-		}
-		return index;
 	}
 
 	public void remove(int quizId) {
@@ -156,5 +115,49 @@ public class MongoQuizDao {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private int getAvailableQuizId() {
+		int index = 1;
+		DBCursor cursor = collection.find();
+		while (cursor.hasNext()) {
+			DBObject dbo = cursor.next();
+			if (dbo.containsField(QUIZ_ID)) {
+				int currentIndex = ((Integer) dbo.get(QUIZ_ID)).intValue();
+				if (currentIndex >= index) {
+					index = currentIndex + 1;
+				}
+			}
+		}
+		return index;
+	}
+
+	private List<Question> createQuestionObject(BasicDBList questionsBasicDBList) {
+		List<Question> questionsList = new ArrayList<Question>();
+		Iterator<Object> questionsIterator = questionsBasicDBList.iterator();
+		while (questionsIterator.hasNext()) {
+			BasicDBObject questionBasicDBObject = (BasicDBObject) questionsIterator
+					.next();
+			int id = (int) questionBasicDBObject.get("id");
+			String text = (String) questionBasicDBObject.get("text");
+			BasicDBList alternativesBasicDBList = (BasicDBList) questionBasicDBObject
+					.get("alternatives");
+			int answer = (int) questionBasicDBObject.get("answer");
+
+			List<Alternative> alternativesList = new ArrayList<Alternative>();
+			Iterator<Object> alternativesIterator = alternativesBasicDBList
+					.iterator();
+			while (alternativesIterator.hasNext()) {
+				BasicDBObject alternativeBasicDBObject = (BasicDBObject) alternativesIterator
+						.next();
+				int aid = (int) alternativeBasicDBObject.get("aid");
+				String atext = (String) alternativeBasicDBObject.get("atext");
+				Alternative alternative = new Alternative(aid, atext);
+				alternativesList.add(alternative);
+			}
+			Question question = new Question(id, text, alternativesList, answer);
+			questionsList.add(question);
+		}
+		return questionsList;
 	}
 }

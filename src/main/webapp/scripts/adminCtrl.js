@@ -14,7 +14,8 @@ angular.module('quizControllers')
 				submitMsg: "",
 				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}],
 				userId: "",
-				language: ""
+				language: "",
+				showAnswer: false
 		};
 
 		$scope.changepw = {

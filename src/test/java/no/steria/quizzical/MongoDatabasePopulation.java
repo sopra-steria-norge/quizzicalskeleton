@@ -86,7 +86,7 @@ public class MongoDatabasePopulation {
 		alternatives2.add(new Alternative(4, "Burudvann"));
 		questions.add(new Question(2, "What is the largest lake in Norway?", alternatives2, 3));		
 		
-		return new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions,  0, true, null);
+		return new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions,  0, false, true, null);
 	}
 
 }

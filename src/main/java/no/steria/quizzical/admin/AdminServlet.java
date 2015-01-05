@@ -118,9 +118,10 @@ public class AdminServlet extends SecuredServlet {
 		}
 
 		Integer language = rootNode.get("language") != null && rootNode.get("language").get("id") != null ? rootNode.get("language").get("id").asInt() : null;
+		boolean showAnswer = rootNode.get("showAnswer") != null && rootNode.get("showAnswer").asBoolean();
 		boolean duplicate = rootNode.get("duplicate") != null && rootNode.get("duplicate").asBoolean();
 
-		//Existing quiz
+		//Saving duplicated quiz
 		if(duplicate) {
 			quiz = mongoQuizDao.getQuiz(quizId);
 			quiz.setQuizId(-1);
@@ -129,8 +130,10 @@ public class AdminServlet extends SecuredServlet {
 			quiz.setSubmitMsg(submitMsg);
 			quiz.setQuestions(questions);
 			quiz.setLanguage(language);
+			quiz.setShowAnswer(showAnswer);
 			quiz.setWinner(null);
 		}
+		//Editing existing quiz
 		else if(quizId != -1) {
 			quiz = mongoQuizDao.getQuiz(quizId);
 			quiz.setQuizName(quizName);
@@ -138,10 +141,11 @@ public class AdminServlet extends SecuredServlet {
 			quiz.setSubmitMsg(submitMsg);
 			quiz.setQuestions(questions);
 			quiz.setLanguage(language);
+			quiz.setShowAnswer(showAnswer);
 		}
 		//New quiz
 		else {
-			quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, language, true, null);
+			quiz = new Quiz(quizId, quizName, quizDesc, submitMsg, questions, language, showAnswer, true, null);
 		}
 
 		String username = (String) req.getSession().getAttribute("username");

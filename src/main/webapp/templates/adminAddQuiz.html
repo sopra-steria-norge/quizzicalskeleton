@@ -47,9 +47,7 @@
 					<label for="quizName" class="sr-only">Quiz name</label>
 					<input class="form-control" type="text" name="quizName" ng-model="newquiz.quizName" placeholder="Type a name for the quiz" required="required">
 				</div>
-
 		</div>
-		
 
 		<div class="row quiz-info">
 			
@@ -60,7 +58,6 @@
 					<label for="quizDescription" class="sr-only">Quiz description</label>
 					<textarea class="ta-no-resize form-control" name="quizDescription" ng-model="newquiz.quizDesc" placeholder="Describe the quiz here..."></textarea>
 				</div>
-			
 		</div>
 
 		<div class="row quiz-info">
@@ -80,6 +77,15 @@
 				<div class="form-group col-md-5 pull-left quiz-info-textbox">
 					<label for="language" class="sr-only">Quiz language</label>
 					<select name="language" class="form-control" ng-model="newquiz.language" ng-options="language.name for language in languages" required="required"></select>
+				</div>
+		</div>
+
+		<div class="row quiz-info">
+				<p class="col-md-7 pull-right quiz-info-text">
+					Show correct answer after each question
+				</p>
+				<div class="form-group col-md-5 pull-right quiz-info-textbox">
+					<input class="form-control" type="checkbox" name="showAnswer" ng-model="newquiz.showAnswer">
 				</div>
 		</div>
 		
