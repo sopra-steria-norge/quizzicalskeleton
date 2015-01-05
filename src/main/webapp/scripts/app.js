@@ -4,7 +4,8 @@
 	var bootstrap;
 	bootstrap = function() {
 		angular.module('quizzical', ['quizControllers']).
-			config(['$routeProvider', "$httpProvider", function($routeProvider, $httpProvider) {
+			config(
+			['$routeProvider', "$httpProvider", function($routeProvider, $httpProvider) {
 				$routeProvider.
 					when('/', {
 						templateUrl: 'templates/loginpage.html',
@@ -43,6 +44,12 @@
 						controller: 'AdminCtrl'
 					});
 
+				if (!$httpProvider.defaults.headers.get) {
+					$httpProvider.defaults.headers.common = {};
+				}
+				$httpProvider.defaults.headers.common["Cache-Control"] = "no-cache";
+				$httpProvider.defaults.headers.common.Pragma = "no-cache";
+
 				var interceptor = ['$rootScope', '$q', function (scope, $q) {
 					function success(response) {
 						return response;
@@ -60,8 +67,8 @@
 					};
 				}];
 				$httpProvider.responseInterceptors.push(interceptor);
-
-			}]);
+			}]
+		);
 
 
 		angular.bootstrap(document,['quizzical']);
