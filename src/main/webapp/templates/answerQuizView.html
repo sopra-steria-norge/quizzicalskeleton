@@ -23,13 +23,13 @@
 	<form name="quizForm">
 	
 		<div class="" ng-show="isCurrent(0)">
-			<p class="quiz-box-description">{{quiz.quizDesc}}</p>
+			<pre class="quiz-box-description normal">{{quiz.quizDesc}}</pre>
 			<br><br>
 			<button class="btn btn-lg btn-primary" ng-click="nextQuestion()">{{i18n('startQuiz')}}</button>
 		</div>
 		
 		<div ng-repeat="q in questions" ng-show="isCurrent(q.id)">
-			<h4 class="quiz-box-question">{{q.text}}</h4>
+			<pre class="normal"><h4 class="quiz-box-question">{{q.text}}</h4></pre>
 			<div ng-repeat="qa in q.alternatives">
 				<label class="radio quiz-input-choice-box {{isRadioBtnSelected(q, qa)}} ql{{q.id}} {{getAlternativeClass(q.id, qa.aid)}}">
 					<input type="radio" ng-disabled="shownAnswer" ng-model="q.isChecked" name="q{{q.id}}" value="{{qa.aid}}" ng-click="updateAnswers(q.id, qa.aid)">
@@ -80,7 +80,7 @@
 
 	<div ng-show="isCurrent(questions.length+2)">
 		<h4>{{i18n('submitted')}}</h4>
-		<p>{{quiz.submitMsg}}<br/>
+		<pre class="normal">{{quiz.submitMsg}}</pre>
 		<br/>
 		<a onclick="window.location.reload()" style="cursor: pointer;">{{i18n('restartQuiz')}}</a>
 	</div>
