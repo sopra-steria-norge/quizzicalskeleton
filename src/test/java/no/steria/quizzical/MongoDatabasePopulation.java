@@ -1,19 +1,15 @@
 package no.steria.quizzical;
 
-import com.mongodb.*;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
 import no.steria.quizzical.admin.MongoUserDao;
-import no.steria.quizzical.admin.PasswordUtil;
-import no.steria.quizzical.admin.User;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-/**
- * Adds two sample users. These are "martin" with password "eple", and "nikolai" with password "sopp",
- * and some sample quizzes.
- */
 public class MongoDatabasePopulation {
 	
 	private DB db;
