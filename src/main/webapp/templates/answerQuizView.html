@@ -46,30 +46,26 @@
 
 		<div ng-show="isCurrent(questions.length+1)">
 			<p class="quiz-box-description">{{i18n('fillUserInfo')}}</p>
-			
-			<span ng-show="quizForm.name.$error.required" class="text-error">{{i18n('required')}}</span>
-			
+
+			<span class="text">{{i18n('name')}} ({{i18n('required')}})</span>
 			<div class="form-group" ng-class="{'has-error': 'quizForm.name.$dirty' && 'quizForm.name.$error.required'}">
-				<label for="name" class="sr-only">{{i18n('name')}}</label>
-				<input type="text" class="form-control" name="name" placeholder="{{i18n('name')}}" ng-model="userName" required="required">
+				<input type="text" class="form-control" name="name" ng-model="userName" required="required">
 			</div>
-			
-			<span ng-show="quizForm.email.$error.required" class="text-error">{{i18n('required')}}</span>
+
+			<span class="text">{{i18n('email')}} ({{i18n('required')}})</span>
 			<span ng-show="quizForm.email.$error.email" class="text-error">{{i18n('invalidEmail')}}</span>
-
-			<div class="form-group" ng-class="{'has-error': 'quizForm.name.$dirty' && ('quizForm.email.$error.email' || 'quizForm.name.$error.required') }">
-				<label for="email" class="sr-only">{{i18n('email')}}</label>
-				<input type="email" class="form-control" name="email" placeholder="{{i18n('email')}}" ng-model="userEmail" required="required">
+			<div class="form-group" ng-class="{'has-error': 'quizForm.name.$dirty' && ('quizForm.email.$error.email' || 'quizForm.email.$error.required') }">
+				<input type="email" class="form-control" name="email" ng-model="userEmail" required="required">
 			</div>
 
-			<div class="form-group">
-				<label for="company" class="sr-only">{{i18n('company')}}</label>
-				<input type="text" class="form-control" name="company" placeholder="{{i18n('company')}}" ng-model="userCompany">
+			<span class="text">{{i18n('company')}} ({{i18n('required')}})</span>
+			<div class="form-group" ng-class="{'has-error': 'quizForm.company.$dirty' && 'quizForm.company.$error.required'}">
+				<input type="text" class="form-control" name="company" ng-model="userCompany" required="required">
 			</div>
 
+			<span class="text">{{i18n('phone')}}</span>
 			<div class="form-group">
-				<label for="phoneNumber">{{i18n('phone')}}</label>
-				<input type="text" class="form-control" name="phoneNumber" placeholder="{{i18n('phone')}}" ng-model="userPhoneNumber">
+				<input type="text" class="form-control" name="phoneNumber" ng-model="userPhoneNumber">
 			</div>
 
 			<br><br>
