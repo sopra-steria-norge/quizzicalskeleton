@@ -131,9 +131,22 @@
 									</td>
 								</tr>
 							</table>
-							<button type="button" class="btn btn-sm" ng-click="addAlternative(q)"><span class="glyphicon glyhpicon-plus"></span> Add alternative</button>
+							<button id="addAlternative-{{$index}}" type="button" class="btn btn-sm" ng-click="addAlternative(q)"><span class="glyphicon glyhpicon-plus"></span> Add alternative</button>
+
+
+							<div class="row quiz-info">
+								<p class="col-md-7 pull-right quiz-info-text">
+									Question has a text answer (not alternatives).
+								</p>
+								<div class="form-group col-md-5 pull-right quiz-info-textbox">
+									<input class="form-control pull-left answerInText" type="checkbox" ng-model="q.answerInText" ng-click="setAnswerInText($index, $event)" style="width: 50px">
+								</div>
+							</div>
+
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</div>

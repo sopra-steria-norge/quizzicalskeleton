@@ -12,7 +12,7 @@ angular.module('quizControllers')
 				quizName: "",
 				quizDesc: "",
 				submitMsg: "",
-				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined}],
+				questions: [{id: 1, text: "", alternatives: [{aid:1, atext: ""}], answer: undefined, answerInText: false}],
 				userId: "",
 				language: "",
 				showAnswer: false
@@ -125,6 +125,37 @@ angular.module('quizControllers')
 			var numberOfAlternatives = question.alternatives.length;
 			question.alternatives.push({aid: (numberOfAlternatives + 1), atext: ""});
 		};
+
+		$scope.setAnswerInText = function($index, $event){
+			var q = $scope.newquiz.questions[$index];
+
+			if($event.currentTarget.checked) {
+				//If set, disable add alternative.
+				document.getElementById("addAlternative-" + $index).disabled = true;
+
+				//Remove existing alternatives.
+				q.alternatives = [];
+				//Remove correct answer
+				q.answer = undefined;
+				//Uncheck other checkboxes for text answers (only one supported)
+
+				var boxes = document.getElementsByClassName("answerInText");
+				var i;
+				for (i = 0; i < boxes.length; i++){
+					if($event.currentTarget !== boxes[i]) {
+						boxes[i].checked = false;
+					}
+				}
+
+
+
+			}
+			else {
+				//If unset, enable add alternative.
+				document.getElementById("addAlternative-" + $index).disabled = false;
+			}
+		};
+
 		
 		$scope.removeAlternative = function(question, index){
 			if (question.alternatives[index].aid === parseInt(question.answer, 10)){

@@ -54,10 +54,11 @@ public class QuizServlet extends HttpServlet {
 			}
 		}
 
+		String textAnswer = rootNode.get("textAnswer") != null ? rootNode.get("textAnswer").asText() : null;
 		String company = rootNode.get("company").asText();
 		String phoneNumber = rootNode.get("phoneNumber").asText();
 
-		quizResponse = new Response(quizId, name, email, company, phoneNumber, answersToDB, null);
+		quizResponse = new Response(quizId, name, email, company, phoneNumber, answersToDB, null, textAnswer);
 		quizResponse.calculateScore(mongoQuizDao.getQuiz(quizId));
 		mongoResponseDao.setResponse(quizResponse);
 	}

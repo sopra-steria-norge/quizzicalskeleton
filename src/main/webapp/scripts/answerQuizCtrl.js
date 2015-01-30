@@ -9,7 +9,7 @@ angular.module('quizControllers')
 		$scope.userCompany = "";
 		$scope.userPhoneNumber = "";
 		$scope.answers = {};
-		
+
 		$scope.errorMsg = "";
 
 		$scope.i18nMap = {
@@ -89,7 +89,7 @@ angular.module('quizControllers')
 			var key = "q" + qid;
 			$scope.answers[key] = aid;
 		};
-		
+
 		$scope.isRadioBtnSelected = function(q, qa){
 			if (parseInt(q.isChecked, 10) === qa.aid){
 				return "quiz-input-choice-box-selected";
@@ -97,7 +97,7 @@ angular.module('quizControllers')
 			return "";
 		};
 		
-		$scope.checkRadioButtons = function(qid){
+		$scope.checkInput = function(qid){
 			var radioButtonIsChecked = false;
 			var buttons = document.getElementsByName("q" + qid);
 			var i = 0;
@@ -108,8 +108,19 @@ angular.module('quizControllers')
 					$scope.nextQuestion();
 				}
 			}
-			
-			if (!radioButtonIsChecked){
+
+			if(buttons.length === 0) {
+				var text = document.getElementById("textAnswer_q" + qid);
+
+				if(text.value.length > 0) {
+					$scope.textAnswer = text.value;
+					$scope.nextQuestion();
+				}
+				else {
+					text.required = "required";
+				}
+			}
+			else if (!radioButtonIsChecked){
 				buttons[0].required = "required";
 			}
 		};
@@ -169,7 +180,9 @@ angular.module('quizControllers')
 		$scope.submitQuiz = function(){
 			if (!isSubmitted){
 				isSubmitted = true;
-				var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail, "company": $scope.userCompany, "phoneNumber": $scope.userPhoneNumber, "answers": $scope.answers};
+				var submitData = {"quizId": $scope.quiz.quizId, "name": $scope.userName, "email": $scope.userEmail,
+					"company": $scope.userCompany, "phoneNumber": $scope.userPhoneNumber, "answers": $scope.answers,
+					"textAnswer": $scope.textAnswer};
 				
 				$http({method: "POST", url: "submitQuiz", data: JSON.stringify(submitData) }).
 				success(function(data) {

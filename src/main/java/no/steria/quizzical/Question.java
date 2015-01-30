@@ -8,14 +8,16 @@ public class Question {
 	private String text;
 	private List<Alternative> alternatives;
 	private int answer;
-	
+	private boolean answerInText;
+
 	public Question(){}
 	
-	public Question(int id, String text, List<Alternative> alternatives, int answer){
+	public Question(int id, String text, List<Alternative> alternatives, int answer, boolean answerInText){
 		this.id = id;
 		this.text = text;
 		this.alternatives = alternatives;
 		this.answer = answer;
+		this.answerInText = answerInText;
 	}
 
 	public int getId() {
@@ -37,7 +39,11 @@ public class Question {
 	public void setAnswer(int answer){
 		this.answer = answer;
 	}
-	
+
+	public boolean isAnswerInText() {
+		return answerInText;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		boolean isEqual = false;

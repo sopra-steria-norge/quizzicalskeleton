@@ -13,11 +13,12 @@ public class Response {
 	private Map<String,Integer> quizAnswers;
 	private int score;
 	private String id;
+	private String textAnswer;
 
 	public Response(){
 	}
 	
-	public Response(int quizId, String name, String email, String company, String phoneNumber, Map<String,Integer> quizAnswers, String id) {
+	public Response(int quizId, String name, String email, String company, String phoneNumber, Map<String,Integer> quizAnswers, String id, String textAnswer) {
 		this.quizId = quizId;
 		this.name = name;
 		this.email = email;
@@ -25,6 +26,7 @@ public class Response {
 		this.phoneNumber = phoneNumber;
 		this.quizAnswers = quizAnswers;
 		this.id = id;
+		this.textAnswer = textAnswer;
 	}
 
 	public int getQuizId(){
@@ -47,10 +49,6 @@ public class Response {
 		return phoneNumber;
 	}
 
-	public Map<String,Integer> getQuizAnswers(){
-		return quizAnswers;
-	}
-	
 	public int getScore(){
 		return score;
 	}
@@ -61,6 +59,10 @@ public class Response {
 
 	public String getId() {
 		return id;
+	}
+
+	public String getTextAnswer() {
+		return textAnswer;
 	}
 
 	public void calculateScore(Quiz quiz){

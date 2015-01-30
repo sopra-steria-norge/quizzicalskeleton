@@ -49,7 +49,8 @@ public class AdminServlet extends SecuredServlet {
 					questionNum++;
 					
 					List<Alternative> alternatives = new ArrayList<Alternative>();
-					
+					boolean answerInText = jsonQuestion.get("answerInText") != null ? jsonQuestion.get("answerInText").asBoolean() : false;
+
 					while(questionFields.hasNext()){
 						Entry<String, JsonNode> questionField = questionFields.next();
 						
@@ -97,12 +98,12 @@ public class AdminServlet extends SecuredServlet {
 						}
 					}
 
-					if(correctAnswer == 0) {
+					if(correctAnswer == 0 && !answerInText) {
 						sendErrorMsg(resp, "Please set a correct answer to question #" + questionNum);
 						return;
 					}
 
-					Question question = new Question(questionId, questionText, alternatives, correctAnswer);
+					Question question = new Question(questionId, questionText, alternatives, correctAnswer, answerInText);
 					questions.add(question);
 				}
 				

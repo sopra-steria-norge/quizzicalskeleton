@@ -36,10 +36,15 @@
 					{{qa.atext}}
 				</label>
 			</div>
+
+			<div ng-show="q.answerInText">
+				<textarea id="textAnswer_q{{q.id}}" class="add-question-text ta-no-resize form-control" ng-model="q.textAnswer" ng-required="q.answerInText" maxlength="1024"></textarea>
+			</div>
+
 			<br>
 			<a class="hide" ng-click="prevQuestion()">{{i18n('previousQuestion')}}</a>
-			<button class="btn btn-lg btn-primary" ng-show="quiz.showAnswer && !shownAnswer" ng-click="checkAnswer(q.id)">{{i18n('checkAnswer')}}</button>
-			<button class="btn btn-lg btn-primary" ng-show="!quiz.showAnswer || shownAnswer" ng-click="checkRadioButtons(q.id)">{{i18n('nextQuestion')}}</button>
+			<button class="btn btn-lg btn-primary" ng-show="!q.answerInText && quiz.showAnswer && !shownAnswer" ng-click="checkAnswer(q.id)">{{i18n('checkAnswer')}}</button>
+			<button class="btn btn-lg btn-primary" ng-show="q.answerInText || !quiz.showAnswer || shownAnswer" ng-click="checkInput(q.id)">{{i18n('nextQuestion')}}</button>
 			<br><br>
 			{{i18n('questionCap')}} {{currentQuestion}} {{i18n('questionOf')}} {{questions.length}}
 		</div>

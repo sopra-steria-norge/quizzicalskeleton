@@ -73,14 +73,14 @@ public class MongoDatabasePopulation {
 		alternatives1.add(new Alternative(2, "Bergen"));
 		alternatives1.add(new Alternative(3, "Trondheim"));
 		alternatives1.add(new Alternative(4, "Kristiansand"));
-		questions.add(new Question(1, "What is the capital of Norway?", alternatives1, 1));
+		questions.add(new Question(1, "What is the capital of Norway?", alternatives1, 1, false));
 		
 		List<Alternative> alternatives2 = new ArrayList<Alternative>();
 		alternatives2.add(new Alternative(1, "Sognsvann"));
 		alternatives2.add(new Alternative(2, "Tyrifjorden"));
 		alternatives2.add(new Alternative(3, "Mjosa"));
 		alternatives2.add(new Alternative(4, "Burudvann"));
-		questions.add(new Question(2, "What is the largest lake in Norway?", alternatives2, 3));		
+		questions.add(new Question(2, "What is the largest lake in Norway?", alternatives2, 3, false));
 		
 		return new Quiz(1,"Geography Quiz","This is a quiz about Norwegian geography. The questions span from fantastic cities to amazing lakes.", "Thank you for taking the quiz. The winner will be announced on 2. august at 4 PM.", questions,  0, false, true, null);
 	}

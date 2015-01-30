@@ -80,6 +80,7 @@ public class MongoQuizDao {
 			questionToDB.put("id", questionData.getId());
 			questionToDB.put("text", questionData.getText());
 			questionToDB.put("answer", questionData.getAnswer());
+			questionToDB.put("answerInText", questionData.isAnswerInText());
 			BasicDBList alternativesToDB = new BasicDBList();
 			for (Alternative alternativeData : questionData.getAlternatives()) {
 				alternativesToDB.add(new BasicDBObject().append("aid",
@@ -143,6 +144,7 @@ public class MongoQuizDao {
 			BasicDBList alternativesBasicDBList = (BasicDBList) questionBasicDBObject
 					.get("alternatives");
 			int answer = (int) questionBasicDBObject.get("answer");
+			boolean answerInText = questionBasicDBObject.get("answerInText") != null ? (boolean)questionBasicDBObject.get("answerInText") : false;
 
 			List<Alternative> alternativesList = new ArrayList<Alternative>();
 			Iterator<Object> alternativesIterator = alternativesBasicDBList
@@ -155,7 +157,7 @@ public class MongoQuizDao {
 				Alternative alternative = new Alternative(aid, atext);
 				alternativesList.add(alternative);
 			}
-			Question question = new Question(id, text, alternativesList, answer);
+			Question question = new Question(id, text, alternativesList, answer, answerInText);
 			questionsList.add(question);
 		}
 		return questionsList;

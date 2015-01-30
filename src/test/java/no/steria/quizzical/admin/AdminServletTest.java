@@ -94,7 +94,7 @@ public class AdminServletTest {
 		alternatives.add(alt1);
 		alternatives.add(alt2);
 		
-		Question q = new Question(1, "Spm1", alternatives, 2);
+		Question q = new Question(1, "Spm1", alternatives, 2, false);
 		ArrayList<Question> qs = new ArrayList<Question>();
 		qs.add(q);
 		
